@@ -1,0 +1,22 @@
+---
+title: "Home"
+# author: Yanyu Liang
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+# Data
+
+## Intermediate GWAS
+
+The candidate phenotypes/traits should be highly inheritable. The intuition is that it may capture one aspect of genetic background in an as informative as possible manner.
+
+### Immune cell level: 
+
+The GWAS study in Sardinia population [@orru2013genetic] indicates that 
+European population: [paper](https://www.nature.com/articles/ng.467)
+
+```{r, echo=FALSE}
+data <- read.csv('../external-data/1-s2.0-S0092867413010726-mmc2.csv')
+
+```
+  

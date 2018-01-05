@@ -1,0 +1,19 @@
+name: "phenotype-epistasis"
+output_dir: "../docs"
+include: [".nojekyll"]
+exclude: ["include"]
+navbar:
+  title: "Phenotypic Genetic Background Effect"
+  left:
+    - text: "Home"
+      href: index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/liangyy/phenotype-epistasis
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cosmo
+    highlight: textmate
+bibliography: bibliography.bib
