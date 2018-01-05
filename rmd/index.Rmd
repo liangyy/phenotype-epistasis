@@ -16,7 +16,12 @@ The GWAS study in Sardinia population [@orru2013genetic] indicates that
 European population: [paper](https://www.nature.com/articles/ng.467)
 
 ```{r, echo=FALSE}
+library(dplyr)
+library(kableExtra)
+library(knitr)
 data <- read.csv('../external-data/1-s2.0-S0092867413010726-mmc2.csv')
-
+kable(data, 'html') %>%
+  kable_styling() %>%
+  scroll_box(width = '500px', height = '200px')
 ```
   
