@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Data</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Phenotypic Genetic Background Effect</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/liangyy/phenotype-epistasis">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Data</h1>
+<h4 class="date"><em>17 January, 2018</em></h4>
+
+</div>
+
+
+<div id="intermediate-gwas" class="section level1">
+<h1>Intermediate GWAS</h1>
+<div id="blood-cell-phenotype" class="section level2">
+<h2>Blood cell phenotype</h2>
+<ul>
+<li><a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/AstleWJ_27863252_GCST004602">Data</a></li>
+<li><a href="http://www.cell.com/cell/fulltext/S0092-8674(16)31463-5">Paper</a></li>
+<li>Meta-data</li>
+</ul>
+<table style="width:99%;">
+<caption>Table continues below</caption>
+<colgroup>
+<col width="6%" />
+<col width="26%" />
+<col width="22%" />
+<col width="19%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">id</th>
+<th align="center">phenotype</th>
+<th align="center">num.of.traits</th>
+<th align="center">sample.size</th>
+<th align="center">num.of.variants</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">blood cell trait</td>
+<td align="center">36</td>
+<td align="center">173480</td>
+<td align="center">29500000</td>
+</tr>
+</tbody>
+</table>
+<table style="width:42%;">
+<colgroup>
+<col width="27%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">heritability.mean</th>
+<th align="center">ancestry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">NA</td>
+<td align="center">european</td>
+</tr>
+</tbody>
+</table>
+The phenotype information is as follow (Table S1)
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; overflow-x: scroll; width:500px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Cell.Type
+</th>
+<th style="text-align:left;">
+Standard.Abbreviation
+</th>
+<th style="text-align:left;">
+Long.Name
+</th>
+<th style="text-align:left;">
+Unit
+</th>
+<th style="text-align:left;">
+Description
+</th>
+<th style="text-align:left;">
+Measured…Derived
+</th>
+<th style="text-align:left;">
+Determination
+</th>
+<th style="text-align:left;">
+Measured…Derived.1
+</th>
+<th style="text-align:left;">
+Determination.1
+</th>
+<th style="text-align:left;">
+Previous.GWAS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Platelet
+</td>
+<td style="text-align:left;">
+PLT#
+</td>
+<td style="text-align:left;">
+Platelet count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Count of platelets per unit volume of blood
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gate (impedance for missing data points)
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+MPV
+</td>
+<td style="text-align:left;">
+Mean platelet volume
+</td>
+<td style="text-align:left;">
+fL
+</td>
+<td style="text-align:left;">
+Mean volume of platelets
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(PCT/PLT#)×10000
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(PCT/PLT#)×10000
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+PDW
+</td>
+<td style="text-align:left;">
+Platelet distribution width
+</td>
+<td style="text-align:left;">
+fL
+</td>
+<td style="text-align:left;">
+The spread of the platelet volume distribution. Note that Sysmex and Coulter use different statistics to measure spread.
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance: Coefficient of variation of platelet volume distribution
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance: width at 20% peak height of platelet volume histogram.
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+PCT
+</td>
+<td style="text-align:left;">
+Plateletcrit
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Volume fraction of blood occupied by platelets
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mature red cell
+</td>
+<td style="text-align:left;">
+RBC#
+</td>
+<td style="text-align:left;">
+Red blood cell count
+</td>
+<td style="text-align:left;">
+per pL
+</td>
+<td style="text-align:left;">
+Count of red blood cells per unit volume of blood
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+MCV
+</td>
+<td style="text-align:left;">
+Mean corpuscular volume
+</td>
+<td style="text-align:left;">
+fL
+</td>
+<td style="text-align:left;">
+Mean volume of red blood cells
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HCT/RBC#)×10
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HCT/RBC#)×10
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+HCT
+</td>
+<td style="text-align:left;">
+Hematocrit
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Volume fraction of blood occupied by red cells
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+MCH
+</td>
+<td style="text-align:left;">
+Mean corpuscular hemoglobin
+</td>
+<td style="text-align:left;">
+pg
+</td>
+<td style="text-align:left;">
+Average mass of hemoglobin per red cell
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HGB/RBC#)×10
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HGB/RBC#)×10
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+MCHC
+</td>
+<td style="text-align:left;">
+Mean corpuscular hemoglobin concentration
+</td>
+<td style="text-align:left;">
+g/dL
+</td>
+<td style="text-align:left;">
+Concentration of hemoglobin with respect to unit of volume occupied by red cells
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HGB/HCT)×100
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HGB/HCT)×100
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+HGB
+</td>
+<td style="text-align:left;">
+Hemoglobin concentration
+</td>
+<td style="text-align:left;">
+g/dL
+</td>
+<td style="text-align:left;">
+Concentration of hemoglobin with respect to unit of volume of blood
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Light absorbance
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Light absorbance
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RDW
+</td>
+<td style="text-align:left;">
+Red cell distribution width
+</td>
+<td style="text-align:left;">
+fL
+</td>
+<td style="text-align:left;">
+Coefficient of variation of red cell volume distribution
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+CV of impedance measured red cell volume distribution
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+CV of impedance measured red cell volume distribution
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Immature red cell
+</td>
+<td style="text-align:left;">
+RET#
+</td>
+<td style="text-align:left;">
+Reticulocyte count
+</td>
+<td style="text-align:left;">
+pL
+</td>
+<td style="text-align:left;">
+Count of reticulocytes per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(RET%×RBC#)/100
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(RET%×RBC#)/100
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RET%
+</td>
+<td style="text-align:left;">
+Reticulocyte fraction of red cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of red blood cells that are reticulocytes
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry/impedance gates
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+IRF
+</td>
+<td style="text-align:left;">
+Immature fraction of reticulocytes
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+Fraction of reticulocytes with high RNA content, as measured by light scatter
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+HLSR#/RET#
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+HLSR#
+</td>
+<td style="text-align:left;">
+High light scatter reticulocyte count
+</td>
+<td style="text-align:left;">
+per pL
+</td>
+<td style="text-align:left;">
+Count of high RNA content (immature) reticulocytes per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HLSR%×RBC#)/100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+IRF×RET#
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+HLSR%
+</td>
+<td style="text-align:left;">
+High light scatter reticulocyte percentage of red cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Immature reticulocyte count as a percentage of red blood cell count
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry/impedance gates
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(HLSR#/RBC#)×100%
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Myeloid white cell
+</td>
+<td style="text-align:left;">
+MONO#
+</td>
+<td style="text-align:left;">
+Monocyte count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Count of monocytes per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(MONO%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(MONO%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+NEUT#
+</td>
+<td style="text-align:left;">
+Neutrophil count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Count of neutrophils per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(NEUT%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(NEUT%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+EO#
+</td>
+<td style="text-align:left;">
+Eosinophil count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Count of eosinophils per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(EO%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(EO%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+BASO#
+</td>
+<td style="text-align:left;">
+Basophil count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Count of basophils per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(BASO%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(BASO%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(NEUT+EO)#
+</td>
+<td style="text-align:left;">
+Sum neutrophil eosinophil counts
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of neutrophils and eosinophils per unit volume of blood.
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+NEUT#+EO#
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+NEUT#+EO#
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(EO+BASO)#
+</td>
+<td style="text-align:left;">
+Sum eosinophil basophil counts
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of eosinophils and basophils per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+EO#+BASO#
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+EO#+BASO#
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+(BASO+NEUT)#
+</td>
+<td style="text-align:left;">
+Sum basophil neutrophil counts
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of basophils and neutrophils per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+BASO#+NEUT#
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+BASO#+NEUT#
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+GRAN#
+</td>
+<td style="text-align:left;">
+Granulocyte count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of granulocytes per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+NEUT#+BASO#+EO#
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+NEUT#+BASO#+EO#
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+NEUT%GRAN
+</td>
+<td style="text-align:left;">
+Neutrophil percentage of granulocytes
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of granulocytes that are neutrophils
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(NEUT#/GRAN#)×100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(NEUT#/GRAN#)×100%
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+BASO%GRAN
+</td>
+<td style="text-align:left;">
+Basophil percentage of granulocytes
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of granulocytes that are basophils
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(BASO#/GRAN#)×100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(BASO#/GRAN#)×100%
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+EO%GRAN
+</td>
+<td style="text-align:left;">
+Eosinophil percentage of granulocytes
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of granulocytes that are eosinophils
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(EO#/GRAN#)×100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(EO/#GRAN#)×100%
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+MYELOID#
+</td>
+<td style="text-align:left;">
+Myeloid white cell count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of myeloid white cells
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+NEUT#+BASO#+EO#+MONO#
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+NEUT#+BASO#+EO#+MONO#
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+GRAN%MYELOID
+</td>
+<td style="text-align:left;">
+Granulocyte percentage of myeloid white cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of myeloid white cells that are granulocytes
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(GRAN#/MYELOID#)×100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(GRAN#/MYELOID#)×100%
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lymphoid white cell
+</td>
+<td style="text-align:left;">
+LYMPH#
+</td>
+<td style="text-align:left;">
+Lymphocyte count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of lymphoid cells per unit volume of blood
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(LYMPH%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+Derived
+</td>
+<td style="text-align:left;">
+(LYMPH%×WBC#)/100%
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Compound white cell
+</td>
+<td style="text-align:left;">
+WBC#
+</td>
+<td style="text-align:left;">
+White blood cell count
+</td>
+<td style="text-align:left;">
+per nL
+</td>
+<td style="text-align:left;">
+Aggregate count of white cells per unit volume of blood
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Impedance
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+MONO%
+</td>
+<td style="text-align:left;">
+Monocyte percentage of white cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of white cells that are monocytes
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+NEUT%
+</td>
+<td style="text-align:left;">
+Neutrophil percentage of white cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of white cells that are neutrophils
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+EO%
+</td>
+<td style="text-align:left;">
+Eosinophil percentage of white cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of white cells that are eosinophils
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+BASO%
+</td>
+<td style="text-align:left;">
+Basophil percentage of white cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of white cells that are basophils
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+LYMPH%
+</td>
+<td style="text-align:left;">
+Lymphocyte percentage of white cells
+</td>
+<td style="text-align:left;">
+%
+</td>
+<td style="text-align:left;">
+Percentage of white cells that are lymphocytes
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+Measured
+</td>
+<td style="text-align:left;">
+Flow cytometry gates
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

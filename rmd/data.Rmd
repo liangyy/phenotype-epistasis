@@ -1,0 +1,39 @@
+---
+title: "Data"
+# author: Yanyu Liang
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+  
+# Intermediate GWAS
+
+```{r, echo=FALSE}
+library(pander)
+data.inter <- data.frame(id = c(), phenotype = c(), num.of.traits = c(), sample.size = c(), num.of.variants = c(), heritability.mean = c(), ancestry = c())
+id.counter <- 1
+```
+
+## Blood cell phenotype
+
+```{r, echo=FALSE}
+data.inter.blood <- data.frame(id = c(id.counter), phenotype = c('blood cell trait'), num.of.traits = c(36), sample.size = c(173480), num.of.variants = c(29.5e6), heritability.mean = c(NA), ancestry = c('european'))
+```
+
+* [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/AstleWJ_27863252_GCST004602)
+* [Paper](http://www.cell.com/cell/fulltext/S0092-8674(16)31463-5)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.blood)
+```
+
+
+The phenotype information is as follow (Table S1)
+```{r, echo=FALSE}
+library(dplyr)
+library(kableExtra)
+library(knitr)
+data <- read.csv('../external-data/10.1016.j.cell.2016.10.042-mmc1.csv')
+kable(data, 'html') %>%
+  kable_styling() %>%
+  scroll_box(width = '500px', height = '200px')
+```
