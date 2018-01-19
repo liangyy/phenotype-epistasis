@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -298,13 +300,14 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Home</h1>
-<h4 class="date"><em>17 January, 2018</em></h4>
+<h4 class="date"><em>18 January, 2018</em></h4>
 
 </div>
 
 
 <div id="data" class="section level1">
 <h1>Data</h1>
+<p>Go to <a href="data.html">data</a></p>
 <div id="intermediate-gwas" class="section level2">
 <h2>Intermediate GWAS</h2>
 <p>The candidate phenotypes/traits should be highly inheritable. The intuition is that it may capture one aspect of genetic background in an as informative as possible manner.</p>

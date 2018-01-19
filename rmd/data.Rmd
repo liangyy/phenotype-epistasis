@@ -8,14 +8,20 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 
 ```{r, echo=FALSE}
 library(pander)
+panderOptions('table.split.table', Inf)
 data.inter <- data.frame(id = c(), phenotype = c(), num.of.traits = c(), sample.size = c(), num.of.variants = c(), heritability.mean = c(), ancestry = c())
+genDataLine <- function(id, phenotype, num.of.traits, sample.size, num.of.variants, ancestry, heritability.mean = NA) {
+  data.inter <- data.frame(id = id, phenotype = phenotype, num.of.traits = num.of.traits, sample.size = sample.size, num.of.variants = num.of.variants, heritability.mean = heritability.mean, ancestry = ancestry)
+  return(data.inter)
+}
 id.counter <- 1
 ```
 
 ## Blood cell phenotype
 
 ```{r, echo=FALSE}
-data.inter.blood <- data.frame(id = c(id.counter), phenotype = c('blood cell trait'), num.of.traits = c(36), sample.size = c(173480), num.of.variants = c(29.5e6), heritability.mean = c(NA), ancestry = c('european'))
+data.inter.blood <- genDataLine(id = c(id.counter), phenotype = c('blood cell traits'), num.of.traits = c(36), sample.size = c(173480), num.of.variants = c(29.5e6), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
 ```
 
 * [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/AstleWJ_27863252_GCST004602)
@@ -35,5 +41,49 @@ library(knitr)
 data <- read.csv('../external-data/10.1016.j.cell.2016.10.042-mmc1.csv')
 kable(data, 'html') %>%
   kable_styling() %>%
-  scroll_box(width = '500px', height = '200px')
+  scroll_box(width = '1000px', height = '500px')
 ```
+
+## Circulating metabolites
+
+```{r, echo=FALSE}
+data.inter.metabolite <- genDataLine(id = c(id.counter), phenotype = c('circulating metabolites'), num.of.traits = c(123), sample.size = c(24925), num.of.variants = c(39e6), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
+```
+
+* [Data](http://www.computationalmedicine.fi/data#NMR_GWAS)
+* [Paper](https://www.nature.com/articles/ncomms11122)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.metabolite)
+```
+
+
+The phenotype information is as follow (Table S1)
+```{r, dev='pdf', out.width = "1000px", out.height = "500px"}
+knitr::include_graphics("../external-data/ncomms11122-s1-table-s1.pdf")
+```
+
+## Personality
+
+```{r, echo=FALSE}
+data.inter.personality <- genDataLine(id = c(id.counter), phenotype = c('personality'), num.of.traits = c(5), sample.size = c(17375), num.of.variants = c(NA), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
+```
+
+* [Paper-complete](https://www.nature.com/articles/ng.3736)
+* [Paper-summary statistic available](http://www.tweelingenregister.org/fileadmin/user_upload/publicaties/verslaggeving/NTR-publicaties_2012/Moor_MP_2012.pdf)
+* [Data](http://www.tweelingenregister.org/GPC/)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.personality)
+```
+
+The phenotype information is as follow (Table S2)
+```{r, dev='pdf', out.width = "1000px", out.height = "500px"}
+knitr::include_graphics("../external-data/ng.3736-S1-table-s2.pdf")
+```
+
+Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
