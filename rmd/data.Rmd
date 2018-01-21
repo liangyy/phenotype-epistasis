@@ -59,11 +59,7 @@ id.counter <- id.counter + 1
 pander(data.inter.metabolite)
 ```
 
-
-The phenotype information is as follow (Table S1)
-```{r, dev='pdf', out.width = "1000px", out.height = "500px"}
-knitr::include_graphics("external-data/ncomms11122-s1-table-s1.pdf")
-```
+The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ncomms11122-s1-table-s1.pdf) (Table S1)
 
 ## Personality
 
@@ -81,9 +77,6 @@ id.counter <- id.counter + 1
 pander(data.inter.personality)
 ```
 
-The phenotype information is as follow (Table S2)
-```{r, dev='pdf', out.width = "1000px", out.height = "500px"}
-knitr::include_graphics("external-data/ng.3736-S1-table-s2.pdf")
-```
+The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ng.3736-S1-table-s2.pdf) (Table S2)
 
 Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
