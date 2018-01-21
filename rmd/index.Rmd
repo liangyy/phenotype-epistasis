@@ -4,6 +4,11 @@ title: "Home"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
+```{r}
+dir.create('../docs/external-data')
+file.copy(file.path('../external-data', list.files('../external-data/')), file.path("../docs/external-data/", list.files('../external-data/')), overwrite = TRUE)
+```
+
 # Data
 
 Go to [data](data.html)

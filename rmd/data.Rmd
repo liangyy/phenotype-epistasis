@@ -3,10 +3,6 @@ title: "Data"
 # author: Yanyu Liang
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
-
-```{r setup, echo=FALSE}
-repo.url <- 'https://github.com/liangyy/phenotype-epistasis/raw/master/'
-```
  
 # Intermediate GWAS
 
@@ -42,7 +38,7 @@ The phenotype information is as follow (Table S1)
 library(dplyr)
 library(kableExtra)
 library(knitr)
-data <- read.csv('../external-data/10.1016.j.cell.2016.10.042-mmc1.csv')
+data <- read.csv('../external-data/10.1016.j.cell.2016.10.042-mmc1.csv')#rmd/external-data/10.1016.j.cell.2016.10.042-mmc1.csv')
 kable(data, 'html') %>%
   kable_styling() %>%
   scroll_box(width = '1000px', height = '500px')
@@ -66,7 +62,7 @@ pander(data.inter.metabolite)
 
 The phenotype information is as follow (Table S1)
 ```{r, dev='pdf', out.width = "1000px", out.height = "500px"}
-knitr::include_graphics(paste0(repo.url, "external-data/ncomms11122-s1-table-s1.pdf"))
+knitr::include_graphics("external-data/ncomms11122-s1-table-s1.pdf")
 ```
 
 ## Personality
@@ -87,7 +83,7 @@ pander(data.inter.personality)
 
 The phenotype information is as follow (Table S2)
 ```{r, dev='pdf', out.width = "1000px", out.height = "500px"}
-knitr::include_graphics(paste0(repo.url, "external-data/ng.3736-S1-table-s2.pdf"))
+knitr::include_graphics("external-data/ng.3736-S1-table-s2.pdf")
 ```
 
 Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
