@@ -1,0 +1,17 @@
+---
+title: "Computation"
+# author: Yanyu Liang
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+  
+# Computing intermediate phenotype
+
+The predicted complex trait risk by GWAS summary statistic is used as intermediate genetic trait. LD pruning + p-value thresholding (P+T) is widely used but suffer from lack of effective SNPs. 
+
+## P+T
+
+LD pruning ($r^2$ < 0.2) followed by p-value thresholding with various threholds optimized by validation prediction accurarcy ($R^2$). One implementation can be found at [PRSice](http://prsice.info/)
+
+## LDpred 
+
+Consider LD effect in each block ($\sim M / 3000$) with various prior fraction of causal variants optimized by validation accuracy. One implementation can be found at [here](https://github.com/bvilhjal/ldpred) (also see [paper](http://linkinghub.elsevier.com/retrieve/pii/S0002-9297(15)00365-1))

@@ -9,6 +9,8 @@ navbar:
       href: index.html
     - text: "Data"
       href: data.html
+    - text: 'Computation'
+      href: computation.html
   right:
     - icon: fa-github
       href: https://github.com/liangyy/phenotype-epistasis
@@ -18,4 +20,5 @@ output:
     toc_float: true
     theme: cosmo
     highlight: textmate
+    number_sections: true
 bibliography: bibliography.bib

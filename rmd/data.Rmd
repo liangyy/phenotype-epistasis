@@ -3,7 +3,7 @@ title: "Data"
 # author: Yanyu Liang
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
- 
+
 # Intermediate GWAS
 
 ```{r, echo=FALSE}
@@ -20,8 +20,9 @@ id.counter <- 1
 ## Blood cell phenotype
 
 ```{r, echo=FALSE}
-data.inter.blood <- genDataLine(id = c(id.counter), phenotype = c('blood cell traits'), num.of.traits = c(36), sample.size = c(173480), num.of.variants = c(29.5e6), heritability.mean = c(NA), ancestry = c('european'))
+data.inter.blood <- genDataLine(id = c(id.counter), phenotype = c('blood cell traits'), num.of.traits = c(36), sample.size = c(173480), num.of.variants = c(29.5e6), heritability.mean = c('10%-30%'), ancestry = c('european'))
 id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.blood)
 ```
 
 * [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/AstleWJ_27863252_GCST004602)
@@ -49,6 +50,7 @@ kable(data, 'html') %>%
 ```{r, echo=FALSE}
 data.inter.metabolite <- genDataLine(id = c(id.counter), phenotype = c('circulating metabolites'), num.of.traits = c(123), sample.size = c(24925), num.of.variants = c(39e6), heritability.mean = c(NA), ancestry = c('european'))
 id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.metabolite)
 ```
 
 * [Data](http://www.computationalmedicine.fi/data#NMR_GWAS)
@@ -64,8 +66,9 @@ The phenotype information is [here](https://github.com/liangyy/phenotype-epistas
 ## Personality
 
 ```{r, echo=FALSE}
-data.inter.personality <- genDataLine(id = c(id.counter), phenotype = c('personality'), num.of.traits = c(5), sample.size = c(17375), num.of.variants = c(NA), heritability.mean = c(NA), ancestry = c('european'))
+data.inter.personality <- genDataLine(id = c(id.counter), phenotype = c('personality'), num.of.traits = c(5), sample.size = c(17375), num.of.variants = c(NA), heritability.mean = c('1%-12%'), ancestry = c('european'))
 id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.personality)
 ```
 
 * [Paper-complete](https://www.nature.com/articles/ng.3736)
@@ -80,3 +83,9 @@ pander(data.inter.personality)
 The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ng.3736-S1-table-s2.pdf) (Table S2)
 
 Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
+
+## Summary
+
+```{r, echo=FALSE}
+pander(data.inter)
+```

@@ -12,3 +12,21 @@ Go to [data](data.html)
 
 The candidate phenotypes/traits should be highly inheritable. The intuition is that it may capture one aspect of genetic background in an as informative as possible manner.
 
+## Disease Phenotypes
+
+1. WTCCC: type 1 diabetes, type 2 diabetes, coronary heart disease, hypertension, bipolar disorder, rheumatoid arthritis and Crohn's disease
+2. Autisum
+
+# Computation
+
+Go to [computation](computation.html).
+
+## Computing intermediate phenotype
+
+Methods available:
+  * P+T
+  * LDpred
+  
+## Testing interaction
+
+Hypothesis testing under linear model.

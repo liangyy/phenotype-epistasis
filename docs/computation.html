@@ -11,7 +11,7 @@
 
 
 
-<title>Home</title>
+<title>Computation</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -300,37 +300,22 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">Computation</h1>
 <h4 class="date"><em>21 January, 2018</em></h4>
 
 </div>
 
 
-<div id="data" class="section level1">
-<h1><span class="header-section-number">1</span> Data</h1>
-<p>Go to <a href="data.html">data</a></p>
-<div id="intermediate-gwas" class="section level2">
-<h2><span class="header-section-number">1.1</span> Intermediate GWAS</h2>
-<p>The candidate phenotypes/traits should be highly inheritable. The intuition is that it may capture one aspect of genetic background in an as informative as possible manner.</p>
+<div id="computing-intermediate-phenotype" class="section level1">
+<h1><span class="header-section-number">1</span> Computing intermediate phenotype</h1>
+<p>The predicted complex trait risk by GWAS summary statistic is used as intermediate genetic trait. LD pruning + p-value thresholding (P+T) is widely used but suffer from lack of effective SNPs.</p>
+<div id="pt" class="section level2">
+<h2><span class="header-section-number">1.1</span> P+T</h2>
+<p>LD pruning (<span class="math inline">\(r^2\)</span> &lt; 0.2) followed by p-value thresholding with various threholds optimized by validation prediction accurarcy (<span class="math inline">\(R^2\)</span>). One implementation can be found at <a href="http://prsice.info/">PRSice</a></p>
 </div>
-<div id="disease-phenotypes" class="section level2">
-<h2><span class="header-section-number">1.2</span> Disease Phenotypes</h2>
-<ol style="list-style-type: decimal">
-<li>WTCCC: type 1 diabetes, type 2 diabetes, coronary heart disease, hypertension, bipolar disorder, rheumatoid arthritis and Crohn’s disease</li>
-<li>Autisum</li>
-</ol>
-</div>
-</div>
-<div id="computation" class="section level1">
-<h1><span class="header-section-number">2</span> Computation</h1>
-<p>Go to <a href="computation.html">computation</a>.</p>
-<div id="computing-intermediate-phenotype" class="section level2">
-<h2><span class="header-section-number">2.1</span> Computing intermediate phenotype</h2>
-<p>Methods available: * P+T * LDpred</p>
-</div>
-<div id="testing-interaction" class="section level2">
-<h2><span class="header-section-number">2.2</span> Testing interaction</h2>
-<p>Hypothesis testing under linear model.</p>
+<div id="ldpred" class="section level2">
+<h2><span class="header-section-number">1.2</span> LDpred</h2>
+<p>Consider LD effect in each block (<span class="math inline">\(\sim M / 3000\)</span>) with various prior fraction of causal variants optimized by validation accuracy. One implementation can be found at <a href="https://github.com/bvilhjal/ldpred">here</a> (also see <a href="http://linkinghub.elsevier.com/retrieve/pii/S0002-9297(15)00365-1">paper</a>)</p>
 </div>
 </div>
 
