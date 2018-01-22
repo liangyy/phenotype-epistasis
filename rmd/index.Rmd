@@ -37,3 +37,43 @@ Methods available:
 ## Testing interaction
 
 Hypothesis testing under linear model.
+
+# Implementation
+
+Go to [implementation](implementation.html) for details.
+
+Pipeline overview is as follow.
+
+Let
+
+1. $\beta_I$ be summary statistic of intermediate GWAS
+2. $Y_t$ be phenotype of interest with corresponding genotype $X_t$
+3. $\hat{Y}_I$ be the predicted intermediate phenotype
+4. $I_T$ be interaction of $X_T$ and $\hat{Y}_I$
+
+```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
+\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes, arrows, calc, positioning}
+\begin{tikzpicture}[auto]
+  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
+  \tikzstyle{arrow}=[draw, ->]
+  \node [node] (summary-statistic) {$\beta_I$};
+  \node [node, below of=summary-statistic] (intermediate-phenotype) {$\hat{Y}_I$};
+  \node [node, below of=intermediate-phenotype] (genotype) {$X_T$};
+  \node [node, below of=genotype] (phenotype) {$Y_T$};
+  \node [node, right of=intermediate-phenotype] (interaction) {$I_T = \hat{Y}_I \cdot X_T$};
+  \node [node, right of=phenotype] (association) {$\text{Cov}(Y_T,I_T)$};
+  \path [arrow] (summary-statistic) -- (intermediate-phenotype);
+  \path [arrow] (genotype) -- (intermediate-phenotype);
+  \path [arrow] (intermediate-phenotype) -- (interaction);
+  \path [arrow] (genotype) -- (interaction);
+  \path [arrow] (phenotype) -- (association);
+  \path [arrow] (interaction) -- (association);
+\end{tikzpicture}
+```
+
+## Obtaining $\hat{Y}_I$
+
+Current available $f: (\beta_I, X_T) \rightarrow \hat{Y}_I$ are `PRSice` and `LDpred` (see [here](computation.html#1_computing_intermediate_phenotype)). 
+

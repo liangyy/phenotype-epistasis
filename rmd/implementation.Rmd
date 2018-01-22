@@ -1,0 +1,31 @@
+---
+title: "Implementation"
+# author: Yanyu Liang
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+  
+# Step 1: $(\beta_I, X_T) \rightarrow \hat{Y}_I$
+
+Current available $f: (\beta_I, X_T) \rightarrow \hat{Y}_I$ are `PRSice` and `LDpred` (see [here](computation.html#1_computing_intermediate_phenotype)). The available $X_T$, WTCCC genotype, is in BIMBAM format.
+
+## Prepare $X_T$
+
+Both `PRSice` and `LDpred` take plink binary, so $X_T$ should be converted to plink binary format. It can be obtained by [`fcgene` chapter 9](https://vcru.wisc.edu/simonlab/bioinformatics/programs/fcgene/fcgene-1.0.7.pdf).
+
+## Prepare $\beta_I$
+
+The following format would work well for both methods.
+
+```
+chr pos ref alt ref frq  info  rs  pval  effalt
+chr1  1020428 C T 0.85083 0.98732 rs6687776 0.0587  -0.0100048507289348
+chr1  1020496 G A 0.85073 0.98751 rs6678318 0.1287  -0.00826075392985992
+```
+
+## Prepare fake $Y_t$
+
+`PRSice` (but not `LDpred`) needs $Y_t$ to optimize prediction accuracy by tuning hyper-parameters. As the true phenotype is not available, here we generate a "fake" $Y_t$ instead which won't affect the computation.
+
+## Evaluation
+
+Compute 

@@ -16,6 +16,8 @@ LD pruning ($r^2$ < 0.2) followed by p-value thresholding with various threholds
 
 Consider LD effect in each block ($\sim M / 3000$) with various prior fraction of causal variants optimized by validation accuracy. One implementation can be found at [here](https://github.com/bvilhjal/ldpred) (also see [paper](http://linkinghub.elsevier.com/retrieve/pii/S0002-9297(15)00365-1))
 
+Note that LDpred also includes codes for P+T strategy.
+
 ## Validation
 
 The difficulty is that we don't have validation data sets to determine the hyper-parameters needed for the calculation of polygenic risk score. One strategy is to see if the order of PRS is stable across a range of hyper-parameters. Note that is can be benchmarked using disease phenotypes of which we have individual genotypes, *i.e.* WTCCC 7 diseases.

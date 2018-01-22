@@ -11,6 +11,8 @@ navbar:
       href: data.html
     - text: 'Computation'
       href: computation.html
+    - text: 'Implementation'
+      href: implementation.html
   right:
     - icon: fa-github
       href: https://github.com/liangyy/phenotype-epistasis
