@@ -151,7 +151,7 @@ data.valid <- rbind(data.valid, data.valid.cd)
 * Meta-data
 
 ```{r, echo=FALSE}
-pander(data.valid.t2d)
+pander(data.valid.cd)
 ```
 
 The sample information is as follow (Table S1).
@@ -161,4 +161,10 @@ data <- read.csv('../external-data/ng.3760-S2-table-s1.csv')
 kable(data, 'html') %>%
   kable_styling() %>%
   scroll_box(width = '1000px', height = '500px')
+```
+
+## Summary
+
+```{r, echo=FALSE}
+pander(data.valid)
 ```
