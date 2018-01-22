@@ -1631,6 +1631,830 @@ Flow cytometry gates
 </table>
 </div>
 </div>
+<div id="disease-phenotypes" class="section level1">
+<h1><span class="header-section-number">2</span> Disease Phenotypes</h1>
+<p>The individual level data is needed here since we need to calculate the predicted intermediate trait from it.</p>
+<div id="wtccc" class="section level2">
+<h2><span class="header-section-number">2.1</span> WTCCC</h2>
+<p><a href="https://www.nature.com/articles/nature05911">WTCCC (2009)</a> has 7 complex diseases:</p>
+<ol style="list-style-type: decimal">
+<li>bipolar disorder (BD)</li>
+<li>coronary artery disease (CAD)</li>
+<li>Crohn’s disease (CD)</li>
+<li>hypertension (HT)</li>
+<li>rheumatoid arthritis (RA)</li>
+<li>type 1 diabetes (T1D)</li>
+<li>type 2 diabetes (T2D)</li>
+</ol>
+<p>2000 cases each and 3000 shared controls (european ancestry). Controls contains two groups, 1500 from 1958 British Birth Cohort (58C) and 1500 from blood donors.</p>
+<p>Posterior mean genotype is available from Nick in BIMBAM format.</p>
+</div>
+<div id="autism" class="section level2">
+<h2><span class="header-section-number">2.2</span> Autism</h2>
+<p>TODO</p>
+</div>
+</div>
+<div id="gwas-for-prs-validation" class="section level1">
+<h1><span class="header-section-number">3</span> GWAS for PRS Validation</h1>
+<p>Here, we focus on WTCCC phenotypes.</p>
+<div id="type-2-diabetes" class="section level2">
+<h2><span class="header-section-number">3.1</span> Type 2 Diabetes</h2>
+<ul>
+<li><a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/MorrisAP_22885922_GCST005047">Data, DIAGRAMv3.2016MAY31</a></li>
+<li><a href="https://www-nature-com.proxy.uchicago.edu/articles/ng.2383">Paper, DIAGRAMv3</a></li>
+<li><strong>ATTENTION: WTCCC is included</strong></li>
+<li>Meta-data</li>
+</ul>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="11%" />
+<col width="14%" />
+<col width="13%" />
+<col width="16%" />
+<col width="18%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">id</th>
+<th align="center">phenotype</th>
+<th align="center">num.of.traits</th>
+<th align="center">sample.size</th>
+<th align="center">num.of.variants</th>
+<th align="center">heritability.mean</th>
+<th align="center">ancestry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">t2d</td>
+<td align="center">1</td>
+<td align="center">150000</td>
+<td align="center">127903</td>
+<td align="center">30%-70%</td>
+<td align="center">european + Pakistani</td>
+</tr>
+</tbody>
+</table>
+<p>The sample information is <a href="https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ng.2383-S1-table-s1.pdf">here</a> (Table S1)</p>
+</div>
+<div id="crohns-disease" class="section level2">
+<h2><span class="header-section-number">3.2</span> Crohn’s Disease</h2>
+<ul>
+<li><a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/deLangeKM_28067908_GCST004132">Data</a></li>
+<li><a href="https://www.nature.com/articles/ng.3760">Paper, Crohn’s disease</a></li>
+<li>Meta-data</li>
+</ul>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="11%" />
+<col width="14%" />
+<col width="13%" />
+<col width="16%" />
+<col width="18%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">id</th>
+<th align="center">phenotype</th>
+<th align="center">num.of.traits</th>
+<th align="center">sample.size</th>
+<th align="center">num.of.variants</th>
+<th align="center">heritability.mean</th>
+<th align="center">ancestry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">t2d</td>
+<td align="center">1</td>
+<td align="center">150000</td>
+<td align="center">127903</td>
+<td align="center">30%-70%</td>
+<td align="center">european + Pakistani</td>
+</tr>
+</tbody>
+</table>
+<p>The sample information is as follow (Table S1).</p>
+<pre class="r"><code>data &lt;- read.csv(&#39;../external-data/ng.3760-S2-table-s1.csv&#39;)
+kable(data, &#39;html&#39;) %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(width = &#39;1000px&#39;, height = &#39;500px&#39;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:500px; overflow-x: scroll; width:1000px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Study
+</th>
+<th style="text-align:left;">
+Data
+</th>
+<th style="text-align:left;">
+Crohn.s.disease..CD.
+</th>
+<th style="text-align:left;">
+X
+</th>
+<th style="text-align:left;">
+X.1
+</th>
+<th style="text-align:left;">
+Ulcerative.colitis..UC.
+</th>
+<th style="text-align:left;">
+X.2
+</th>
+<th style="text-align:left;">
+X.3
+</th>
+<th style="text-align:left;">
+Inflammatory.bowel.disease..IBD.
+</th>
+<th style="text-align:left;">
+X.4
+</th>
+<th style="text-align:left;">
+X.5
+</th>
+<th style="text-align:left;">
+Controls
+</th>
+<th style="text-align:left;">
+X.6
+</th>
+<th style="text-align:left;">
+X.7
+</th>
+<th style="text-align:left;">
+Grand.Total
+</th>
+<th style="text-align:left;">
+X.8
+</th>
+<th style="text-align:left;">
+X.9
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+QC+
+</td>
+<td style="text-align:left;">
+Non-overlap
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+QC+
+</td>
+<td style="text-align:left;">
+Non-overlap
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+QC+
+</td>
+<td style="text-align:left;">
+Non-overlap
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+QC+
+</td>
+<td style="text-align:left;">
+Non-overlap
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+QC+
+</td>
+<td style="text-align:left;">
+Non-overlap
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UK low coverage whole genome sequencing IBD study
+</td>
+<td style="text-align:left;">
+Samples
+</td>
+<td style="text-align:left;">
+2,697
+</td>
+<td style="text-align:left;">
+2513
+</td>
+<td style="text-align:left;">
+1974
+</td>
+<td style="text-align:left;">
+1817
+</td>
+<td style="text-align:left;">
+1767
+</td>
+<td style="text-align:left;">
+1326
+</td>
+<td style="text-align:left;">
+4514
+</td>
+<td style="text-align:left;">
+4280
+</td>
+<td style="text-align:left;">
+3300
+</td>
+<td style="text-align:left;">
+3910
+</td>
+<td style="text-align:left;">
+3652
+</td>
+<td style="text-align:left;">
+3650
+</td>
+<td style="text-align:left;">
+8424
+</td>
+<td style="text-align:left;">
+7932
+</td>
+<td style="text-align:left;">
+6950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Sites
+</td>
+<td style="text-align:left;">
+95,140,340
+</td>
+<td style="text-align:left;">
+13,272,215
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+95,140,340
+</td>
+<td style="text-align:left;">
+13,219,710
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+95,140,340
+</td>
+<td style="text-align:left;">
+13,211,989
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+95,140,340
+</td>
+<td style="text-align:left;">
+13,211,989
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+95,140,340
+</td>
+<td style="text-align:left;">
+13,211,989
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UK HumanCoreExome genotyped IBD study
+</td>
+<td style="text-align:left;">
+Samples
+</td>
+<td style="text-align:left;">
+5695
+</td>
+<td style="text-align:left;">
+4474
+</td>
+<td style="text-align:left;">
+4264
+</td>
+<td style="text-align:left;">
+5299
+</td>
+<td style="text-align:left;">
+4173
+</td>
+<td style="text-align:left;">
+4072
+</td>
+<td style="text-align:left;">
+11758
+</td>
+<td style="text-align:left;">
+9239
+</td>
+<td style="text-align:left;">
+8860
+</td>
+<td style="text-align:left;">
+10484
+</td>
+<td style="text-align:left;">
+9500
+</td>
+<td style="text-align:left;">
+9495
+</td>
+<td style="text-align:left;">
+22242
+</td>
+<td style="text-align:left;">
+18739
+</td>
+<td style="text-align:left;">
+18355
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Genotyped sites
+</td>
+<td style="text-align:left;">
+535434
+</td>
+<td style="text-align:left;">
+296203
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+535434
+</td>
+<td style="text-align:left;">
+296203
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+535434
+</td>
+<td style="text-align:left;">
+296203
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+535434
+</td>
+<td style="text-align:left;">
+296203
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+535434
+</td>
+<td style="text-align:left;">
+296203
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Imputed sites
+</td>
+<td style="text-align:left;">
+109,485,955
+</td>
+<td style="text-align:left;">
+18,956,986
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+109,485,955
+</td>
+<td style="text-align:left;">
+18,940,631
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+109,485,955
+</td>
+<td style="text-align:left;">
+18,954,471
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+109,485,955
+</td>
+<td style="text-align:left;">
+18,954,471
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+109,485,955
+</td>
+<td style="text-align:left;">
+18,954,471
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IIBDGC genotyped CD study (summary statistics)
+</td>
+<td style="text-align:left;">
+Samples
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+5956
+</td>
+<td style="text-align:left;">
+5956
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+14927
+</td>
+<td style="text-align:left;">
+14927
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+20883
+</td>
+<td style="text-align:left;">
+20883
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Sites
+</td>
+<td style="text-align:left;">
+12,276,506
+</td>
+<td style="text-align:left;">
+12,036,635
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,276,506
+</td>
+<td style="text-align:left;">
+12,036,635
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,276,506
+</td>
+<td style="text-align:left;">
+12,036,635
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IIBDGC genotyped UC study (summary statistics)
+</td>
+<td style="text-align:left;">
+Samples
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+6968
+</td>
+<td style="text-align:left;">
+6968
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+20464
+</td>
+<td style="text-align:left;">
+20464
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+27432
+</td>
+<td style="text-align:left;">
+27432
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Sites
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,255,263
+</td>
+<td style="text-align:left;">
+12,055,356
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,255,263
+</td>
+<td style="text-align:left;">
+12,055,356
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,255,263
+</td>
+<td style="text-align:left;">
+12,055,356
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IIBDGC genotyped IBD study (summary statistics)
+</td>
+<td style="text-align:left;">
+Samples
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12882
+</td>
+<td style="text-align:left;">
+12882
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+21770
+</td>
+<td style="text-align:left;">
+21770
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+34652
+</td>
+<td style="text-align:left;">
+34652
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Sites
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,716,150
+</td>
+<td style="text-align:left;">
+12,484,467
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,716,150
+</td>
+<td style="text-align:left;">
+12,484,467
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12,716,150
+</td>
+<td style="text-align:left;">
+12,484,467
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Combined meta-analysis (CD | UC | IBD)
+</td>
+<td style="text-align:left;">
+Samples
+</td>
+<td style="text-align:left;">
+12194
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+12366
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+25042
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+28072 | 33609 | 34915
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+40266 | 45975 | 59957
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Sites
+</td>
+<td style="text-align:left;">
+20,765,806
+</td>
+<td style="text-align:left;">
+9,560,910
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+20,764,549
+</td>
+<td style="text-align:left;">
+9,578,670
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+20,936,273
+</td>
+<td style="text-align:left;">
+9,725,440
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+9,560,910 | 9,578,670 | 9,725,440
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+9,560,910 | 9,578,670 | 9,725,440
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 
 
 

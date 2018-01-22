@@ -33,7 +33,6 @@ data.inter <- rbind(data.inter, data.inter.blood)
 pander(data.inter.blood)
 ```
 
-
 The phenotype information is as follow (Table S1)
 ```{r, echo=FALSE}
 library(dplyr)
@@ -88,4 +87,78 @@ Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversi
 
 ```{r, echo=FALSE}
 pander(data.inter)
+```
+
+# Disease Phenotypes
+
+The individual level data is needed here since we need to calculate the predicted intermediate trait from it.
+
+## WTCCC
+
+[WTCCC (2009)](https://www.nature.com/articles/nature05911) has 7 complex diseases: 
+
+1. bipolar disorder (BD)
+2. coronary artery disease (CAD)
+3. Crohn’s disease (CD)
+4. hypertension (HT)
+5. rheumatoid arthritis (RA)
+6. type 1 diabetes (T1D)
+7. type 2 diabetes (T2D)
+
+2000 cases each and 3000 shared controls (european ancestry). Controls contains two groups, 1500 from 1958 British Birth Cohort (58C) and 1500 from blood donors.
+
+Posterior mean genotype is available from Nick in BIMBAM format.
+
+## Autism
+
+TODO
+
+# GWAS for PRS Validation
+
+Here, we focus on WTCCC phenotypes.
+
+## Type 2 Diabetes
+
+```{r, echo=FALSE}
+id.counter <- 1
+data.valid <- data.frame()
+data.valid.t2d <- genDataLine(id = c(id.counter), phenotype = c('t2d'), num.of.traits = c(1), sample.size = c(150000), num.of.variants = c(127903), heritability.mean = c('30%-70%'), ancestry = c('european + Pakistani'))
+id.counter <- id.counter + 1
+data.valid <- rbind(data.valid, data.valid.t2d)
+```
+
+* [Data, DIAGRAMv3.2016MAY31](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/MorrisAP_22885922_GCST005047)
+* [Paper, DIAGRAMv3](https://www-nature-com.proxy.uchicago.edu/articles/ng.2383)
+* **ATTENTION: WTCCC is included**
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.valid.t2d)
+```
+
+The sample information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ng.2383-S1-table-s1.pdf) (Table S1)
+
+## Crohn's Disease
+
+```{r, echo=FALSE}
+data.valid.cd <- genDataLine(id = c(id.counter), phenotype = c('crohn\'s disease'), num.of.traits = c(1), sample.size = c(12000), num.of.variants = c(9.5e6), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.valid <- rbind(data.valid, data.valid.cd)
+```
+
+* [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/deLangeKM_28067908_GCST004132)
+* [Paper, Crohn's disease](https://www.nature.com/articles/ng.3760)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.valid.t2d)
+```
+
+The sample information is as follow (Table S1).
+
+```{r}
+data <- read.csv('../external-data/ng.3760-S2-table-s1.csv')
+kable(data, 'html') %>%
+  kable_styling() %>%
+  scroll_box(width = '1000px', height = '500px')
 ```
