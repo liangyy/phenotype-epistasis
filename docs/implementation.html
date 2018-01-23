@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -304,7 +306,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Implementation</h1>
-<h4 class="date"><em>22 January, 2018</em></h4>
+<h4 class="date"><em>23 January, 2018</em></h4>
 
 </div>
 
@@ -315,6 +317,28 @@ div.tocify {
 <div id="prepare-x_t" class="section level2">
 <h2><span class="header-section-number">1.1</span> Prepare <span class="math inline">\(X_T\)</span></h2>
 <p>Both <code>PRSice</code> and <code>LDpred</code> take plink binary, so <span class="math inline">\(X_T\)</span> should be converted to plink binary format. It can be obtained by <a href="https://vcru.wisc.edu/simonlab/bioinformatics/programs/fcgene/fcgene-1.0.7.pdf"><code>fcgene</code> chapter 9</a>.</p>
+<blockquote>
+<p>Side notes: It turns out there are several difficulties to use <code>fcgene</code>:</p>
+<ol style="list-style-type: decimal">
+<li><code>fcgene</code> can only take genotype distribution file instead of mean genotype file. One way to work around is to generate a “fake” genotype distribution file. Namely, genotype distribution is set to one-hot vector where only the genotype that is closest to the mean genotype is assigned to 1;</li>
+<li><code>fcgene</code> flips the minor and major alleles. So, to work around, we need to flip the order of allele in genotype distribution file (label it as <code>genotype-dist-flip</code>). Note that only the order in genotype file matters and SNP info file does not;</li>
+<li><code>fcgene</code> takes an information file for SNPs with MAF, which is not available but since it is not included in the output we can add a fake MAF (say 0.5).</li>
+</ol>
+</blockquote>
+<pre><code># Pseudo-code for this task
+
+## comment 1 &amp; 2
+$ mean2dist_genotype --input test.genotype-mean.txt --output test.genotype-dist-flip.txt
+
+## comment 3
+$ gen_snpinfo --input test.pos --output test.bimbam.snpinfo 
+
+## run fcgene
+$ fcgene --wgd test.genotype-dist-flip.txt --pos test.bimbam.snpinfo --oformat plink-bed --out test.bplink
+
+## outcome files
+$ ls
+test.bplink.bed test.bplink.bim test.bplink.fam</code></pre>
 </div>
 <div id="prepare-beta_i" class="section level2">
 <h2><span class="header-section-number">1.2</span> Prepare <span class="math inline">\(\beta_I\)</span></h2>

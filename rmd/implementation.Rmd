@@ -12,6 +12,29 @@ Current available $f: (\beta_I, X_T) \rightarrow \hat{Y}_I$ are `PRSice` and `LD
 
 Both `PRSice` and `LDpred` take plink binary, so $X_T$ should be converted to plink binary format. It can be obtained by [`fcgene` chapter 9](https://vcru.wisc.edu/simonlab/bioinformatics/programs/fcgene/fcgene-1.0.7.pdf).
 
+> Side notes: It turns out there are several difficulties to use `fcgene`:
+>
+> 1. `fcgene` can only take genotype distribution file instead of mean genotype file. One way to work around is to generate a "fake" genotype distribution file. Namely, genotype distribution is set to one-hot vector where only the genotype that is closest to the mean genotype is assigned to 1;
+> 2. `fcgene` flips the minor and major alleles. So, to work around, we need to flip the order of allele in genotype distribution file (label it as `genotype-dist-flip`). Note that only the order in genotype file matters and SNP info file does not;
+> 3. `fcgene` takes an information file for SNPs with MAF, which is not available but since it is not included in the output we can add a fake MAF (say 0.5).
+
+```
+# Pseudo-code for this task
+
+## comment 1 & 2
+$ mean2dist_genotype --input test.genotype-mean.txt --output test.genotype-dist-flip.txt
+
+## comment 3
+$ gen_snpinfo --input test.pos --output test.bimbam.snpinfo 
+
+## run fcgene
+$ fcgene --wgd test.genotype-dist-flip.txt --pos test.bimbam.snpinfo --oformat plink-bed --out test.bplink
+
+## outcome files
+$ ls
+test.bplink.bed test.bplink.bim test.bplink.fam
+```
+
 ## Prepare $\beta_I$
 
 The following format would work well for both methods.
