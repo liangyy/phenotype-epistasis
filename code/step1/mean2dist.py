@@ -17,11 +17,14 @@ geno_info = geno.iloc[:, :3]
 geno_mean = geno.iloc[:, 3:]
 (ns, ni) = geno_mean.shape
 geno_dist = pd.DataFrame()
+distance = 0
 for i in range(ni): # iter over every individual
     geno_mean_i = round(geno_mean.iloc[:, i])
-    geno_dist_i = pd.DataFrame(np.zeros(ns, 2))
+    distance += sum(abs(geno_mean_i - geno_mean.iloc[:, i]))
+    geno_dist_i = pd.DataFrame(np.zeros((ns, 2)))
     geno_dist_i.ix[geno_mean_i == 0, 0] = 1
     geno_dist_i.ix[geno_mean_i == 1, 1] = 1
     geno_dist = pd.concat([geno_dist, geno_dist_i], axis = 1)
 geno_out = pd.concat([geno_info, geno_dist], axis = 1)
-geno_out.write_csv(args.output, sep = ' ', header = False, index = False, compression = 'gzip')
+print('average distance between posterior mean genotype and integerized genotype is {avg_distance}'.format(avg_distance = distance / ns / ni))
+geno_out.to_csv(args.output, sep = ' ', header = False, index = False, compression = 'gzip')
