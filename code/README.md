@@ -1,6 +1,6 @@
 # Implementation of data analysis pipeline proposed in this repository
 
-## Step 1: $\beta_I, X_T$ \rightarrow \hat{Y}_I$
+## Step 1: $\beta_I, X_T \rightarrow \hat{Y}_I$
 
 Pipeline is glued by snakemake.
 
