@@ -20,7 +20,9 @@ snp.info.out <- paste0(opt$out, '.snp.pos')
 snp.names <- paste0('snp', 1 : opt$nsnps)
 snp.chr <- sample(22, opt$nsnps, replace = T)
 snp.pos <- round(runif(opt$nsnps) * 1e6)
-snp <- data.frame(snp.names, snp.chr, snp.pos)
+ordered.snp <- data.frame(x1 = snp.chr, x2 = snp.pos)
+ordered.snp <- ordered.snp[order(ordered.snp[, 1], ordered.snp[, 2]), ] 
+snp <- data.frame(snp.names, ordered.snp$x1, ordered.snp$x2)
 bases <- c('A', 'T', 'C', 'G')
 allele.set <- c()
 for(i in bases) {
@@ -37,7 +39,7 @@ genGeno <- function(ni, snp.name, allele.set) {
   out <- out - noise * (out == 2)
   out <- out + ((runif(ni) > 0.5) - 0.5) * 2 * noise * (out == 1)
   snp.name <- as.character(snp.name)
-  return(c(snp.name, allele, round(out, digits = 3)))
+  return(c(snp.name, allele, format(round(out, digits = 3), nsmall = 3)))
 }
 geno <- t(sapply(snp[,1], genGeno, ni=opt$nindividuals, allele.set=allele.set))
 write.table(geno, file = geno.mean.out, quote = F, col.names = F, row.names = F)
