@@ -1,9 +1,9 @@
 import argparse
 parser = argparse.ArgumentParser(prog='mean2dist.py', description='''
-    Take a genotype mean file in BIMBAM format and output an imputed genotype distribution file where the posterior probability is either 0 or 1 and the closest genotype is set to one and others are set to zero.
+    Take a genotype mean file in BIMBAM format and output an imputed genotype distribution file where the posterior probability is either 0 or 1 and the closest genotype is set to one and others are set to zero. Also the alternative allele and reference allele are fliped.
 
-    Note that genotype dist format is
-    [snp-id] [alt-allele] [ref-allele] [posterior-prob-of-ref-ref] [posterior-prob-of-ref-alt]
+    Note that fliped genotype dist format is
+    [snp-id] [ref-allele] [alt-allele] [posterior-prob-of-ref-ref] [posterior-prob-of-ref-alt]
 ''')
 parser.add_argument('--input', help = 'input genotype mean file in GZ format')
 parser.add_argument('--output', help = 'file name of output genotype distribution file in GZ format')
@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 
 geno = pd.read_table(args.input, sep = ' ', header = None, compression = 'gzip')
-geno_info = geno.iloc[:, :3]
+geno_info = geno.iloc[:, (0, 2, 1)]
 geno_mean = geno.iloc[:, 3:]
 (ns, ni) = geno_mean.shape
 geno_dist = pd.DataFrame()
