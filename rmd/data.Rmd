@@ -38,7 +38,7 @@ The phenotype information is as follow (Table S1)
 library(dplyr)
 library(kableExtra)
 library(knitr)
-data <- read.csv('../external-data/10.1016.j.cell.2016.10.042-mmc1.csv')#rmd/external-data/10.1016.j.cell.2016.10.042-mmc1.csv')
+data <- read.csv('../docs-data/10.1016.j.cell.2016.10.042-mmc1.csv')#rmd/docs-data/10.1016.j.cell.2016.10.042-mmc1.csv')
 kable(data, 'html') %>%
   kable_styling() %>%
   scroll_box(width = '1000px', height = '500px')
@@ -60,7 +60,7 @@ data.inter <- rbind(data.inter, data.inter.metabolite)
 pander(data.inter.metabolite)
 ```
 
-The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ncomms11122-s1-table-s1.pdf) (Table S1)
+The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/docs-data/ncomms11122-s1-table-s1.pdf) (Table S1)
 
 ## Personality
 
@@ -79,7 +79,7 @@ data.inter <- rbind(data.inter, data.inter.personality)
 pander(data.inter.personality)
 ```
 
-The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ng.3736-S1-table-s2.pdf) (Table S2)
+The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/docs-data/ng.3736-S1-table-s2.pdf) (Table S2)
 
 Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
 
@@ -95,7 +95,7 @@ The individual level data is needed here since we need to calculate the predicte
 
 ## WTCCC
 
-[WTCCC (2009)](https://www.nature.com/articles/nature05911) has 7 complex diseases: 
+[WTCCC (2009)](https://www.nature.com/articles/nature05911) has 7 complex diseases:
 
 1. bipolar disorder (BD)
 2. coronary artery disease (CAD)
@@ -136,7 +136,7 @@ data.valid <- rbind(data.valid, data.valid.t2d)
 pander(data.valid.t2d)
 ```
 
-The sample information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/external-data/ng.2383-S1-table-s1.pdf) (Table S1)
+The sample information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/docs-data/ng.2383-S1-table-s1.pdf) (Table S1)
 
 ## Crohn's Disease
 
@@ -157,7 +157,7 @@ pander(data.valid.cd)
 The sample information is as follow (Table S1).
 
 ```{r}
-data <- read.csv('../external-data/ng.3760-S2-table-s1.csv')
+data <- read.csv('../docs-data/ng.3760-S2-table-s1.csv')
 kable(data, 'html') %>%
   kable_styling() %>%
   scroll_box(width = '1000px', height = '500px')
