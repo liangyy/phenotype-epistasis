@@ -8,6 +8,7 @@ usage="$(basename "$0") [-h] [-i snp-info] [-g genotype-mean (no flip)] [-o outp
 where:
     -h  show this help text
     -i  input SNP information file in GZ format
+    -g  BIMBAM genotype mean file (no filp) in GZ format
     -o  output file name in GZ format"
 while getopts ':ho:i:g:' option; do
   case "$option" in
