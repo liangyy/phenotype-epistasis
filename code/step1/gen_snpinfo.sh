@@ -28,4 +28,6 @@ while getopts ':ho:i:' option; do
        ;;
   esac
 done
-zcat $input | awk -F"\t" -v OFS="\t" '{print $1,"X","X",0.1,$2,$3}' | gzip > $output
+
+zcat $input | awk -F"\t" -v OFS="\t" '{print $1,"X","X",0.1,$2,$3}' > $output.temp
+echo -e 'rs\tA\tB\taf\tchr\tpos' | cat - $output.temp | gzip > $output && rm $output.temp
