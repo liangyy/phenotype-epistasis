@@ -1,0 +1,12 @@
+disease1:
+  prepare_XT:
+    geno-mean:
+      name-format: '../../data/simulated/disease1/test1.genotype-mean.{chr}.txt.gz'
+    snp-list:
+      name-format: '../../data/simulated/disease1/test1.snp-list.{chr}.pos.gz'
+    chr-list: 'chr,1:22'
+intermediate1:
+  prepare_betaI:
+    beta-ss: '../../data/simulated/intermediate1/test1.txt.gz'
+    chr-pos-ref-alt-reffrq-info-rs-pval-effalt: '1,2,3,4,5,6,7,8,9'
+  nsamples: 10000

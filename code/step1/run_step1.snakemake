@@ -1,0 +1,21 @@
+# this module run ldpred in P+T or LDpred mode
+
+include: 'prepare_XT.snakemake'
+include: 'prepare_betaI.snakemake'
+
+rule p_and_t:
+    input:
+        do_p_and_t(config)
+rule ldpred:
+    input:
+        do_ldpred(config)
+
+rule gen_coordinate:
+    input:
+        beta_ss = 'output-prepare_betaI/{intermediate}/beta-ss.txt.gz',
+        geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.bed',
+        geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.bim',
+        geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.fam'
+    params:
+        geno_plink = 'output-prepare_XT/{disease}/plink.{chr}'
+        nsamples = lambda wildcards: config[wildcards.intermediate]['nsamples']

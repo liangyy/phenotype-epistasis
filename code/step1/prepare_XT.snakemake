@@ -1,0 +1,29 @@
+# this module takes genotype-mean-[chr] and snp-list-[chr] as input and output plink-[chr] files in PLINK format which is ready for LDpred
+
+rule mean2dist:
+    input:
+        lambda wildcards: config[wildcards.disease]['prepare_XT']['geno-mean']['name-format']
+    output:
+        'output-prepare_XT/{disease}/genotype-dist-flip.{chr}.txt.gz'
+    shell:
+        'python scripts/mean2dist.py --input {input[0]} --output {output[0]}'
+
+rule gen_snpinfo:
+    input:
+        lambda wildcards: config[wildcards.disease]['prepare_XT']['snp-list']['name-format'],
+        lambda wildcards: config[wildcards.disease]['prepare_XT']['geno-mean']['name-format']
+    output:
+        'output-prepare_XT/{disease}/bimbam-snpinfo-flip.{chr}.txt.gz'
+    shell:
+        'bash scripts/gen_snpinfo.sh -i {input[0]} -g {input[1]} -o {output[0]}'
+
+rule fcgene:
+    input:
+        'output-prepare_XT/{disease}/genotype-dist-flip.{chr}.txt.gz',
+        'output-prepare_XT/{disease}/bimbam-snpinfo-flip.{chr}.txt.gz'
+    output:
+        'output-prepare_XT/{disease}/plink.{chr}.bed',
+        'output-prepare_XT/{disease}/plink.{chr}.bim',
+        'output-prepare_XT/{disease}/plink.{chr}.fam'
+    shell:
+        'fcgene --wgd {input[0]} --pos {input[1]} --oformat plink-bed --out output-prepare_XT/{disease}/plink.{chr}'
