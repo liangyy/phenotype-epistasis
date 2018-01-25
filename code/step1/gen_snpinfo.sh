@@ -31,6 +31,5 @@ while getopts ':ho:i:g:' option; do
        ;;
   esac
 done
-echo $geno,$output,$input
 awk 'NR==FNR{a[$1]=$3"\t"$2;next}{print $1,a[$1],0.1,$2,$3}' OFS="\t" FS=' ' <(zcat $geno) FS='\t' <(zcat $input) > $output.temp
 echo -e 'rs\tA\tB\taf\tchr\tpos' | cat - $output.temp | gzip > $output && rm $output.temp
