@@ -19,3 +19,5 @@ rule gen_coordinate:
     params:
         geno_plink = 'output-prepare_XT/{disease}/plink.{chr}'
         nsamples = lambda wildcards: config[wildcards.intermediate]['nsamples']
+    output:
+        ''
