@@ -1,8 +1,11 @@
 library(optparse)
 
-help_text = 'This script generate a collection ([nchr] pairs) of paired two files: 1. BIMBAM mean genotype file, 2. SNP information file. The SNP info file takes the followling format:
-  [snp-id]\t[position]\t[chr-num]
-Note that 10% of mean genotype will be non-integer'
+help_text = 'This script generate a collection ([nchr] pairs) of paired two files:
+  1. BIMBAM mean genotype file,
+  2. SNP information file. The SNP info file takes the followling format:
+          [snp-id]\t[position]\t[chr-num]
+Note that 10% of mean genotype will be non-integer.
+Also, no LD is imposed in the simulated genotype.'
 
 option_list = list(
   make_option(c('-c', '--nchr'), type="numeric", default=22,
@@ -11,10 +14,10 @@ option_list = list(
               help="the number of snps [default = %default]", metavar="character"),
   make_option(c("-i", "--nindividuals"), type="numeric", default=200,
               help="the number of individuals [default = %default]", metavar="character"),
-  make_option(c('-o', '--out'), type='character', default='genFakeData', help='the prefix of outputs [default = %default]', metavar='character')
+  make_option(c('-o', '--out'), type='character', default='genFakeGeno', help='the prefix of outputs [default = %default]', metavar='character')
 );
 
-opt_parser = OptionParser(option_list=option_list);
+opt_parser = OptionParser(option_list=option_list, usage=help_text);
 opt = parse_args(opt_parser);
 
 genGeno <- function(ni, snp.name, allele.set) {
@@ -29,8 +32,8 @@ genGeno <- function(ni, snp.name, allele.set) {
 }
 
 for(c in 1 : opt$nchr) {
-  geno.mean.out <- paste0(opt$out, '.genotype-mean', 'chr', c, '.txt.gz')
-  snp.info.out <- paste0(opt$out, '.snp-list', 'chr', c, '.gz')
+  geno.mean.out <- paste0(opt$out, '.genotype-mean.', 'chr', c, '.txt.gz')
+  snp.info.out <- paste0(opt$out, '.snp-list.', 'chr', c, '.gz')
   snp.names <- paste0('snp', 1 : opt$nsnp)
   snp.chr <- rep(c, opt$nsnp) # sample(22, opt$nsnp, replace = T)
   snp.pos <- round(runif(opt$nsnp) * 1e6)
