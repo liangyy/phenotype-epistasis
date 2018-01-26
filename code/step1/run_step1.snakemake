@@ -34,7 +34,7 @@ rule gen_coordinate:
     shell:
         'python {ldpred_dir}/coord_genotypes.py \
             --gf {params.plink} \
-            --ssf {input.beta_ss} \
+            --ssf <(zcat {input.beta_ss}) \
             --N {params.nsamples} \
             --out {output[0]}'
 

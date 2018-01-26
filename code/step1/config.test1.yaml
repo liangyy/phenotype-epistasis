@@ -8,6 +8,7 @@ disease1:
 intermediate1:
   prepare_betaI:
     beta-ss: '../../data/simulated/intermediate1/test1.txt.gz'
+    header: 0  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt: '1,2,3,4,5,6,7,8,9'
   nsamples: 10000
 ldpred-dir: '../../../ldpred'

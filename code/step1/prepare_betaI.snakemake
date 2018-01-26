@@ -5,8 +5,13 @@ rule format_beta:
     input:
         lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['beta-ss']
     params:
-        lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['chr-pos-ref-alt-reffrq-info-rs-pval-effalt']
+        lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['chr-pos-ref-alt-reffrq-info-rs-pval-effalt'],
+        lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['header']
     output:
         'output-prepare_betaI/{intermediate}/beta-ss.txt.gz'
     shell:
-        'python scripts/format_beta.py --input {input[0]} --col_index {params[0]} --output {output[0]}'
+        'python scripts/format_beta.py \
+          --input {input[0]} \
+          --col_index {params[0]} \
+          --output {output[0]} \
+          --header {params[1]}'
