@@ -3,12 +3,22 @@
 include: 'prepare_XT.snakemake'
 include: 'prepare_betaI.snakemake'
 
+def get_ldpred_outputs(prefix, fs):
+    fs = fs.split(',')
+    fs = [ float(f) for f in fs ]
+    out = []
+    for f in fs:
+        out.append('%s_LDpred_p%0.4e.txt' % (prefix, f))
+    return out
+
 rule p_and_t:
     input:
         do_p_and_t(config)
 rule ldpred:
     input:
         do_ldpred(config)
+
+ldpred_dir = config['ldpred-dir']
 
 rule gen_coordinate:
     input:
@@ -20,4 +30,41 @@ rule gen_coordinate:
         geno_plink = 'output-prepare_XT/{disease}/plink.{chr}'
         nsamples = lambda wildcards: config[wildcards.intermediate]['nsamples']
     output:
-        ''
+        'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5'
+    shell:
+        'python {ldpred_dir}/coord_genotypes.py \
+            --gf {params.plink} \
+            --ssf {input.beta_ss} \
+            --N {params.nsamples} \
+            --out {output[0]}'
+
+rule get_ld_radius:
+    input:
+        'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5'
+    params:
+        config['ldpred']['num-SNPs-per-xMb']
+    output:
+        'output-run_step1/{intermediate}__{disease}/ld-radius.{chr}.yaml'
+    shell:
+        'python scripts/get_ld_radius.py \
+            --input {input[0]} \
+            --per_x_mb {params[0]} \
+            --output {output[0]}'
+
+rule run_ldpred:
+    input:
+        'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5',
+        'output-run_step1/{intermediate}__{disease}/ld-radius.{chr}.yaml'
+    params:
+        config['ldpred']['causal-fraction'],
+        'output-run_step1/{intermediate}__{disease}/ldpred.{chr}',
+        lambda wildcards: config[wildcards.intermediate]['nsamples']
+    output:
+        get_ldpred_outputs('output-run_step1/{intermediate}__{disease}/ldpred.{chr}', config['ldpred']['causal-fraction'])
+    shell:
+        'python scripts/ldpred_wrapper.py --coord {input[0]} \
+            --ld_radius {input[1]} \
+            --ldpred_dir {ldpred_dir} \
+            --causal_fraction {params[0]} \
+            --nsamples {params[2]} \
+            --out {params[1]}'
