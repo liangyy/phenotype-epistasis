@@ -1,0 +1,13 @@
+genotype:
+  out: 'genotest1'  # it should be unique for each genotype data set
+  nchr: 22
+  nindividual: 200
+  nsnp: 300
+beta:
+  out: 'betatest1'
+  sigma: 0.5
+  fraction: 0.1
+  heritability: 0.1
+  gwas_sample_size: 20000
+  nchr: 22
+  drop_rate: 0.2

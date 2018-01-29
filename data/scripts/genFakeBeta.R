@@ -75,7 +75,7 @@ snp.out.list <- data.frame(chr = snp.out.list$chr,
                           effalt = beta.tilde)
 
 # write to file
-out.filename <- paste0(opt$out, '.summary-statistic.', '.txt.gz')
+out.filename <- paste0(opt$out, '.summary-statistic', '.txt.gz')
 gz1 <- gzfile(out.filename, 'w')
 write.table(snp.out.list, gz1, sep = '\t', quote = F, col.names = F, row.names = F)
 close(gz1)

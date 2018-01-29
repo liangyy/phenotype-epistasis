@@ -1,0 +1,80 @@
+# This module generate a full collection of fake data which is ready for downstream pipeline
+
+def get_geno(config):
+    files1 = [ 'fake_data/genotype/{out_geno}.genotype-mean.chr{i}.txt.gz'.format(
+        i = i + 1,
+        out_geno = config['genotype']['out']) for i in range(config['genotype']['nchr']) ]
+    files2 = [ 'fake_data/genotype/{out_geno}.snp-list.chr{i}.gz'.format(
+        i = i + 1,
+        out_geno = config['genotype']['out']) for i in range(config['genotype']['nchr']) ]
+    return files1 + files2
+
+def get_beta(config):
+    o = 'fake_data/beta/{out_beta}-{out_geno}.summary-statistic.txt.gz'.format(out_beta = config['beta']['out'], out_geno = config['genotype']['out'])
+    return o
+
+# for debug
+# rule all_geno:
+#     input:
+#         get_geno(config)
+# rule all_beta:
+#     input:
+#         get_beta(config)
+
+rule all:
+    input:
+        get_geno(config),
+        get_beta(config)
+
+rule gen_geno_mean:
+    params:
+        out_geno = config['genotype']['out'],
+        nchr = config['genotype']['nchr'],
+        nsnp = config['genotype']['nsnp'],
+        nindividual = config['genotype']['nindividual']
+    output:
+        files = [ 'fake_data/genotype/{{out_geno}}.genotype-mean.chr{i}.txt.gz'.format(i = i + 1) for i in range(config['genotype']['nchr']) ],
+        files2 = [ 'fake_data/genotype/{{out_geno}}.snp-list.chr{i}.gz'.format(i = i + 1) for i in range(config['genotype']['nchr']) ]
+    shell:
+        'Rscript scripts/genFakeGeno.R \
+            -c {params.nchr} \
+            -s {params.nsnp} \
+            -i {params.nindividual} \
+            -o fake_data/genotype/{wildcards.out_geno}'
+
+rule format_snp_list:
+    input:
+        'fake_data/genotype/{out_geno}.snp-list.chr{i}.gz',
+        'fake_data/genotype/{out_geno}.genotype-mean.chr{i}.txt.gz'
+    output:
+        temp('fake_data/genotype/{out_geno}.snpinfo.chr{i}.gz')
+    shell:
+        'bash ../code/step1/scripts/gen_snpinfo.sh \
+            -i {input[0]} \
+            -g {input[1]} \
+            -o {output[0]}'
+
+rule gen_beta:
+    input:
+        files = [ 'fake_data/genotype/{{ref_snp_list_prefix}}.snpinfo.chr{i}.gz'.format(i = i + 1) for i in range(config['beta']['nchr']) ]
+    params:
+        sigma = config['beta']['sigma'],
+        fraction = config['beta']['fraction'],
+        heritability = config['beta']['heritability'],
+        gwas_sample_size = config['beta']['gwas_sample_size'],
+        ref_snp_list_prefix = config['genotype']['out'],
+        nchr = config['beta']['nchr'],
+        drop_rate = config['beta']['drop_rate'],
+        out_beta = config['beta']['out']
+    output:
+        'fake_data/beta/{out_beta}-{ref_snp_list_prefix}.summary-statistic.txt.gz'
+    shell:
+        'Rscript scripts/genFakeBeta.R \
+            -s {params.sigma} \
+            -f {params.fraction} \
+            -e {params.heritability} \
+            -n {params.gwas_sample_size} \
+            -r fake_data/genotype/{params.ref_snp_list_prefix}.snpinfo \
+            -c {params.nchr} \
+            -i {params.drop_rate} \
+            -o fake_data/beta/{wildcards.out_beta}-{wildcards.ref_snp_list_prefix}'
