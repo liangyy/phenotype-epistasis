@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 
 geno = pd.read_table(args.input, sep = ' ', header = None, compression = 'gzip')
-geno_info = geno.iloc[:, (0, 2, 1)]
+geno_info = geno.iloc[:, [0, 2, 1]]
 geno_mean = geno.iloc[:, 3:]
 (ns, ni) = geno_mean.shape
 geno_dist = pd.DataFrame()
