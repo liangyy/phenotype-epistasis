@@ -3,7 +3,11 @@ title: "Computation"
 # author: Yanyu Liang
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
-  
+
+$$
+\newcommand\logit{\text{logit}}  
+$$
+
 # Computing intermediate phenotype
 
 The predicted complex trait risk by GWAS summary statistic is used as intermediate genetic trait. LD pruning + p-value thresholding (P+T) is widely used but suffer from lack of effective SNPs. 
@@ -21,3 +25,52 @@ Note that LDpred also includes codes for P+T strategy.
 ## Validation
 
 The difficulty is that we don't have validation data sets to determine the hyper-parameters needed for the calculation of polygenic risk score. One strategy is to see if the order of PRS is stable across a range of hyper-parameters. Note that is can be benchmarked using disease phenotypes of which we have individual genotypes, *i.e.* WTCCC 7 diseases.
+
+# Testing interaction
+
+## Rationale
+
+The epistasis between genetic background and the given locus is defined as the situation where the contribution of genotype ($G_i$) to liability depends not only on the genotype itself but also on the genetic background which is measured by the genetic component of the selected intermediate phenotype ($I$). In particular, the following model is used
+\begin{align*}
+  \logit(\Pr(Y = 1|G_i, I, \alpha, \beta, \gamma)) &= \alpha + \mathbf{p}(I)^T \cdot G_i + \gamma I 
+\end{align*}
+, where $\mathbf{p}: I \rightarrow \beta$ which takes $I$ and maps to the effect size in terms of the contribution to log odds ratio. Note that the representation of $G_i$ can be vector or loading depends on how the genetics is specified (see [here](#scenarios)). $\gamma$ is the contribution of $I$ to liability which should be universal across all genotypes and all loci. $\alpha$ is the baseline liability of the trait which should also be share across loci.
+
+## Scenarios {#scenarios}
+
+The following four scenarios are considered (suppose a is risk allele):
+
+1. additive effect: 
+  \begin{align*}
+    G_i &= \begin{cases}
+      1 & \text{, if genotype is AA} \\
+      2 & \text{, if genotype is Aa} \\
+      3 & \text{, if genotype is aa} 
+    \end{cases}
+  \end{align*}
+  , and the contribution of liability is $p(I) G_i$, specifically $p(I)$ is the baseline contribution function (the non-risk allele contribution).
+2. dominant(recessive) effect: 
+  \begin{align*}
+    G_i &= \begin{cases}
+      (1, 0)^T & \text{, if genotype is aa or Aa (aa)} \\
+      (0, 1)^T & \text{, if genotype is AA (AA or Aa)}
+    \end{cases}
+  \end{align*}
+  , and $p_i(I)$ is the corresponding contribution function of each cases.
+3. free effect:
+  \begin{align*}
+    G_i &= \begin{cases}
+      (1, 0, 0)^T & \text{, if genotype is aa} \\
+      (0, 1, 0)^T & \text{, if genotype is Aa} \\
+      (0, 0, 1)^T & \text{, if genotype is AA}
+    \end{cases}
+  \end{align*}
+  , namely every genotype has a specific contribution function.
+
+## Procedure
+
+1. determine the risk allele by vanilla GWAS
+2. estimate $\alpha$ and $\gamma$. Namely perform regression $Y \sim 1 + I$ with link function logistic and determine the positive direction of $I$ (the direction that decreases liability)
+3. estimate the parameters in $\mathbf{p}(I)$. Specifically, let $p_i$ as degree $n$ polynomial. In practice $n = 1, 2$
+4. test if the parameters of $p_i$ other than zero order are significantly different from zero
+5. identify loci with protective epistasis, namely the effect of risk allele goes down if the genetic background goes to the positive direction
