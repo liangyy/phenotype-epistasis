@@ -1,8 +1,24 @@
 # this module takes genotype-mean-[chr] and snp-list-[chr] as input and output plink-[chr] files in PLINK format which is ready for LDpred
 
+## for debug
+def get_all(config):
+    out = []
+    nchr_info = config[config['x']]['prepare_XT']['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        out.append('output-prepare_XT/{disease}/plink.{chr}.bed'.format(disease = config['x'], chr = nchr_name + str(i)))
+    return out
+
+rule all:
+    input:
+        get_all(config)
+
 rule mean2dist:
     input:
-        lambda wildcards: config[wildcards.disease]['prepare_XT']['geno-mean']['name-format']
+        lambda wildcards: config[wildcards.disease]['prepare_XT']['geno-mean']['name-format'].format(chr = wildcards.chr)
     output:
         'output-prepare_XT/{disease}/genotype-dist-flip.{chr}.txt.gz'
     shell:
@@ -10,8 +26,8 @@ rule mean2dist:
 
 rule gen_snpinfo:
     input:
-        lambda wildcards: config[wildcards.disease]['prepare_XT']['snp-list']['name-format'],
-        lambda wildcards: config[wildcards.disease]['prepare_XT']['geno-mean']['name-format']
+        lambda wildcards: config[wildcards.disease]['prepare_XT']['snp-list']['name-format'].format(chr = wildcards.chr),
+        lambda wildcards: config[wildcards.disease]['prepare_XT']['geno-mean']['name-format'].format(chr = wildcards.chr)
     output:
         'output-prepare_XT/{disease}/bimbam-snpinfo-flip.{chr}.txt.gz'
     shell:
@@ -26,4 +42,4 @@ rule fcgene:
         'output-prepare_XT/{disease}/plink.{chr}.bim',
         'output-prepare_XT/{disease}/plink.{chr}.fam'
     shell:
-        'fcgene --wgd {input[0]} --pos {input[1]} --oformat plink-bed --out output-prepare_XT/{disease}/plink.{chr}'
+        'fcgene --wgd {input[0]} --pos {input[1]} --oformat plink-bed --out output-prepare_XT/{wildcards.disease}/plink.{wildcards.chr}'
