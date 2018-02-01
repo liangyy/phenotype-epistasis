@@ -1,11 +1,5 @@
 # this module run ldpred in P+T or LDpred mode
 
-## pipeline output
-rule all:
-    input:
-        get_all(config)
-## pipeline output end
-
 include: 'prepare_XT.snakemake'
 include: 'prepare_betaI.snakemake'
 
@@ -17,12 +11,27 @@ def get_ldpred_outputs(prefix, fs):
         out.append('%s_LDpred_p%0.4e.txt' % (prefix, f))
     return out
 
-rule p_and_t:
+## pipeline output
+def get_all(config, mtd):
+    out = []
+    nchr_info = config[config['x']]['prepare_XT']['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        out += get_ldpred_outputs('output-run_step1/{intermediate}__{disease}/{method}.{chr}'.format(intermediate = config['y'], disease = config['x'], chr = nchr_name + str(i), method = mtd), config['ldpred']['causal-fraction'])
+    return out
+
+rule all_pt:
     input:
-        do_p_and_t(config)
-rule ldpred:
+        get_all(config, 'pt')
+rule all_ldpred:
     input:
-        do_ldpred(config)
+        get_all(config, 'ldpred')
+## pipeline output end
+
+
 
 ldpred_dir = config['ldpred-dir']
 
@@ -30,16 +39,16 @@ rule gen_coordinate:
     input:
         beta_ss = 'output-prepare_betaI/{intermediate}/beta-ss.txt.gz',
         geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.bed',
-        geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.bim',
-        geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.fam'
+        geno_plink2 = 'output-prepare_XT/{disease}/plink.{chr}.bim',
+        geno_plink3 = 'output-prepare_XT/{disease}/plink.{chr}.fam'
     params:
-        geno_plink = 'output-prepare_XT/{disease}/plink.{chr}'
+        geno_plink = 'output-prepare_XT/{disease}/plink.{chr}',
         nsamples = lambda wildcards: config[wildcards.intermediate]['nsamples']
     output:
         'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5'
     shell:
         'python {ldpred_dir}/coord_genotypes.py \
-            --gf {params.plink} \
+            --gf {params.geno_plink} \
             --ssf <(zcat {input.beta_ss}) \
             --N {params.nsamples} \
             --out {output[0]}'

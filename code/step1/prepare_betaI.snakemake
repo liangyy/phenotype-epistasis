@@ -2,7 +2,7 @@
 # and prepare the input file ready for downstream analysis
 
 ## for debug
-rule all:
+rule all_betaI:
     input:
         'output-prepare_betaI/{intermediate}/beta-ss.txt.gz'.format(intermediate = config['y'])
 ## debug end

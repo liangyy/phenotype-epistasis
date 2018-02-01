@@ -12,7 +12,7 @@ def get_all(config):
         out.append('output-prepare_XT/{disease}/plink.{chr}.bed'.format(disease = config['x'], chr = nchr_name + str(i)))
     return out
 
-rule all:
+rule all_XT:
     input:
         get_all(config)
 ## debug end
