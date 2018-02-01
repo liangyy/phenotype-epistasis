@@ -15,6 +15,7 @@ def get_all(config):
 rule all:
     input:
         get_all(config)
+## debug end
 
 rule mean2dist:
     input:

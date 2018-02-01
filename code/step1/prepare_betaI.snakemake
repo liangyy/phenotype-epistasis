@@ -1,6 +1,12 @@
 # this module takes a GWAS summary statistic of intermediate trait
 # and prepare the input file ready for downstream analysis
 
+## for debug
+rule all:
+    input:
+        'output-prepare_betaI/{intermediate}/beta-ss.txt.gz'.format(intermediate = config['y'])
+## debug end
+
 rule format_beta:
     input:
         lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['beta-ss']

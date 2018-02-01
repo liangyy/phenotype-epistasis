@@ -1,5 +1,11 @@
 # this module run ldpred in P+T or LDpred mode
 
+## pipeline output
+rule all:
+    input:
+        get_all(config)
+## pipeline output end
+
 include: 'prepare_XT.snakemake'
 include: 'prepare_betaI.snakemake'
 
