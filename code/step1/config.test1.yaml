@@ -13,7 +13,7 @@ intermediate1:
     header: 0  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt: '1,2,3,4,5,6,7,8,9'
   nsamples: 20000
-ldpred-dir: '../../../ldpred'
+ldpred-dir: '../../../ldpred/ldpred'
 ldpred:
   num-SNPs-per-xMb: 1
   causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
