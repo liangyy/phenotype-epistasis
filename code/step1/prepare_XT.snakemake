@@ -43,8 +43,10 @@ rule fcgene:
         'output-prepare_XT/{disease}/plink.{chr}.bim',
         'output-prepare_XT/{disease}/plink.{chr}.fam.temp'
     shell:
-        'fcgene --wgd {input[0]} --pos {input[1]} --oformat plink-bed --out output-prepare_XT/{wildcards.disease}/plink.{wildcards.chr}',
-        'mv output-prepare_XT/{disease}/plink.{chr}.fam output-prepare_XT/{disease}/plink.{chr}.fam.temp'
+        '''
+        fcgene --wgd {input[0]} --pos {input[1]} --oformat plink-bed --out output-prepare_XT/{wildcards.disease}/plink.{wildcards.chr}
+        mv output-prepare_XT/{wildcards.disease}/plink.{wildcards.chr}.fam output-prepare_XT/{wildcards.disease}/plink.{wildcards.chr}.fam.temp
+        '''
 
 rule post_process_fam:
     input:
@@ -52,6 +54,6 @@ rule post_process_fam:
     output:
         'output-prepare_XT/{disease}/plink.{chr}.fam'
     shell:
-        ''''
+        '''
         cat {input[0]} | awk '{{print $1,$2,$3,$4,$5,$6}}' > {output[0]}
         '''
