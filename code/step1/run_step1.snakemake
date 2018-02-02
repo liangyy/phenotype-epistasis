@@ -49,7 +49,7 @@ rule gen_coordinate:
     shell:
         'python {ldpred_dir}/coord_genotypes.py \
             --gf {params.geno_plink} \
-            --ssf <(zcat {input.beta_ss}) \
+            --ssf <(zcat < {input.beta_ss}) \
             --N {params.nsamples} \
             --out {output[0]}'
 
@@ -82,4 +82,5 @@ rule run_ldpred:
             --ldpred_dir {ldpred_dir} \
             --causal_fraction {params[0]} \
             --nsamples {params[2]} \
+            --prefix_of_pickle output-run_step1/{wildcards.intermediate}__{wildcards.disease}/coordinate.{wildcards.chr} \
             --out {params[1]}'

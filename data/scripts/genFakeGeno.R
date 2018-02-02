@@ -34,7 +34,7 @@ genGeno <- function(ni, snp.name, allele.set) {
 for(c in 1 : opt$nchr) {
   geno.mean.out <- paste0(opt$out, '.genotype-mean.', 'chr', c, '.txt.gz')
   snp.info.out <- paste0(opt$out, '.snp-list.', 'chr', c, '.gz')
-  snp.names <- paste0('snp', 1 : opt$nsnp)
+  snp.names <- paste0('chr', c, 'snp', 1 : opt$nsnp)
   snp.chr <- rep(c, opt$nsnp) # sample(22, opt$nsnp, replace = T)
   snp.pos <- round(runif(opt$nsnp) * 1e6)
   ordered.snp <- data.frame(x1 = snp.chr, x2 = snp.pos)

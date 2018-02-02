@@ -33,6 +33,8 @@ opt_parser = OptionParser(option_list=option_list, usage=help_text);
 opt = parse_args(opt_parser);
 
 # drop some SNPs and add some new SNPs
+min.pval <- 1e-10
+af <- 0.11
 snp.list <- c()
 for(c in 1 : opt$nchr) {
   snp.list.c <- read.table(paste0(opt$reference_snp_list_prefix, '.chr', c, '.gz'), sep = '\t', header = T)
@@ -41,12 +43,12 @@ for(c in 1 : opt$nchr) {
 selected.snp.indicator <- rbinom(nrow(snp.list), 1, 1 - opt$drop_rate)
 snp.selected.list <- snp.list[selected.snp.indicator == 1, ]
 nsnp.new <- sum(selected.snp.indicator == 0)
+chr.new <- sample(1 : opt$nchr, nsnp.new, replace = T)
 snpid.new <- paste0('snp.new', 1 : nsnp.new)
-chr.new <- sample(1 : opt$nchr, 1)
 pos.new <- round(runif(nsnp.new) * 1e6)
 A.new <- 'G'
 B.new <- 'T'
-snp.new.list <- data.frame(rs = snpid.new, A = A.new, B = B.new, af = 0.11, chr = chr.new, pos = pos.new)
+snp.new.list <- data.frame(rs = snpid.new, A = A.new, B = B.new, af = af, chr = chr.new, pos = pos.new)
 snp.out.list <- rbind(snp.selected.list, snp.new.list)
 snp.out.list <- snp.out.list[order(snp.out.list$chr, snp.out.list$pos), ]
 
@@ -63,7 +65,9 @@ beta <- beta.norm * beta.binary
 beta.tilde <- sapply(beta, function(x) {
   return(rnorm(n = 1, mean = x, sd = sqrt(sigma.tilde)))
 })
-beta.tilde.pval <- pnorm(-abs(beta.tilde), mean = 0, sd = sqrt(sigma.tilde))
+beta.tilde.z <- beta.tilde * sqrt(opt$gwas_sample_size)  # sqrt((1 - 2 * af * (1 - af) * beta) / (2 * af * (1 - af)))
+beta.tilde.pval <- pnorm(-abs(beta.tilde.z)) * 2
+beta.tilde.pval[beta.tilde.pval < min.pval] <- min.pval
 snp.out.list <- data.frame(chr = snp.out.list$chr,
                           pos = snp.out.list$pos,
                           ref = snp.out.list$A,

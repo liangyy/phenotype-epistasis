@@ -8,7 +8,8 @@ parser.add_argument('--causal_fraction', help = 'a list of causal fraction (hype
 parser.add_argument('--out', help = 'output prefix')
 parser.add_argument('--nsamples', help = 'sample size of GWAS summary statistics')
 parser.add_argument('--ld_radius', help = 'ld-radius in YAML format')
-parser.add_argument('--ldpred_dir', type = float, default = 1, help = 'directory of Ldpred.py')
+parser.add_argument('--ldpred_dir', help = 'directory of Ldpred.py')
+parser.add_argument('--prefix_of_pickle', help = 'prefix of generated pickle file')
 args = parser.parse_args()
 
 import yaml, os
@@ -23,11 +24,13 @@ cmd = 'python {dir}/Ldpred.py \
         --ld_radius {radius} \
         --PS {fraction} \
         --N {n} \
+        --local_ld_file_prefix {prefix} \
         --out {out}'.format(dir = args.ldpred_dir,
                             coord = args.coord,
-                            radius = radius,
+                            radius = int(radius),
                             fraction = args.causal_fraction,
                             n = args.nsamples,
+                            prefix = args.prefix_of_pickle,
                             out = args.out)
 print('=============== LDpred wrapper START ================')
 print('Do:')

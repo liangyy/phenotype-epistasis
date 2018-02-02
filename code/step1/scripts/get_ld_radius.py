@@ -14,8 +14,10 @@ coord = h5py.File(args.input, 'r')
 sum_stats = coord['sum_stats']
 nsnp = 0
 length = 0
+# print(sum_stats.keys())
 for i in list(sum_stats.keys()):
     pos = sum_stats[i]['positions'][:]
+    # print(pos)
     length += max(pos) - min(pos)
     nsnp += pos.size
 radius = nsnp / length * 1e6 * args.per_x_mb
