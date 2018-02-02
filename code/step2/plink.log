@@ -1,0 +1,43 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ plink.log ]
+Analysis started: Fri Feb  2 17:12:09 2018
+
+Options in effect:
+	--noweb
+	--bfile output-combine_XT_YT/geno1_case/chr2
+
+Reading map (extended format) from [ output-combine_XT_YT/geno1_case/chr2.bim ] 
+300 markers to be included from [ output-combine_XT_YT/geno1_case/chr2.bim ]
+Reading pedigree information from [ output-combine_XT_YT/geno1_case/chr2.fam ] 
+200 individuals read from [ output-combine_XT_YT/geno1_case/chr2.fam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 200 missing
+0 males, 0 females, and 200 of unspecified sex
+Warning, found 200 individuals with ambiguous sex codes
+These individuals will be set to missing ( or use --allow-no-sex )
+Writing list of these individuals to [ plink.nosex ]
+Reading genotype bitfile from [ output-combine_XT_YT/geno1_case/chr2.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 300 SNPs
+200 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 300 SNPs
+After filtering, 0 cases, 0 controls and 200 missing
+After filtering, 0 males, 0 females, and 200 of unspecified sex
+
+Analysis finished: Fri Feb  2 17:12:09 2018
+

@@ -20,7 +20,7 @@ def get_all(config, mtd):
     nchr_from = int(nchr_info[0])
     nchr_to = int(nchr_info[1])
     for i in range(nchr_from, nchr_to + 1):
-        out += get_ldpred_outputs('output-run_step1/{intermediate}__{disease}/{method}.{chr}'.format(intermediate = config['y'], disease = config['x'], chr = nchr_name + str(i), method = mtd), config['ldpred']['causal-fraction'])
+        out += get_ldpred_outputs('output-run_step1/{intermediate}__{genotype}/{method}.{chr}'.format(intermediate = config['y'], genotype = config['x'], chr = nchr_name + str(i), method = mtd), config['ldpred']['causal-fraction'])
     return out
 
 rule all_pt:
@@ -38,14 +38,14 @@ ldpred_dir = config['ldpred-dir']
 rule gen_coordinate:
     input:
         beta_ss = 'output-prepare_betaI/{intermediate}/beta-ss.txt.gz',
-        geno_plink1 = 'output-prepare_XT/{disease}/plink.{chr}.bed',
-        geno_plink2 = 'output-prepare_XT/{disease}/plink.{chr}.bim',
-        geno_plink3 = 'output-prepare_XT/{disease}/plink.{chr}.fam'
+        geno_plink1 = 'output-prepare_XT/{genotype}/plink.{chr}.bed',
+        geno_plink2 = 'output-prepare_XT/{genotype}/plink.{chr}.bim',
+        geno_plink3 = 'output-prepare_XT/{genotype}/plink.{chr}.fam'
     params:
-        geno_plink = 'output-prepare_XT/{disease}/plink.{chr}',
+        geno_plink = 'output-prepare_XT/{genotype}/plink.{chr}',
         nsamples = lambda wildcards: config[wildcards.intermediate]['nsamples']
     output:
-        'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5'
+        'output-run_step1/{intermediate}__{genotype}/coordinate.{chr}.hdf5'
     shell:
         'python {ldpred_dir}/coord_genotypes.py \
             --gf {params.geno_plink} \
@@ -55,11 +55,11 @@ rule gen_coordinate:
 
 rule get_ld_radius:
     input:
-        'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5'
+        'output-run_step1/{intermediate}__{genotype}/coordinate.{chr}.hdf5'
     params:
         config['ldpred']['num-SNPs-per-xMb']
     output:
-        'output-run_step1/{intermediate}__{disease}/ld-radius.{chr}.yaml'
+        'output-run_step1/{intermediate}__{genotype}/ld-radius.{chr}.yaml'
     shell:
         'python scripts/get_ld_radius.py \
             --input {input[0]} \
@@ -68,14 +68,14 @@ rule get_ld_radius:
 
 rule run_ldpred:
     input:
-        'output-run_step1/{intermediate}__{disease}/coordinate.{chr}.hdf5',
-        'output-run_step1/{intermediate}__{disease}/ld-radius.{chr}.yaml'
+        'output-run_step1/{intermediate}__{genotype}/coordinate.{chr}.hdf5',
+        'output-run_step1/{intermediate}__{genotype}/ld-radius.{chr}.yaml'
     params:
         config['ldpred']['causal-fraction'],
-        'output-run_step1/{intermediate}__{disease}/ldpred.{chr}',
+        'output-run_step1/{intermediate}__{genotype}/ldpred.{chr}',
         lambda wildcards: config[wildcards.intermediate]['nsamples']
     output:
-        get_ldpred_outputs('output-run_step1/{intermediate}__{disease}/ldpred.{chr}', config['ldpred']['causal-fraction'])
+        get_ldpred_outputs('output-run_step1/{intermediate}__{genotype}/ldpred.{chr}', config['ldpred']['causal-fraction'])
     shell:
         'python scripts/ldpred_wrapper.py --coord {input[0]} \
             --ld_radius {input[1]} \

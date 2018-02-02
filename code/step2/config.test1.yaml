@@ -1,0 +1,17 @@
+x1: 'geno1_case'
+x2: 'geno2_ctrl'
+y: 'intermediate1'
+
+chr-list: 'chr,1:3'
+geno1_case:
+  combine_XT:
+    name-format: '../step1/output-prepare_XT/geno1/plink.{chr}'
+    case-control: 1  # 1 for unaffected; 2 for affected
+geno2_ctrl:
+  combine_XT:
+    name-format: '../step1/output-prepare_XT/geno1/plink.{chr}'
+    case-control: 2
+quality-control:
+    hwe: 0.05
+    maf: 0.01
+    geno: 0.05

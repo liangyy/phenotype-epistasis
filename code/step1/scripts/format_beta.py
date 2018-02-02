@@ -8,7 +8,7 @@ parser.add_argument('--output', help = 'output GZ file (TAB delimited)')
 parser.add_argument('--header', type = int, default = 0, help = 'if the input file contains header, set it to 1')
 parser.add_argument('--col_index', help = '''
     columns indices (1-based) of input column in order:
-    chr,pos,ref,alt,reffrq,info,rs,pval,effalt
+    chr,pos,ref,alt,reffrq,info,rs,pval,effalt,n
 ''')
 args = parser.parse_args()
 
@@ -24,7 +24,7 @@ else:
 
 col_indices = args.col_index.split(',')
 col_indices = [ int(i) - 1 for i in col_indices ]
-col_names = [ 'chr', 'pos', 'ref', 'alt', 'reffrq', 'info', 'rs', 'pval', 'effalt' ]
+col_names = [ 'chr', 'pos', 'ref', 'alt', 'reffrq', 'info', 'rs', 'pval', 'effalt', 'n' ]
 
-beta = pd.read_table(args.input, sep = '\t', header = None, skiprows = header, compression = 'gzip', usecols = col_indices, names = col_names)
+beta = pd.read_table(args.input, sep = '\t', header = None, dtype = {'pos': int}, skiprows = header, compression = 'gzip', usecols = col_indices, names = col_names)
 beta.to_csv(args.output, sep = '\t', header = True, index = False, compression = 'gzip')

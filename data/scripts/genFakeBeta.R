@@ -18,7 +18,7 @@ option_list = list(
   make_option(c("-e", "--heritability"), type="numeric", default=0.1,
               help="heritability of the trait of the GWAS [default = %default]", metavar="numeric"),
   make_option(c('-n', '--gwas_sample_size'), type='numeric', default=20000,
-              help='the sample size of the GWAS to simulate [default = %default]', metavar='numeric'),
+              help='the mean sample size of the GWAS to simulate (standard deviation is 10% of mean) [default = %default]', metavar='numeric'),
   make_option(c('-r', '--reference_snp_list_prefix'), type='character',
               help='the prefix of the reference SNP list files [default = %default]', metavar='character'),
   make_option(c('-c', '--nchr'), type="numeric", default=22,
@@ -54,7 +54,7 @@ snp.out.list <- snp.out.list[order(snp.out.list$chr, snp.out.list$pos), ]
 
 # simulate summary statistic
 M <- nrow(snp.out.list)
-N <- opt$gwas_sample_size
+N <- round(rnorm(M, opt$gwas_sample_size, 0.1 * opt$gwas_sample_size))
 h_square <- opt$heritability
 p.i <- opt$fraction
 sigma <- opt$sigma
@@ -65,7 +65,7 @@ beta <- beta.norm * beta.binary
 beta.tilde <- sapply(beta, function(x) {
   return(rnorm(n = 1, mean = x, sd = sqrt(sigma.tilde)))
 })
-beta.tilde.z <- beta.tilde * sqrt(opt$gwas_sample_size)  # sqrt((1 - 2 * af * (1 - af) * beta) / (2 * af * (1 - af)))
+beta.tilde.z <- beta.tilde * sqrt(N)  # sqrt((1 - 2 * af * (1 - af) * beta) / (2 * af * (1 - af)))
 beta.tilde.pval <- pnorm(-abs(beta.tilde.z)) * 2
 beta.tilde.pval[beta.tilde.pval < min.pval] <- min.pval
 snp.out.list <- data.frame(chr = snp.out.list$chr,
@@ -76,7 +76,8 @@ snp.out.list <- data.frame(chr = snp.out.list$chr,
                           info = 1,
                           rs = snp.out.list$rs,
                           pval = beta.tilde.pval,
-                          effalt = beta.tilde)
+                          effalt = beta.tilde,
+                          n = N)
 
 # write to file
 out.filename <- paste0(opt$out, '.summary-statistic', '.txt.gz')
