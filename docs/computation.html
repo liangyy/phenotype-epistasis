@@ -304,7 +304,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Computation</h1>
-<h4 class="date"><em>31 January, 2018</em></h4>
+<h4 class="date"><em>01 February, 2018</em></h4>
 
 </div>
 
@@ -331,7 +331,7 @@ div.tocify {
 </div>
 <div id="testing-interaction" class="section level1">
 <h1><span class="header-section-number">2</span> Testing interaction</h1>
-<div id="rationale" class="section level2">
+<div id="model" class="section level2">
 <h2><span class="header-section-number">2.1</span> Rationale</h2>
 The epistasis between genetic background and the given locus is defined as the situation where the contribution of genotype (<span class="math inline">\(G_i\)</span>) to liability depends not only on the genotype itself but also on the genetic background which is measured by the genetic component of the selected intermediate phenotype (<span class="math inline">\(I\)</span>). In particular, the following model is used
 <span class="math display">\[\begin{align*}
@@ -346,29 +346,29 @@ The epistasis between genetic background and the given locus is defined as the s
 <li>additive effect:
 <span class="math display">\[\begin{align*}
 G_i &amp;= \begin{cases}
-  1 &amp; \text{, if genotype is AA} \\
-  2 &amp; \text{, if genotype is Aa} \\
-  3 &amp; \text{, if genotype is aa} 
+  0 &amp; \text{, if genotype is AA} \\
+  1 &amp; \text{, if genotype is Aa} \\
+  2 &amp; \text{, if genotype is aa} 
 \end{cases}
   \end{align*}\]</span>
 , and the contribution of liability is <span class="math inline">\(p(I) G_i\)</span>, specifically <span class="math inline">\(p(I)\)</span> is the baseline contribution function (the non-risk allele contribution).</li>
 <li>dominant(recessive) effect:
 <span class="math display">\[\begin{align*}
 G_i &amp;= \begin{cases}
-  (1, 0)^T &amp; \text{, if genotype is aa or Aa (aa)} \\
-  (0, 1)^T &amp; \text{, if genotype is AA (AA or Aa)}
+  1 &amp; \text{, if genotype is aa or Aa (aa)} \\
+  0 &amp; \text{, if genotype is AA (AA or Aa)}
 \end{cases}
   \end{align*}\]</span>
-, and <span class="math inline">\(p_i(I)\)</span> is the corresponding contribution function of each cases.</li>
+, and <span class="math inline">\(p_i(I)\)</span> is the corresponding contribution function of risk allele case.</li>
 <li>free effect:
 <span class="math display">\[\begin{align*}
 G_i &amp;= \begin{cases}
-  (1, 0, 0)^T &amp; \text{, if genotype is aa} \\
-  (0, 1, 0)^T &amp; \text{, if genotype is Aa} \\
-  (0, 0, 1)^T &amp; \text{, if genotype is AA}
+  (0, 0)^T &amp; \text{, if genotype is AA} \\
+  (0, 1)^T &amp; \text{, if genotype is Aa} \\
+  (1, 0)^T &amp; \text{, if genotype is aa}
 \end{cases}
   \end{align*}\]</span>
-, namely every genotype has a specific contribution function.</li>
+, namely every genotype has a specific contribution function. Note that the effect size is respective to the reference allele (non-risk allele). The effect of non-risk allele is obserbed into <span class="math inline">\(\alpha + \gamma I\)</span>.</li>
 </ol>
 </div>
 <div id="procedure" class="section level2">

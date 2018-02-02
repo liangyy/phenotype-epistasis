@@ -304,11 +304,14 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Implementation</h1>
-<h4 class="date"><em>31 January, 2018</em></h4>
+<h4 class="date"><em>01 February, 2018</em></h4>
 
 </div>
 
 
+<p><span class="math display">\[
+\newcommand\logit{\text{logit}}  
+\]</span></p>
 <div id="step-1-beta_i-x_t-rightarrow-haty_i" class="section level1">
 <h1><span class="header-section-number">1</span> Step 1: <span class="math inline">\((\beta_I, X_T) \rightarrow \hat{Y}_I\)</span></h1>
 <p>Current available <span class="math inline">\(f: (\beta_I, X_T) \rightarrow \hat{Y}_I\)</span> are <code>PRSice</code> and <code>LDpred</code> (see <a href="computation.html#1_computing_intermediate_phenotype">here</a>). The available <span class="math inline">\(X_T\)</span>, WTCCC genotype, is in BIMBAM format.</p>
@@ -336,7 +339,9 @@ $ fcgene --wgd test.genotype-dist-flip.txt --pos test.bimbam.snpinfo --oformat p
 
 ## outcome files
 $ ls
-test.bplink.bed test.bplink.bim test.bplink.fam</code></pre>
+test.bplink.bed test.bplink.bim test.bplink.fam
+
+## *.fam output by fcgene needs post-processing to remove extra space at the end of each column</code></pre>
 </div>
 <div id="prepare-beta_i" class="section level2">
 <h2><span class="header-section-number">1.2</span> Prepare <span class="math inline">\(\beta_I\)</span></h2>
@@ -345,13 +350,67 @@ test.bplink.bed test.bplink.bim test.bplink.fam</code></pre>
 chr1  1020428 C T 0.85083 0.98732 rs6687776 0.0587  -0.0100048507289348
 chr1  1020496 G A 0.85073 0.98751 rs6678318 0.1287  -0.00826075392985992</code></pre>
 </div>
-<div id="prepare-fake-y_i" class="section level2">
-<h2><span class="header-section-number">1.3</span> Prepare fake <span class="math inline">\(Y_I\)</span></h2>
-<p><code>PRSice</code> (but not <code>LDpred</code>) needs <span class="math inline">\(Y_t\)</span> to optimize prediction accuracy by tuning hyper-parameters. As the true phenotype is not available, here we generate a “fake” <span class="math inline">\(Y_t\)</span> instead which won’t affect the computation.</p>
+<div id="pipeline" class="section level2">
+<h2><span class="header-section-number">1.3</span> Pipeline</h2>
+<p>Only the approach using Ldpred has been implemented (at <a href="https://github.com/liangyy/phenotype-epistasis/tree/master/code/step1"><code>code/step1/</code></a>)</p>
+<!-- ## Prepare fake $Y_I$ -->
+<!-- `PRSice` (but not `LDpred`) needs $Y_t$ to optimize prediction accuracy by tuning hyper-parameters. As the true phenotype is not available, here we generate a "fake" $Y_t$ instead which won't affect the computation. -->
 </div>
 <div id="evaluation" class="section level2">
 <h2><span class="header-section-number">1.4</span> Evaluation</h2>
-<p>Compute</p>
+<p>Leave it for future.</p>
+</div>
+</div>
+<div id="step-2-y_t-sim-x_t-cdot-haty_i" class="section level1">
+<h1><span class="header-section-number">2</span> Step 2: <span class="math inline">\(Y_T \sim X_T \cdot \hat{Y}_I\)</span></h1>
+Current we test the following two types of interactions
+<span class="math display">\[\begin{align*}
+  \logit(\Pr(Y_T|X_T, Y_I)) &amp;= \alpha + \gamma Y_I + \beta_1 X_T + \beta_2 X_T Y_I\\
+  \logit(\Pr(Y_T|X_T, Y_I)) &amp;= \alpha + \gamma Y_I + \beta_{11} X_T + \beta_{12} X_T Y_I + \beta_{21} X_T + \beta_{22} X_T Y_I 
+\end{align*}\]</span>
+<p>, where the first is additive model and the second is dominant/recessive model. See detail <a href="computation.html#model">here</a>.</p>
+<div id="combine-x_t-and-y_t" class="section level2">
+<h2><span class="header-section-number">2.1</span> Combine <span class="math inline">\(X_T\)</span> and <span class="math inline">\(Y_T\)</span></h2>
+<pre><code># change the last column to phenotype (1 unaffected, 2 affected)
+$ bash add_phenotype.sh -p 1 -i data1.fam -o data1_phenotyped.fam 
+$ bash add_phenotype.sh -p 2 -i data2.fam -o data2_phenotyped.fam 
+
+# rename *.bim and *.bed files accordingly
+$ mv data1.bim data1_phenotyped.bim.fam; mv data1.bed data1_phenotyped.bed
+$ mv data2.bim data2_phenotyped.bim.fam; mv data2.bed data2_phenotyped.bed
+
+# merge two data sets
+$ plink --bfile data1_phenotyped --bmerge data2_phenotyped --make-bed --out merged_data
+
+# QC 
+$ plink --bfile merged_data --make-bed --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out merged_data_QC</code></pre>
+</div>
+<div id="determine-the-direction-of-effect" class="section level2">
+<h2><span class="header-section-number">2.2</span> Determine the direction of effect</h2>
+<div id="direction-of-x_t" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Direction of <span class="math inline">\(X_T\)</span></h3>
+<pre><code>$ plink --bfile merged_data_QC --logistic --out log_assoc_merged_data_QC
+$ Rscript extractDirection.R --input log_assoc.merged_data_QC.logistic --output direction.merge_data_QC.txt.gz</code></pre>
+</div>
+<div id="direction-of-y_i" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Direction of <span class="math inline">\(Y_I\)</span></h3>
+<pre><code># predict Y_I based on merged_data_QC
+$ python ldpred/validate.py SOMETHING --input merged_data_QC --out merged_data_QC_YI  # ignore the prediction accuracy since the phenotype is wrong 
+
+# determine the direction
+$ Rscript computeDirection.R --input merged_data_QC_YI.txt.gz --output directon.merged_data_QC_YI.txt.gz</code></pre>
+</div>
+</div>
+<div id="perform-interaction-test" class="section level2">
+<h2><span class="header-section-number">2.3</span> Perform interaction test</h2>
+<pre><code># additive model
+$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; merged_data_QC_YI.txt.gz) --interaction --out interaction_add.merged_data_QC_YI
+
+# dominant/recessive model
+## note that the dominant/recessive is respective to reference allele but not the risk one
+## in the end, the dominant and recessive will be reassigned according to direction files
+$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; merged_data_QC_YI.txt.gz) --interaction --dominant --out interaction_dom.merged_data_QC_YI 
+$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; merged_data_QC_YI.txt.gz) --interaction --recessive --out interaction_rec.merged_data_QC_YI </code></pre>
 </div>
 </div>
 

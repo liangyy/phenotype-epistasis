@@ -63,7 +63,7 @@ Let
   \node [node, below of=intermediate-phenotype] (genotype) {$X_T$};
   \node [node, below of=genotype] (phenotype) {$Y_T$};
   \node [node, right of=intermediate-phenotype] (interaction) {$I_T = \hat{Y}_I \cdot X_T$};
-  \node [node, right of=phenotype] (association) {$\text{Cov}(Y_T,I_T)$};
+  \node [node, right of=phenotype] (association) {$Y_T \sim I_T$};
   \path [arrow] (summary-statistic) -- (intermediate-phenotype);
   \path [arrow] (genotype) -- (intermediate-phenotype);
   \path [arrow] (intermediate-phenotype) -- (interaction);

@@ -28,7 +28,7 @@ The difficulty is that we don't have validation data sets to determine the hyper
 
 # Testing interaction
 
-## Rationale
+## Rationale {#model}
 
 The epistasis between genetic background and the given locus is defined as the situation where the contribution of genotype ($G_i$) to liability depends not only on the genotype itself but also on the genetic background which is measured by the genetic component of the selected intermediate phenotype ($I$). In particular, the following model is used
 \begin{align*}
@@ -43,29 +43,30 @@ The following four scenarios are considered (suppose a is risk allele):
 1. additive effect: 
   \begin{align*}
     G_i &= \begin{cases}
-      1 & \text{, if genotype is AA} \\
-      2 & \text{, if genotype is Aa} \\
-      3 & \text{, if genotype is aa} 
+      0 & \text{, if genotype is AA} \\
+      1 & \text{, if genotype is Aa} \\
+      2 & \text{, if genotype is aa} 
     \end{cases}
   \end{align*}
   , and the contribution of liability is $p(I) G_i$, specifically $p(I)$ is the baseline contribution function (the non-risk allele contribution).
 2. dominant(recessive) effect: 
   \begin{align*}
     G_i &= \begin{cases}
-      (1, 0)^T & \text{, if genotype is aa or Aa (aa)} \\
-      (0, 1)^T & \text{, if genotype is AA (AA or Aa)}
+      1 & \text{, if genotype is aa or Aa (aa)} \\
+      0 & \text{, if genotype is AA (AA or Aa)}
     \end{cases}
   \end{align*}
-  , and $p_i(I)$ is the corresponding contribution function of each cases.
+  , and $p_i(I)$ is the corresponding contribution function of risk allele case.
 3. free effect:
   \begin{align*}
     G_i &= \begin{cases}
-      (1, 0, 0)^T & \text{, if genotype is aa} \\
-      (0, 1, 0)^T & \text{, if genotype is Aa} \\
-      (0, 0, 1)^T & \text{, if genotype is AA}
+      (0, 0)^T & \text{, if genotype is AA} \\
+      (0, 1)^T & \text{, if genotype is Aa} \\
+      (1, 0)^T & \text{, if genotype is aa}
     \end{cases}
   \end{align*}
   , namely every genotype has a specific contribution function.
+Note that the effect size is respective to the reference allele (non-risk allele). The effect of non-risk allele is obserbed into $\alpha + \gamma I$.
 
 ## Procedure
 

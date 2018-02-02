@@ -4,6 +4,10 @@ title: "Implementation"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
+$$
+\newcommand\logit{\text{logit}}  
+$$
+
 # Step 1: $(\beta_I, X_T) \rightarrow \hat{Y}_I$
 
 Current available $f: (\beta_I, X_T) \rightarrow \hat{Y}_I$ are `PRSice` and `LDpred` (see [here](computation.html#1_computing_intermediate_phenotype)). The available $X_T$, WTCCC genotype, is in BIMBAM format.
@@ -33,6 +37,8 @@ $ fcgene --wgd test.genotype-dist-flip.txt --pos test.bimbam.snpinfo --oformat p
 ## outcome files
 $ ls
 test.bplink.bed test.bplink.bim test.bplink.fam
+
+## *.fam output by fcgene needs post-processing to remove extra space at the end of each column
 ```
 
 ## Prepare $\beta_I$
@@ -45,10 +51,73 @@ chr1  1020428 C T 0.85083 0.98732 rs6687776 0.0587  -0.0100048507289348
 chr1  1020496 G A 0.85073 0.98751 rs6678318 0.1287  -0.00826075392985992
 ```
 
-## Prepare fake $Y_I$
+## Pipeline 
 
-`PRSice` (but not `LDpred`) needs $Y_t$ to optimize prediction accuracy by tuning hyper-parameters. As the true phenotype is not available, here we generate a "fake" $Y_t$ instead which won't affect the computation.
+Only the approach using Ldpred has been implemented (at [`code/step1/`](https://github.com/liangyy/phenotype-epistasis/tree/master/code/step1)) 
+
+<!-- ## Prepare fake $Y_I$ -->
+
+<!-- `PRSice` (but not `LDpred`) needs $Y_t$ to optimize prediction accuracy by tuning hyper-parameters. As the true phenotype is not available, here we generate a "fake" $Y_t$ instead which won't affect the computation. -->
 
 ## Evaluation
 
-Compute
+Leave it for future.
+
+# Step 2: $Y_T \sim X_T \cdot \hat{Y}_I$
+
+Current we test the following two types of interactions
+\begin{align*}
+  \logit(\Pr(Y_T|X_T, Y_I)) &= \alpha + \gamma Y_I + \beta_1 X_T + \beta_2 X_T Y_I\\
+  \logit(\Pr(Y_T|X_T, Y_I)) &= \alpha + \gamma Y_I + \beta_{11} X_T + \beta_{12} X_T Y_I + \beta_{21} X_T + \beta_{22} X_T Y_I 
+\end{align*}
+, where the first is additive model and the second is dominant/recessive model. See detail [here](computation.html#model).
+
+## Combine $X_T$ and $Y_T$
+
+```
+# change the last column to phenotype (1 unaffected, 2 affected)
+$ bash add_phenotype.sh -p 1 -i data1.fam -o data1_phenotyped.fam 
+$ bash add_phenotype.sh -p 2 -i data2.fam -o data2_phenotyped.fam 
+
+# rename *.bim and *.bed files accordingly
+$ mv data1.bim data1_phenotyped.bim.fam; mv data1.bed data1_phenotyped.bed
+$ mv data2.bim data2_phenotyped.bim.fam; mv data2.bed data2_phenotyped.bed
+
+# merge two data sets
+$ plink --bfile data1_phenotyped --bmerge data2_phenotyped --make-bed --out merged_data
+
+# QC 
+$ plink --bfile merged_data --make-bed --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out merged_data_QC
+```
+
+## Determine the direction of effect
+
+### Direction of $X_T$
+
+```
+$ plink --bfile merged_data_QC --logistic --out log_assoc_merged_data_QC
+$ Rscript extractDirection.R --input log_assoc.merged_data_QC.logistic --output direction.merge_data_QC.txt.gz
+```
+
+### Direction of $Y_I$
+
+```
+# predict Y_I based on merged_data_QC
+$ python ldpred/validate.py SOMETHING --input merged_data_QC --out merged_data_QC_YI  # ignore the prediction accuracy since the phenotype is wrong 
+
+# determine the direction
+$ Rscript computeDirection.R --input merged_data_QC_YI.txt.gz --output directon.merged_data_QC_YI.txt.gz
+```
+
+## Perform interaction test
+
+```
+# additive model
+$ plink --bfile merged_data_QC --logistic --covar <(zcat < merged_data_QC_YI.txt.gz) --interaction --out interaction_add.merged_data_QC_YI
+
+# dominant/recessive model
+## note that the dominant/recessive is respective to reference allele but not the risk one
+## in the end, the dominant and recessive will be reassigned according to direction files
+$ plink --bfile merged_data_QC --logistic --covar <(zcat < merged_data_QC_YI.txt.gz) --interaction --dominant --out interaction_dom.merged_data_QC_YI 
+$ plink --bfile merged_data_QC --logistic --covar <(zcat < merged_data_QC_YI.txt.gz) --interaction --recessive --out interaction_rec.merged_data_QC_YI 
+```
