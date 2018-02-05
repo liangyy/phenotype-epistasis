@@ -1,1 +1,1 @@
-../step1/output-prepare_XT/geno1/plink.chr3.bed ../step1/output-prepare_XT/geno1/plink.chr3.bim output-combine_XT_YT/geno2_ctrl/chr3.fam
+output-combine_XT_YT/geno2_ctrl/chr3.bed output-combine_XT_YT/geno2_ctrl/chr3.bim output-combine_XT_YT/geno2_ctrl/chr3.fam

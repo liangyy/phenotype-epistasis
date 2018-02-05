@@ -24,32 +24,52 @@ rule add_phenotype:
     params:
         label = lambda wildcards: config[wildcards.genotype]['combine_XT']['case-control']
     output:
+        'output-combine_XT_YT/{genotype}/{chr}.fam.temp'
+    shell:
+        '''
+        bash scripts/add_phenotype.sh -p {params.label} -i {input[0]} -o {output[0]}
+        '''
+
+rule update_id:
+    input:
+        bed = lambda wildcards: (config[wildcards.genotype]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
+        bim = lambda wildcards: (config[wildcards.genotype]['combine_XT']['name-format'] + '.bim').format(chr = wildcards.chr),
+        fam = temp('output-combine_XT_YT/{genotype}/{chr}.fam.temp')
+    params:
+        label = lambda wildcards: config[wildcards.genotype]['combine_XT']['case-control'],
+        name = 'output-combine_XT_YT/{genotype}/{chr}'
+    output:
+        'output-combine_XT_YT/{genotype}/{chr}.bed',
+        'output-combine_XT_YT/{genotype}/{chr}.bim',
         'output-combine_XT_YT/{genotype}/{chr}.fam'
     shell:
         '''
-        bash scripts/add_phenotype.sh -p {params.label} -i {input[0]}.fam -o {output[0]}
+        bash scripts/update_id.sh -p {params.label} -e {input[0]} -i {input[1]} -f {input[2]} -o {params.name}
         '''
 
 rule generate_merge_list:
     params:
-        geno2 = lambda wildcards: config[wildcards.geno2]['combine_XT']['name-format'],
-        fam2 = 'output-combine_XT_YT/{geno2}/{chr}.fam'
+        geno2 = 'output-combine_XT_YT/{geno2}/{chr}'
     output:
         'output-combine_XT_YT/{geno1}__{geno2}/merge_list.{chr}.txt'
     shell:
         '''
-        echo '{params.geno2}.bed {params.geno2}.bim {params.fam2}' > {output[0]}
+        echo '{params.geno2}.bed {params.geno2}.bim {params.geno2}.fam' > {output[0]}
         '''
 
 rule merge_genos:
     input:
-        lambda wildcards: (config[wildcards.geno1]['combine_XT']['name-format'] + '.bim').format(chr = wildcards.chr),
-        lambda wildcards: (config[wildcards.geno2]['combine_XT']['name-format'] + '.bim').format(chr = wildcards.chr),
-        lambda wildcards: (config[wildcards.geno1]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
-        lambda wildcards: (config[wildcards.geno2]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
-        'output-combine_XT_YT/{geno1}/{chr}.fam',
-        'output-combine_XT_YT/{geno2}/{chr}.fam',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_list.{chr}.txt'
+        # lambda wildcards: (config[wildcards.geno1]['combine_XT']['name-format'] + '.bim').format(chr = wildcards.chr),
+        # lambda wildcards: (config[wildcards.geno2]['combine_XT']['name-format'] + '.bim').format(chr = wildcards.chr),
+        # lambda wildcards: (config[wildcards.geno1]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
+        # lambda wildcards: (config[wildcards.geno2]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
+        fam1 = 'output-combine_XT_YT/{geno1}/{chr}.fam',
+        fam2 = 'output-combine_XT_YT/{geno2}/{chr}.fam',
+        bed1 = 'output-combine_XT_YT/{geno1}/{chr}.bed',
+        bde2 = 'output-combine_XT_YT/{geno2}/{chr}.bed',
+        bim1 = 'output-combine_XT_YT/{geno1}/{chr}.bim',
+        bim2 = 'output-combine_XT_YT/{geno2}/{chr}.bim',
+        mlist = 'output-combine_XT_YT/{geno1}__{geno2}/merge_list.{chr}.txt'
     params:
         out = 'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}'
     output:
@@ -58,7 +78,7 @@ rule merge_genos:
         'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.fam'
     shell:
         '''
-        plink --noweb --bim {input[0]} --bed {input[2]} --fam {input[4]} --merge-list {input[6]} --make-bed --out {params.out}
+        plink --noweb --bim {input.bim1} --bed {input.bed1} --fam {input.fam1} --merge-list {input.mlist} --make-bed --out {params.out}
         '''
 
 rule quality_control:

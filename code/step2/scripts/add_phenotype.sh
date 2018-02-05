@@ -1,5 +1,5 @@
 usage="$(basename "$0") [-h] [-i input FAM file] [-p phenotype] [-o output FAM filename]
-  This script takes a plink FAM file and change the phenotype label (namely the last column of the file) to the value specified by user
+  This script takes a plink FAM file and change the phenotype label (namely the last column of the file) to the value specified by user also the family ID and individual ID are changed accordingly
 where:
     -h  show this help text
     -i  input plink FAM file

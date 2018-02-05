@@ -10,20 +10,20 @@
 
 Skipping web check... [ --noweb ] 
 Writing this text to log file [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.log ]
-Analysis started: Fri Feb  2 17:32:20 2018
+Analysis started: Mon Feb  5 16:20:24 2018
 
 Options in effect:
 	--noweb
-	--bim ../step1/output-prepare_XT/geno1/plink.chr2.bim
-	--bed ../step1/output-prepare_XT/geno1/plink.chr2.bed
+	--bim output-combine_XT_YT/geno1_case/chr2.bim
+	--bed output-combine_XT_YT/geno1_case/chr2.bed
 	--fam output-combine_XT_YT/geno1_case/chr2.fam
 	--merge-list output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr2.txt
 	--make-bed
 	--out output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2
 
 ** For gPLINK compatibility, do not use '.' in --out **
-Reading map (extended format) from [ ../step1/output-prepare_XT/geno1/plink.chr2.bim ] 
-300 markers to be included from [ ../step1/output-prepare_XT/geno1/plink.chr2.bim ]
+Reading map (extended format) from [ output-combine_XT_YT/geno1_case/chr2.bim ] 
+300 markers to be included from [ output-combine_XT_YT/geno1_case/chr2.bim ]
 Reading pedigree information from [ output-combine_XT_YT/geno1_case/chr2.fam ] 
 200 individuals read from [ output-combine_XT_YT/geno1_case/chr2.fam ] 
 200 individuals with nonmissing phenotypes
@@ -33,23 +33,23 @@ Missing phenotype value is also -9
 0 males, 0 females, and 200 of unspecified sex
 Warning, found 200 individuals with ambiguous sex codes
 Writing list of these individuals to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.nosex ]
-Reading genotype bitfile from [ ../step1/output-prepare_XT/geno1/plink.chr2.bed ] 
+Reading genotype bitfile from [ output-combine_XT_YT/geno1_case/chr2.bed ] 
 Detected that binary PED file is v1.00 SNP-major mode
 Using merge mode 1 : consensus call (default)
 Detected that binary PED file is v1.00 SNP-major mode
-Merging 1 samples, final sample contains 200 individuals and 300 markers
+Merging 1 samples, final sample contains 400 individuals and 300 markers
 Before frequency and genotyping pruning, there are 300 SNPs
-200 founders and 0 non-founders found
+400 founders and 0 non-founders found
 Total genotyping rate in remaining individuals is 1
 0 SNPs failed missingness test ( GENO > 1 )
 0 SNPs failed frequency test ( MAF < 0 )
 After frequency and genotyping pruning, there are 300 SNPs
-After filtering, 0 cases, 200 controls and 0 missing
-After filtering, 0 males, 0 females, and 200 of unspecified sex
+After filtering, 200 cases, 200 controls and 0 missing
+After filtering, 0 males, 0 females, and 400 of unspecified sex
 Writing pedigree information to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.fam ] 
 Writing map (extended format) information to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.bim ] 
 Writing genotype bitfile to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.bed ] 
 Using (default) SNP-major mode
 
-Analysis finished: Fri Feb  2 17:32:20 2018
+Analysis finished: Mon Feb  5 16:20:24 2018
 
