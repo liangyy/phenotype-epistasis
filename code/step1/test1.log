@@ -1,0 +1,547 @@
+appending output to nohup.out
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	6	add_phenotype
+	1	all_ldpred
+	6	fcgene
+	1	format_beta
+	3	gen_coordinate
+	6	gen_snpinfo
+	3	generate_merge_list
+	3	get_ld_radius
+	6	mean2dist
+	3	merge_genos
+	6	post_process_fam
+	3	quality_control
+	3	run_ldpred
+	6	update_id
+	56
+
+rule format_beta:
+    input: ../../data/fake_data/beta/betatest1-genotest1.summary-statistic.txt.gz
+    output: output-prepare_betaI/intermediate1/beta-ss.txt.gz
+    jobid: 11
+    wildcards: intermediate=intermediate1
+
+Finished job 11.
+1 of 56 steps (2%) done
+
+rule gen_snpinfo:
+    input: ../../data/fake_data/genotype/genotest1.snp-list.chr1.gz, ../../data/fake_data/genotype/genotest1.genotype-mean.chr1.txt.gz
+    output: output-prepare_XT/geno2_ctrl/bimbam-snpinfo-flip.chr1.txt.gz
+    jobid: 51
+    wildcards: genotype=geno2_ctrl, chr=chr1
+
+Finished job 51.
+2 of 56 steps (4%) done
+
+rule gen_snpinfo:
+    input: ../../data/fake_data/genotype/genotest1.snp-list.chr1.gz, ../../data/fake_data/genotype/genotest1.genotype-mean.chr1.txt.gz
+    output: output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr1.txt.gz
+    jobid: 53
+    wildcards: genotype=geno1_case, chr=chr1
+
+Finished job 53.
+3 of 56 steps (5%) done
+
+rule gen_snpinfo:
+    input: ../../data/fake_data/genotype/genotest1.snp-list.chr3.gz, ../../data/fake_data/genotype/genotest1.genotype-mean.chr3.txt.gz
+    output: output-prepare_XT/geno2_ctrl/bimbam-snpinfo-flip.chr3.txt.gz
+    jobid: 41
+    wildcards: genotype=geno2_ctrl, chr=chr3
+
+Finished job 41.
+4 of 56 steps (7%) done
+
+rule gen_snpinfo:
+    input: ../../data/fake_data/genotype/genotest1.snp-list.chr3.gz, ../../data/fake_data/genotype/genotest1.genotype-mean.chr3.txt.gz
+    output: output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr3.txt.gz
+    jobid: 39
+    wildcards: genotype=geno1_case, chr=chr3
+
+Finished job 39.
+5 of 56 steps (9%) done
+
+rule gen_snpinfo:
+    input: ../../data/fake_data/genotype/genotest1.snp-list.chr2.gz, ../../data/fake_data/genotype/genotest1.genotype-mean.chr2.txt.gz
+    output: output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr2.txt.gz
+    jobid: 46
+    wildcards: genotype=geno1_case, chr=chr2
+
+Finished job 46.
+6 of 56 steps (11%) done
+
+rule gen_snpinfo:
+    input: ../../data/fake_data/genotype/genotest1.snp-list.chr2.gz, ../../data/fake_data/genotype/genotest1.genotype-mean.chr2.txt.gz
+    output: output-prepare_XT/geno2_ctrl/bimbam-snpinfo-flip.chr2.txt.gz
+    jobid: 47
+    wildcards: genotype=geno2_ctrl, chr=chr2
+
+Finished job 47.
+7 of 56 steps (12%) done
+
+rule mean2dist:
+    input: ../../data/fake_data/genotype/genotest1.genotype-mean.chr1.txt.gz
+    output: output-prepare_XT/geno1_case/genotype-dist-flip.chr1.txt.gz
+    jobid: 54
+    wildcards: genotype=geno1_case, chr=chr1
+
+Finished job 54.
+8 of 56 steps (14%) done
+
+rule mean2dist:
+    input: ../../data/fake_data/genotype/genotest1.genotype-mean.chr1.txt.gz
+    output: output-prepare_XT/geno2_ctrl/genotype-dist-flip.chr1.txt.gz
+    jobid: 50
+    wildcards: genotype=geno2_ctrl, chr=chr1
+
+Finished job 50.
+9 of 56 steps (16%) done
+
+rule mean2dist:
+    input: ../../data/fake_data/genotype/genotest1.genotype-mean.chr3.txt.gz
+    output: output-prepare_XT/geno2_ctrl/genotype-dist-flip.chr3.txt.gz
+    jobid: 42
+    wildcards: genotype=geno2_ctrl, chr=chr3
+
+Finished job 42.
+10 of 56 steps (18%) done
+
+rule mean2dist:
+    input: ../../data/fake_data/genotype/genotest1.genotype-mean.chr3.txt.gz
+    output: output-prepare_XT/geno1_case/genotype-dist-flip.chr3.txt.gz
+    jobid: 38
+    wildcards: genotype=geno1_case, chr=chr3
+
+Finished job 38.
+11 of 56 steps (20%) done
+
+rule mean2dist:
+    input: ../../data/fake_data/genotype/genotest1.genotype-mean.chr2.txt.gz
+    output: output-prepare_XT/geno2_ctrl/genotype-dist-flip.chr2.txt.gz
+    jobid: 48
+    wildcards: genotype=geno2_ctrl, chr=chr2
+
+Finished job 48.
+12 of 56 steps (21%) done
+
+rule mean2dist:
+    input: ../../data/fake_data/genotype/genotest1.genotype-mean.chr2.txt.gz
+    output: output-prepare_XT/geno1_case/genotype-dist-flip.chr2.txt.gz
+    jobid: 45
+    wildcards: genotype=geno1_case, chr=chr2
+
+Finished job 45.
+13 of 56 steps (23%) done
+
+rule fcgene:
+    input: output-prepare_XT/geno1_case/genotype-dist-flip.chr2.txt.gz, output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr2.txt.gz
+    output: output-prepare_XT/geno1_case/plink.chr2.bed, output-prepare_XT/geno1_case/plink.chr2.bim, output-prepare_XT/geno1_case/plink.chr2.fam.temp
+    jobid: 31
+    wildcards: genotype=geno1_case, chr=chr2
+
+Finished job 31.
+14 of 56 steps (25%) done
+
+rule fcgene:
+    input: output-prepare_XT/geno2_ctrl/genotype-dist-flip.chr2.txt.gz, output-prepare_XT/geno2_ctrl/bimbam-snpinfo-flip.chr2.txt.gz
+    output: output-prepare_XT/geno2_ctrl/plink.chr2.bed, output-prepare_XT/geno2_ctrl/plink.chr2.bim, output-prepare_XT/geno2_ctrl/plink.chr2.fam.temp
+    jobid: 32
+    wildcards: genotype=geno2_ctrl, chr=chr2
+
+Finished job 32.
+15 of 56 steps (27%) done
+
+rule fcgene:
+    input: output-prepare_XT/geno1_case/genotype-dist-flip.chr1.txt.gz, output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr1.txt.gz
+    output: output-prepare_XT/geno1_case/plink.chr1.bed, output-prepare_XT/geno1_case/plink.chr1.bim, output-prepare_XT/geno1_case/plink.chr1.fam.temp
+    jobid: 36
+    wildcards: genotype=geno1_case, chr=chr1
+
+Finished job 36.
+16 of 56 steps (29%) done
+
+rule fcgene:
+    input: output-prepare_XT/geno2_ctrl/genotype-dist-flip.chr1.txt.gz, output-prepare_XT/geno2_ctrl/bimbam-snpinfo-flip.chr1.txt.gz
+    output: output-prepare_XT/geno2_ctrl/plink.chr1.bed, output-prepare_XT/geno2_ctrl/plink.chr1.bim, output-prepare_XT/geno2_ctrl/plink.chr1.fam.temp
+    jobid: 34
+    wildcards: genotype=geno2_ctrl, chr=chr1
+
+Finished job 34.
+17 of 56 steps (30%) done
+
+rule fcgene:
+    input: output-prepare_XT/geno1_case/genotype-dist-flip.chr3.txt.gz, output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr3.txt.gz
+    output: output-prepare_XT/geno1_case/plink.chr3.bed, output-prepare_XT/geno1_case/plink.chr3.bim, output-prepare_XT/geno1_case/plink.chr3.fam.temp
+    jobid: 26
+    wildcards: genotype=geno1_case, chr=chr3
+
+Finished job 26.
+18 of 56 steps (32%) done
+
+rule fcgene:
+    input: output-prepare_XT/geno2_ctrl/genotype-dist-flip.chr3.txt.gz, output-prepare_XT/geno2_ctrl/bimbam-snpinfo-flip.chr3.txt.gz
+    output: output-prepare_XT/geno2_ctrl/plink.chr3.bed, output-prepare_XT/geno2_ctrl/plink.chr3.bim, output-prepare_XT/geno2_ctrl/plink.chr3.fam.temp
+    jobid: 28
+    wildcards: genotype=geno2_ctrl, chr=chr3
+
+Finished job 28.
+19 of 56 steps (34%) done
+
+rule post_process_fam:
+    input: output-prepare_XT/geno2_ctrl/plink.chr2.fam.temp
+    output: output-prepare_XT/geno2_ctrl/plink.chr2.fam
+    jobid: 49
+    wildcards: genotype=geno2_ctrl, chr=chr2
+
+Finished job 49.
+20 of 56 steps (36%) done
+
+rule post_process_fam:
+    input: output-prepare_XT/geno1_case/plink.chr2.fam.temp
+    output: output-prepare_XT/geno1_case/plink.chr2.fam
+    jobid: 44
+    wildcards: genotype=geno1_case, chr=chr2
+
+Finished job 44.
+21 of 56 steps (38%) done
+
+rule post_process_fam:
+    input: output-prepare_XT/geno1_case/plink.chr3.fam.temp
+    output: output-prepare_XT/geno1_case/plink.chr3.fam
+    jobid: 40
+    wildcards: genotype=geno1_case, chr=chr3
+
+Finished job 40.
+22 of 56 steps (39%) done
+
+rule post_process_fam:
+    input: output-prepare_XT/geno2_ctrl/plink.chr3.fam.temp
+    output: output-prepare_XT/geno2_ctrl/plink.chr3.fam
+    jobid: 43
+    wildcards: genotype=geno2_ctrl, chr=chr3
+
+Finished job 43.
+23 of 56 steps (41%) done
+
+rule post_process_fam:
+    input: output-prepare_XT/geno2_ctrl/plink.chr1.fam.temp
+    output: output-prepare_XT/geno2_ctrl/plink.chr1.fam
+    jobid: 52
+    wildcards: genotype=geno2_ctrl, chr=chr1
+
+Finished job 52.
+24 of 56 steps (43%) done
+
+rule post_process_fam:
+    input: output-prepare_XT/geno1_case/plink.chr1.fam.temp
+    output: output-prepare_XT/geno1_case/plink.chr1.fam
+    jobid: 55
+    wildcards: genotype=geno1_case, chr=chr1
+
+Finished job 55.
+25 of 56 steps (45%) done
+
+rule add_phenotype:
+    input: output-prepare_XT/geno2_ctrl/plink.chr2.fam
+    output: output-combine_XT_YT/geno2_ctrl/premerge.chr2.fam.temp
+    jobid: 33
+    wildcards: genotype=geno2_ctrl, chr=chr2
+
+Finished job 33.
+26 of 56 steps (46%) done
+
+rule add_phenotype:
+    input: output-prepare_XT/geno1_case/plink.chr1.fam
+    output: output-combine_XT_YT/geno1_case/premerge.chr1.fam.temp
+    jobid: 37
+    wildcards: genotype=geno1_case, chr=chr1
+
+Finished job 37.
+27 of 56 steps (48%) done
+
+rule add_phenotype:
+    input: output-prepare_XT/geno2_ctrl/plink.chr3.fam
+    output: output-combine_XT_YT/geno2_ctrl/premerge.chr3.fam.temp
+    jobid: 29
+    wildcards: genotype=geno2_ctrl, chr=chr3
+
+Finished job 29.
+28 of 56 steps (50%) done
+
+rule add_phenotype:
+    input: output-prepare_XT/geno1_case/plink.chr3.fam
+    output: output-combine_XT_YT/geno1_case/premerge.chr3.fam.temp
+    jobid: 27
+    wildcards: genotype=geno1_case, chr=chr3
+
+Finished job 27.
+29 of 56 steps (52%) done
+
+rule add_phenotype:
+    input: output-prepare_XT/geno2_ctrl/plink.chr1.fam
+    output: output-combine_XT_YT/geno2_ctrl/premerge.chr1.fam.temp
+    jobid: 35
+    wildcards: genotype=geno2_ctrl, chr=chr1
+
+Finished job 35.
+30 of 56 steps (54%) done
+
+rule add_phenotype:
+    input: output-prepare_XT/geno1_case/plink.chr2.fam
+    output: output-combine_XT_YT/geno1_case/premerge.chr2.fam.temp
+    jobid: 30
+    wildcards: genotype=geno1_case, chr=chr2
+
+Finished job 30.
+31 of 56 steps (55%) done
+
+rule update_id:
+    input: output-prepare_XT/geno2_ctrl/plink.chr2.bed, output-prepare_XT/geno2_ctrl/plink.chr2.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr2.fam.temp
+    output: output-combine_XT_YT/geno2_ctrl/premerge.chr2.bed, output-combine_XT_YT/geno2_ctrl/premerge.chr2.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr2.fam
+    jobid: 21
+    wildcards: genotype=geno2_ctrl, chr=chr2
+
+Finished job 21.
+32 of 56 steps (57%) done
+
+rule update_id:
+    input: output-prepare_XT/geno1_case/plink.chr2.bed, output-prepare_XT/geno1_case/plink.chr2.bim, output-combine_XT_YT/geno1_case/premerge.chr2.fam.temp
+    output: output-combine_XT_YT/geno1_case/premerge.chr2.bed, output-combine_XT_YT/geno1_case/premerge.chr2.bim, output-combine_XT_YT/geno1_case/premerge.chr2.fam
+    jobid: 20
+    wildcards: genotype=geno1_case, chr=chr2
+
+Finished job 20.
+33 of 56 steps (59%) done
+
+rule update_id:
+    input: output-prepare_XT/geno1_case/plink.chr3.bed, output-prepare_XT/geno1_case/plink.chr3.bim, output-combine_XT_YT/geno1_case/premerge.chr3.fam.temp
+    output: output-combine_XT_YT/geno1_case/premerge.chr3.bed, output-combine_XT_YT/geno1_case/premerge.chr3.bim, output-combine_XT_YT/geno1_case/premerge.chr3.fam
+    jobid: 17
+    wildcards: genotype=geno1_case, chr=chr3
+
+Finished job 17.
+34 of 56 steps (61%) done
+
+rule update_id:
+    input: output-prepare_XT/geno2_ctrl/plink.chr3.bed, output-prepare_XT/geno2_ctrl/plink.chr3.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr3.fam.temp
+    output: output-combine_XT_YT/geno2_ctrl/premerge.chr3.bed, output-combine_XT_YT/geno2_ctrl/premerge.chr3.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr3.fam
+    jobid: 18
+    wildcards: genotype=geno2_ctrl, chr=chr3
+
+Finished job 18.
+35 of 56 steps (62%) done
+
+rule update_id:
+    input: output-prepare_XT/geno2_ctrl/plink.chr1.bed, output-prepare_XT/geno2_ctrl/plink.chr1.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr1.fam.temp
+    output: output-combine_XT_YT/geno2_ctrl/premerge.chr1.bed, output-combine_XT_YT/geno2_ctrl/premerge.chr1.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr1.fam
+    jobid: 23
+    wildcards: genotype=geno2_ctrl, chr=chr1
+
+Finished job 23.
+36 of 56 steps (64%) done
+
+rule update_id:
+    input: output-prepare_XT/geno1_case/plink.chr1.bed, output-prepare_XT/geno1_case/plink.chr1.bim, output-combine_XT_YT/geno1_case/premerge.chr1.fam.temp
+    output: output-combine_XT_YT/geno1_case/premerge.chr1.bed, output-combine_XT_YT/geno1_case/premerge.chr1.bim, output-combine_XT_YT/geno1_case/premerge.chr1.fam
+    jobid: 24
+    wildcards: genotype=geno1_case, chr=chr1
+
+Finished job 24.
+37 of 56 steps (66%) done
+
+rule generate_merge_list:
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr3.txt
+    jobid: 19
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr3
+
+Finished job 19.
+38 of 56 steps (68%) done
+
+rule generate_merge_list:
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr1.txt
+    jobid: 25
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr1
+
+Finished job 25.
+39 of 56 steps (70%) done
+
+rule generate_merge_list:
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr2.txt
+    jobid: 22
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr2
+
+Finished job 22.
+40 of 56 steps (71%) done
+
+rule merge_genos:
+    input: output-combine_XT_YT/geno1_case/premerge.chr2.fam, output-combine_XT_YT/geno2_ctrl/premerge.chr2.fam, output-combine_XT_YT/geno1_case/premerge.chr2.bed, output-combine_XT_YT/geno2_ctrl/premerge.chr2.bed, output-combine_XT_YT/geno1_case/premerge.chr2.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr2.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr2.txt
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.fam
+    jobid: 15
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr2
+
+Finished job 15.
+41 of 56 steps (73%) done
+
+rule merge_genos:
+    input: output-combine_XT_YT/geno1_case/premerge.chr3.fam, output-combine_XT_YT/geno2_ctrl/premerge.chr3.fam, output-combine_XT_YT/geno1_case/premerge.chr3.bed, output-combine_XT_YT/geno2_ctrl/premerge.chr3.bed, output-combine_XT_YT/geno1_case/premerge.chr3.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr3.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr3.txt
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr3.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr3.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr3.fam
+    jobid: 14
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr3
+
+Finished job 14.
+42 of 56 steps (75%) done
+
+rule merge_genos:
+    input: output-combine_XT_YT/geno1_case/premerge.chr1.fam, output-combine_XT_YT/geno2_ctrl/premerge.chr1.fam, output-combine_XT_YT/geno1_case/premerge.chr1.bed, output-combine_XT_YT/geno2_ctrl/premerge.chr1.bed, output-combine_XT_YT/geno1_case/premerge.chr1.bim, output-combine_XT_YT/geno2_ctrl/premerge.chr1.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_list.chr1.txt
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.fam
+    jobid: 16
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr1
+
+Finished job 16.
+43 of 56 steps (77%) done
+
+rule quality_control:
+    input: output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr2.fam
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr2.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr2.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr2.fam
+    jobid: 12
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr2
+
+Finished job 12.
+44 of 56 steps (79%) done
+
+rule quality_control:
+    input: output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr3.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr3.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr3.fam
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.fam
+    jobid: 10
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr3
+
+Finished job 10.
+45 of 56 steps (80%) done
+
+rule quality_control:
+    input: output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.fam
+    output: output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.fam
+    jobid: 13
+    wildcards: geno1=geno1_case, geno2=geno2_ctrl, chr=chr1
+
+Finished job 13.
+46 of 56 steps (82%) done
+
+rule gen_coordinate:
+    input: output-prepare_betaI/intermediate1/beta-ss.txt.gz, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr2.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr2.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr2.fam
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr2.hdf5
+    jobid: 6
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr2
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Finished job 6.
+47 of 56 steps (84%) done
+
+rule gen_coordinate:
+    input: output-prepare_betaI/intermediate1/beta-ss.txt.gz, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.fam
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr3.hdf5
+    jobid: 5
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr3
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Finished job 5.
+48 of 56 steps (86%) done
+
+rule gen_coordinate:
+    input: output-prepare_betaI/intermediate1/beta-ss.txt.gz, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.bed, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.bim, output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.fam
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr1.hdf5
+    jobid: 9
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr1
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Finished job 9.
+49 of 56 steps (88%) done
+
+rule get_ld_radius:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr3.hdf5
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ld-radius.chr3.yaml
+    jobid: 4
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr3
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Finished job 4.
+50 of 56 steps (89%) done
+
+rule get_ld_radius:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr1.hdf5
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ld-radius.chr1.yaml
+    jobid: 8
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr1
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Finished job 8.
+51 of 56 steps (91%) done
+
+rule get_ld_radius:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr2.hdf5
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ld-radius.chr2.yaml
+    jobid: 7
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr2
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Finished job 7.
+52 of 56 steps (93%) done
+
+rule run_ldpred:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr3.hdf5, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ld-radius.chr3.yaml
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e+00.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-04.txt
+    jobid: 1
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr3
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to 'gelss' driver.
+  warnings.warn(mesg, RuntimeWarning)
+Finished job 1.
+53 of 56 steps (95%) done
+
+rule run_ldpred:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr1.hdf5, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ld-radius.chr1.yaml
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e+00.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-04.txt
+    jobid: 3
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr1
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to 'gelss' driver.
+  warnings.warn(mesg, RuntimeWarning)
+Finished job 3.
+54 of 56 steps (96%) done
+
+rule run_ldpred:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/coordinate.chr2.hdf5, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ld-radius.chr2.yaml
+    output: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e+00.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-04.txt
+    jobid: 2
+    wildcards: intermediate=intermediate1, geno1=geno1_case, geno2=geno2_ctrl, chr=chr2
+
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/Users/yanyu_liang/Documents/programs/anaconda3/envs/py3/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to 'gelss' driver.
+  warnings.warn(mesg, RuntimeWarning)
+Finished job 2.
+55 of 56 steps (98%) done
+
+localrule all_ldpred:
+    input: output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e+00.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p3.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr1_LDpred_p1.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e+00.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p3.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr2_LDpred_p1.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e+00.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-01.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-02.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-03.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p3.0000e-04.txt, output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred.chr3_LDpred_p1.0000e-04.txt
+    jobid: 0
+
+Finished job 0.
+56 of 56 steps (100%) done
+Shutting down, this might take some time.
+Complete log: /Users/yanyu_liang/Documents/learnATcmu/repo/phenotype-epistasis/code/step1/.snakemake/log/2018-02-06T123345.275180.snakemake.log

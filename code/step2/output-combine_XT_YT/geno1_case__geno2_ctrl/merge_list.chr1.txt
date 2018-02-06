@@ -1,1 +1,0 @@
-output-combine_XT_YT/geno2_ctrl/chr1.bed output-combine_XT_YT/geno2_ctrl/chr1.bim output-combine_XT_YT/geno2_ctrl/chr1.fam

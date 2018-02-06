@@ -1,0 +1,54 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ output-combine_XT_YT/geno1_case/premerge.chr1.log ]
+Analysis started: Tue Feb  6 12:34:03 2018
+
+Options in effect:
+	--noweb
+	--bim output-prepare_XT/geno1_case/plink.chr1.bim
+	--bed output-prepare_XT/geno1_case/plink.chr1.bed
+	--fam output-combine_XT_YT/geno1_case/premerge.chr1.fam.temp
+	--update-ids output-combine_XT_YT/geno1_case/premerge.chr1.update-list.temp
+	--make-bed
+	--out output-combine_XT_YT/geno1_case/premerge.chr1
+
+** For gPLINK compatibility, do not use '.' in --out **
+Reading map (extended format) from [ output-prepare_XT/geno1_case/plink.chr1.bim ] 
+300 markers to be included from [ output-prepare_XT/geno1_case/plink.chr1.bim ]
+Reading pedigree information from [ output-combine_XT_YT/geno1_case/premerge.chr1.fam.temp ] 
+200 individuals read from [ output-combine_XT_YT/geno1_case/premerge.chr1.fam.temp ] 
+200 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 200 controls and 0 missing
+0 males, 0 females, and 200 of unspecified sex
+Warning, found 200 individuals with ambiguous sex codes
+Writing list of these individuals to [ output-combine_XT_YT/geno1_case/premerge.chr1.nosex ]
+Reading genotype bitfile from [ output-prepare_XT/geno1_case/plink.chr1.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Reading new FIDs and IIDs from [ output-combine_XT_YT/geno1_case/premerge.chr1.update-list.temp ]
+200 individuals found, 0 not in sample
+Before frequency and genotyping pruning, there are 300 SNPs
+200 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 300 SNPs
+After filtering, 0 cases, 200 controls and 0 missing
+After filtering, 0 males, 0 females, and 200 of unspecified sex
+Writing pedigree information to [ output-combine_XT_YT/geno1_case/premerge.chr1.fam ] 
+Writing map (extended format) information to [ output-combine_XT_YT/geno1_case/premerge.chr1.bim ] 
+Writing genotype bitfile to [ output-combine_XT_YT/geno1_case/premerge.chr1.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Tue Feb  6 12:34:03 2018
+

@@ -1,0 +1,49 @@
+
+||====================================================================================||
+*-> Version: 1.0.7
+*-> Copyright:  GNU General Public License
+*-> Program Developer: 	
+	 Nab Raj Roshyara	 
+	 email: roshyara@yahoo.com	 
+	 Universitaet Leipzig		 
+	 Leipzig Research Center for Civilization Diseases(LIFE)
+	 Institute for Medical Informatics, Statistics and Epidemiology (IMISE)
+	 Group: Genetical Statistics and Systems Biology 
+	 Group Leader: Prof. Dr. Markus Scholz
+|--------------------------------------------------------------------------------------|
+*->Given command options:
+	 --wgd output-prepare_XT/geno1_case/genotype-dist-flip.chr2.txt.gz
+	 --pos output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr2.txt.gz
+	 --oformat plink-bed
+	 --out output-prepare_XT/geno1_case/plink.chr2
+||====================================================================================||
+	**->Used command options: 
+	 --wgd output-prepare_XT/geno1_case/genotype-dist-flip.chr2.txt.gz
+	 --pos output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr2.txt.gz
+	 --oformat plink-bed
+	 --out output-prepare_XT/geno1_case/plink.chr2
+*->Reading file "output-prepare_XT/geno1_case/genotype-dist-flip.chr2.txt.gz": 
+*->Reading file "output-prepare_XT/geno1_case/bimbam-snpinfo-flip.chr2.txt.gz": 
+	           **->Total number of successfully read: 300
+
+
+*->Individual summary:
+	**->Total females:                                0
+	**->Total males:                                  0
+	**->Total individuals with undefined sex:         200
+
+	**->Total cases:                                  0
+	**->Total controls:                               0
+	**->Total individuals with undefined status:      200
+*->Writing fam file "output-prepare_XT/geno1_case/plink.chr2.fam":
+	**->fam file is saved as "output-prepare_XT/geno1_case/plink.chr2.fam".
+*->Writing bim file "output-prepare_XT/geno1_case/plink.chr2.bim": 
+	**->bim file is saved as "output-prepare_XT/geno1_case/plink.chr2.bim". 
+*->Writing genotype bitfile "output-prepare_XT/geno1_case/plink.chr2.bed":
+	**->Genotype bit file is saved as "output-prepare_XT/geno1_case/plink.chr2.bed".
+	**->One extra "snpinfo.txt" file has been written out and saved as "output-prepare_XT/geno1_case/plink.chr2_snpinfo.txt". 
+	**->One extra "pedinfo.txt" file has  been written out and saved as "output-prepare_XT/geno1_case/plink.chr2_pedinfo.txt".
+
+*->The analysis has ended at Tue Feb  6 12:34:01 2018
+
+*->Total time taken for the analysis is: 0 hours, 0 minutes and 0.00 seconds.

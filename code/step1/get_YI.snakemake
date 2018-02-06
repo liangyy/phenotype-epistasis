@@ -1,0 +1,43 @@
+# this module obtain polygenic risk score
+# Note that PRS computed in LDpred shifts a same constant for all individual so the value of PRS_ldpred is not meaningful but the relative amount is meaningful
+
+rule get_prs_ldpred:
+    input:
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bim',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bed',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.fam',
+        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred.{chr}')
+    params:
+        inprefix = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}',
+        rfprefix = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred.{chr}',
+        fractions = config['ldpred']['causal-fraction'],
+        outprefix = 'output-get_YI/{geno1}__{geno2}/YI.{chr}'
+    output:
+        get_ldpred_validate('output-get_YI/{intermediate}__{geno1}__{geno2}/YI.{chr}')
+    shell:
+        'python {ldpred_dir}/validate.py \
+            --vgf {params.inprefix} \
+            --rf {params.rfprefix} \
+            --PS {params.fractions} \
+            --out {params.outprefix}'
+
+rule combine_all_chr:
+    input:
+
+# rule get_prs_pt:
+#     input:
+#         'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bim',
+#         'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bed',
+#         'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.fam'
+#     params:
+#         inprefix = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}',
+#         rfprefix = 'output-run_step1/{intermediate}__{genotype}/pt.{chr}',
+#         fractions = config['ldpred']['causal-fraction']
+#     output:
+#         get_ldpred_validate('output-get_YI/{geno1}__{geno2}/YI.{chr}')
+#     shell:
+#         'python {ldpred_dir}/validate.py \
+#             --vgf {params.inprefix} \
+#             --rf {params.rfprefix} \
+#             --TS {params.fractions} \
+#             --out '

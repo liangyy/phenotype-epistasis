@@ -15,3 +15,6 @@ quality-control:
     hwe: 0.05
     maf: 0.01
     geno: 0.05
+ldpred-dir: '../../../ldpred/ldpred'
+ldpred:
+  causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'

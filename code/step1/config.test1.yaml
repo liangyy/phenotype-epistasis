@@ -1,19 +1,40 @@
-x: 'geno1'
+x1: 'geno1_case'
+x2: 'geno2_ctrl'
 y: 'intermediate1'
-geno1:
+
+## data parameters
+geno1_case:
+  prepare_XT:
+    geno-mean:
+      name-format: '../../data/fake_data/genotype/genotest1.genotype-mean.{chr}.txt.gz'
+    snp-list:
+      name-format: '../../data/fake_data/genotype/genotest1.snp-list.{chr}.gz'
+
+  combine_XT_YT:
+    case-control: 1   # 1 for unaffected; 2 for affected
+geno2_ctrl:
   prepare_XT:
     geno-mean:
       name-format: '../../data/fake_data/genotype/genotest1.genotype-mean.{chr}.txt.gz'
     snp-list:
       name-format: '../../data/fake_data/genotype/genotest1.snp-list.{chr}.gz'
     chr-list: 'chr,1:22'
+  combine_XT_YT:
+    case-control: 2
 intermediate1:
   prepare_betaI:
     beta-ss: '../../data/fake_data/beta/betatest1-genotest1.summary-statistic.txt.gz'
     header: 0  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,3,4,5,6,7,8,9,10'
   nsamples: 20000
+
+## other parameters
 ldpred-dir: '../../../ldpred/ldpred'
 ldpred:
   num-SNPs-per-xMb: 1
   causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
+chr-list: 'chr,1:3'
+quality-control:
+  hwe: 0  # 0.05
+  maf: 0  # 0.01
+  geno: 1  # 0.05

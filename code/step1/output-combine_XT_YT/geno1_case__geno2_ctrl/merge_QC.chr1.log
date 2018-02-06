@@ -1,0 +1,56 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.log ]
+Analysis started: Tue Feb  6 12:34:04 2018
+
+Options in effect:
+	--noweb
+	--bfile output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1
+	--make-bed
+	--mind 1
+	--maf 0
+	--geno 1
+	--hwe 0
+	--out output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1
+
+** For gPLINK compatibility, do not use '.' in --out **
+Reading map (extended format) from [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bim ] 
+300 markers to be included from [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bim ]
+Reading pedigree information from [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.fam ] 
+400 individuals read from [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.fam ] 
+400 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+200 cases, 200 controls and 0 missing
+0 males, 0 females, and 400 of unspecified sex
+Warning, found 400 individuals with ambiguous sex codes
+Writing list of these individuals to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.nosex ]
+Reading genotype bitfile from [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge.chr1.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 300 SNPs
+400 founders and 0 non-founders found
+0 markers to be excluded based on HWE test ( p <= 0 )
+	0 markers failed HWE test in cases
+	0 markers failed HWE test in controls
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 300 SNPs
+After filtering, 200 cases, 200 controls and 0 missing
+After filtering, 0 males, 0 females, and 400 of unspecified sex
+Writing pedigree information to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.fam ] 
+Writing map (extended format) information to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.bim ] 
+Writing genotype bitfile to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr1.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Tue Feb  6 12:34:04 2018
+
