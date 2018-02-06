@@ -29,8 +29,6 @@ test.bplink.bed test.bplink.bim test.bplink.fam
 
 Formating summary statistic. LDpred uses p-value and sample size to compute beta (standard format) and raw beta is not used at all
 
-## Step 2: $Y_T \sim \hat{Y}_I \cdot X_T$
-
 ### Combine $X_T$ and $Y_T$
 
 ```
@@ -49,7 +47,13 @@ $ plink --bfile data1_phenotyped --bmerge data2_phenotyped --make-bed --out merg
 $ plink --bfile merged_data --make-bed --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out merged_data_QC
 ```
 
-**TODO**: change the individual id for geno2
+### Run LDpred or P+T
+
+Now, only LDpred is implemented.
+
+**TODO**: add P+T
+
+## Step 2: $Y_T \sim \hat{Y}_I \cdot X_T$
 
 ### Get PCs of $X_T$
 
