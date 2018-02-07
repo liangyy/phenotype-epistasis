@@ -8,27 +8,36 @@ include: 'combine_XT_YT.snakemake'
 
 def get_ldpred_outputs(prefix, fs):
     fs = fs.split(',')
-    fs = [ float(f) for f in fs ]
-    out = []
-    for f in fs:
-        out.append('%s_LDpred_p%0.4e.txt' % (prefix, f))
+    try:
+        fs = [ float(f) for f in fs ]
+        out = []
+        for f in fs:
+            out.append('%s_LDpred_p%0.4e.txt' % (prefix, f))
+    except ValueError:
+        out = '%s_LDpred_p%s.txt' % (prefix, fs[0])
+        print(out)
     return out
 
-## pipeline output
-def get_all(config, mtd):
+def get_all_chr(string, nchr_info):
     out = []
-    nchr_info = config['chr-list'].split(',')
+    nchr_info = nchr_info.split(',')
     nchr_name = nchr_info[0]
     nchr_info = nchr_info[1].split(':')
     nchr_from = int(nchr_info[0])
     nchr_to = int(nchr_info[1])
     for i in range(nchr_from, nchr_to + 1):
-        out += get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/{method}.{chr}'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'], chr = nchr_name + str(i), method = mtd), config['ldpred']['causal-fraction'])
+        out.append(string.format(chr = nchr_name + str(i)))
+    print(out)
+    return out
+
+## pipeline output
+def get_all(config, mtd):
+    out = get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/{method}'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'], chr = 'all', method = mtd), config['ldpred']['causal-fraction'])
     return out
 
 rule all_pt:
     input:
-        get_all(config, 'pt')
+        get_all(config, 'ptYI')
 rule all_ldpred:
     input:
         get_all(config, 'ldpredYI')
@@ -107,3 +116,13 @@ rule get_prs_ldpred:
             --rf {params.rfprefix} \
             --PS {params.fractions} \
             --out {params.outprefix}'
+
+rule combine_prs_ldpred:
+    input:
+        get_all_chr(get_ldpred_outputs('output-run_step1/{{intermediate}}__{{geno1}}__{{geno2}}/ldpredYI.{chr}', '{{pval}}'), nchr_info = config['chr-list'])
+    params:
+        ':'.join(get_all_chr(get_ldpred_outputs('output-run_step1/{{intermediate}}__{{geno1}}__{{geno2}}/ldpredYI.{chr}', '{{pval}}'), nchr_info = config['chr-list']))
+    output:
+        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', '{pval}')
+    shell:
+        'Rscript scripts/combine_prs.R -i {params[0]} -o {output[0]}'
