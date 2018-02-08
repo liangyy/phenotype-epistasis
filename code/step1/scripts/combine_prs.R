@@ -29,6 +29,7 @@ covariate <- myRead(f)
 iids <- covariate[, 1]
 raw <- covariate[, 3]
 prs <- covariate[, 4]
+true_phens <- covariate[, 2]
 for(i in 2 : length(inputs)) {
   f <- inputs[i]
   covariate <- myRead(f)
@@ -43,5 +44,5 @@ for(i in 2 : length(inputs)) {
   prs <- prs + prs.i
 }
 
-out <- data.frame(IID = iids, RAW_PRS = raw, PRS = prs)
+out <- data.frame(IID = iids, RAW_PRS = raw, PRS = prs, PHENO = true_phens)
 write.table(out, file = opt$output, quote = F, row.names = F, col.names = T)

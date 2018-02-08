@@ -1,0 +1,108 @@
+# this module computes the association of XT againist YT
+# this module compute the direction of YI on YT
+# and combined direction
+
+def get_format(replace_str, config, chr):
+    string = config[replace_str]['name-format'].format(replace = replace_str, chr = chr)
+    return string
+
+def get_ldpred_outputs_ext(prefix, fs, ext):
+    fs = fs.split(',')
+    try:
+        fs = [ float(f) for f in fs ]
+        out = []
+        for f in fs:
+            out.append('%s_LDpred_p%0.4e%s' % (prefix, f, ext))
+    except ValueError:
+        out = '%s_LDpred_p%s%s' % (prefix, fs[0], ext)
+        print(out)
+    return out
+
+## for debug
+def get_xtyi(config):
+    out = []
+    nchr_info = config['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        out += get_ldpred_outputs_ext('output-direction_XT_YI/{yt}/xtyi.{chr}'.format(chr = nchr_name + str(i), yt = config['y'] + '__' + config['x1'] + '__' + config['x2']),
+                                        config['ldpred']['causal-fraction'],
+                                        '.assoc.logistic')
+    return out
+def get_xt(config):
+    out = []
+    nchr_info = config['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        out.append('output-direction_XT_YI/{yt}/xt.{chr}.assoc.logistic'.format(chr = nchr_name + str(i), yt = config['y'] + '__' + config['x1'] + '__' + config['x2']))
+    return out
+def get_yi(config):
+    out = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
+    return out
+rule all_XTYI:
+    input:
+        get_xtyi(config)
+rule all_XT:
+    input:
+        get_xt(config)
+rule all_YI:
+    input:
+        get_yi(config)
+## end debug
+
+rule direction_xt:
+    input:
+        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr) + '.bed',
+        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr) + '.bim',
+        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr) + '.fam'
+    params:
+        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr),
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.{chr}'
+    output:
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.{chr}.assoc.logistic'
+    shell:
+        'plink --noweb --bed {input.e} --bim {input.i} --fam {input.f} --logistic --out {params[1]}'
+
+
+
+rule direction_yi:
+    input:
+        get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'], '.txt')
+    params:
+        ':'.join(get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'], '.txt'))
+    output:
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
+    shell:
+        'Rscript scripts/direction_yi.R --inputs {params[0]} \
+            --output {output[0]}'
+
+first_chr = config['chr-list'].split(',')[0] + config['chr-list'].split(',')[1].split(':')[0]
+
+rule prepare_covar:
+    input:
+        '../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI_LDpred_p{pval}.txt',
+        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, first_chr) + '.fam'
+    output:
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar_LDpred_p{pval}.txt'
+    shell:
+        'Rscript scripts/prepare_covar.R -i {input[0]} -o {output[0]} -f {input[1]}'
+
+rule direction_xt_yi:
+    input:
+        yi = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', '{pval}', '.txt'),
+        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr) + '.bed',
+        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr) + '.bim',
+        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr) + '.fam'
+    params:
+        genotype = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config, wildcards.chr),
+        oprefix = lambda wildcards:  get_ldpred_outputs_ext('output-direction_XT_YI/{i}__{g1}__{g2}/xtyi.{chr}'.format(i = wildcards.intermediate, g1 = wildcards.geno1, g2 = wildcards.geno2, chr = wildcards.chr), wildcards.pval, '')
+    output:
+        o = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi.{chr}', '{pval}', '.assoc.logistic'),
+    shell:
+        'python scripts/direction_xtyi.py --inputs {input.yi} --outputs {params.oprefix} --geno_prefix {params.genotype}'
+# output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi.logistic_gwas.{chr}_LDpred_p1.0000e+00.assoc

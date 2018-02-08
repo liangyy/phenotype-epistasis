@@ -1,0 +1,52 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi.chr3_LDpred_p3.0000e-01.log ]
+Analysis started: Wed Feb  7 12:56:45 2018
+
+Options in effect:
+	--noweb
+	--bed ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bed
+	--bim ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bim
+	--fam ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.fam
+	--allow-no-sex
+	--logistic
+	--covar output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/covar_LDpred_p3.0000e-01.txt
+	--out output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi.chr3_LDpred_p3.0000e-01
+
+** For gPLINK compatibility, do not use '.' in --out **
+Reading map (extended format) from [ ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bim ] 
+300 markers to be included from [ ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bim ]
+Reading pedigree information from [ ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.fam ] 
+400 individuals read from [ ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.fam ] 
+400 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+200 cases, 200 controls and 0 missing
+0 males, 0 females, and 400 of unspecified sex
+Warning, found 400 individuals with ambiguous sex codes
+Writing list of these individuals to [ output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi.chr3_LDpred_p3.0000e-01.nosex ]
+Reading genotype bitfile from [ ../step1/output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.chr3.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Reading 1 covariates from [ output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/covar_LDpred_p3.0000e-01.txt ] with nonmissing values for 400 individuals
+Before frequency and genotyping pruning, there are 300 SNPs
+400 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 300 SNPs
+After filtering, 200 cases, 200 controls and 0 missing
+After filtering, 0 males, 0 females, and 400 of unspecified sex
+Converting data to Individual-major format
+Writing logistic model association results to [ output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi.chr3_LDpred_p3.0000e-01.assoc.logistic ] 
+
+Analysis finished: Wed Feb  7 12:56:45 2018
+
