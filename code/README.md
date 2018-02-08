@@ -47,15 +47,33 @@ $ plink --bfile data1_phenotyped --bmerge data2_phenotyped --make-bed --out merg
 $ plink --bfile merged_data --make-bed --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out merged_data_QC
 ```
 
-### Run LDpred or P+T
+### Compute $Y_I$ with LDpred or P+T
 
 Now, only LDpred is implemented.
+
+```
+# prepare input
+$ python [ldpred-code-dir]/coord_genotypes.py [input: combined genotype in PLINK format]
+
+# run LDpred
+$ python [ldpred-code-dir]/Ldpred.py [input: output of previous step + causal fraction hyper-parameters]
+
+# calculate PRS based on LDpred output
+$ python [ldpred-code-dir]/validate.py [input: genotype data + LDpred output posterior mean of effect size]
+
+# combine results from all chromosomes
+$ python combine_prs.py --inputs [the collection of LDpred output under the same causal fraction] --output [ldpred.prs_by_causal_fraction]
+```
 
 **TODO**: add P+T
 
 ## Step 2: $Y_T \sim \hat{Y}_I \cdot X_T$
 
 ### Get PCs of $X_T$
+
+It has not been implemented yet.
+
+**TODO**: implement PC
 
 ```
 Rscript getQC.R --geno merged_data_QC -nPCs 2 --output PCs.merged_data_QC.txt.gz
@@ -66,32 +84,35 @@ Rscript getQC.R --geno merged_data_QC -nPCs 2 --output PCs.merged_data_QC.txt.gz
 #### Direction of $X_T$
 
 ```
-$ plink --bfile merged_data_QC --logistic --out log_assoc_merged_data_QC --covar <(zcat < PCs.merged_data_QC.txt.gz)
-$ Rscript extractDirection.R --input log_assoc.merged_data_QC.logistic --output direction_XT.merge_data_QC.txt.gz
+$ plink --bfile merged_data_QC --logistic --out log_assoc_merged_data_QC --allow-no-sex
 ```
 
 #### Direction of $Y_I$
 
 ```
-# predict Y_I based on merged_data_QC
-$ python ldpred/validate.py SOMETHING --input merged_data_QC --out merged_data_QC_YI  # ignore the prediction accuracy since the phenotype is wrong
+$ Rscript direction_yi.R --input [ldpred.prs_by_causal_fraction] --output [yi.ldpred.prs_by_causal_fraction]
+```
 
-# determine the direction
-$ Rscript computeDirection.R --input merged_data_QC_YI.txt.gz --output directon_YI.merged_data_QC.txt.gz
+#### Direction of $X_T$ when $Y_I$ is covariate
+
+```
+$ python direction_xtyi.py --input [input: PRS score + genotype]
 ```
 
 ### Perform interaction test
 
 ```
+# =========== LEAVE FOR FUTURE ===========
 # merge covariates
 bash merge_two_covar.sh -a YI.merged_data_QC.txt.gz -b PCs.merged_data_QC.txt.gz -o covars.merged_data_QC.txt.gz
+# ========================================
 
 # additive model
-$ plink --bfile merged_data_QC --logistic --covar <(zcat < YI.merged_data_QC.txt.gz) --interaction --out interaction_add_YI.merged_data_QC
+$ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --out interaction_add_YI.merged_data_QC
 
 # dominant/recessive model
 ## note that the dominant/recessive is respective to reference allele but not the risk one
 ## in the end, the dominant and recessive will be reassigned according to direction files
-$ plink --bfile merged_data_QC --logistic --covar <(zcat < YI.merged_data_QC.txt.gz) --interaction --dominant --out interaction_dom_YI.merged_data_QC
-$ plink --bfile merged_data_QC --logistic --covar <(zcat < YI.merged_data_QC.txt.gz) --interaction --recessive --out interaction_rec_YI.merged_data_QC
+$ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --dominant --out interaction_dom_YI.merged_data_QC
+$ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --recessive --out interaction_rec_YI.merged_data_QC
 ```

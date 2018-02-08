@@ -12,6 +12,5 @@ intermediate1__geno1_case__geno2_ctrl:
 ## other parameters
 ldpred-dir: '../../../ldpred/ldpred'
 ldpred:
-  num-SNPs-per-xMb: 1
   causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
 chr-list: 'chr,1:3'
