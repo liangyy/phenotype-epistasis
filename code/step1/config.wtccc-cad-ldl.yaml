@@ -1,0 +1,39 @@
+x1: 'wtccc_cad'
+x2: 'wtccc_ctrl'
+y: 'MAGNETIC_HDL.C'
+
+## data parameters
+wtccc_cad:
+  prepare_XT:
+    geno-mean:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cad/cad.{chr}.mean.genotype.txt.gz'
+    snp-list:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cad/cad.wtccc.{chr}.pos'
+  combine_XT_YT:
+    case-control: 2   # 1 for unaffected; 2 for affected
+wtccc_ctrl:
+  prepare_XT:
+    geno-mean:
+      name-format: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/merge/wtccc_ctrl.{chr}.mean.genotype.txt.gz'
+    snp-list:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/birthctrl/birthctrl.wtccc.{chr}.pos'
+  combine_XT_YT:
+    case-control: 1
+MAGNETIC_HDL.C:
+  prepare_betaI:
+    beta-ss: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/Summary_statistics_MAGNETIC_LDL.C.txt.gz'
+    header: 1  # no header = 0, with header = 1
+    chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,5,4,-6,6,3,9,7,11'  # add '-' before reffrq is the column is referring to altfrq
+    sep: ' '
+  nsamples: 21555
+
+## other parameters
+ldpred-dir: '../../../ldpred/ldpred'
+ldpred:
+  num-SNPs-per-xMb: 1
+  causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
+chr-list: 'chr,1:22'
+quality-control:
+  hwe: 0.05  # 0.05
+  maf: 0.05  # 0.01
+  geno: 0.05  # 0.05
