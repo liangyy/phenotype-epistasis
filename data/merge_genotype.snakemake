@@ -1,0 +1,29 @@
+# this module merge genotype by chromosome
+# it takes BIMBAM mean genotype file in GZ format
+
+def get_all(config):
+    string = 'merge/{out_prefix}.{chr}.mean.genotype.txt.gz'.format(out_prefix = config['out_prefix'])
+    out = []
+    chrm = config['chromosome']
+    chrm = chrm.split('-')
+    s = int(chrm[0])
+    e = int(chrm[1])
+    for i in range(s, e + 1):
+        out.append(string.format(chr = config['chr_string'] + str(i)))
+    return out
+
+rule all:
+    input:
+        get_all(config)
+
+rule merge:
+    input:
+        g1 = lambda wildcards: config[wildcards.out_prefix + '-1'],
+        g2 = lambda wildcards: config[wildcards.out_prefix + '-2']
+    output:
+        'merge/{out_prefix}.{chr}.mean.genotype.txt.gz'
+    shell:
+        'python scripts/merge_genotype.py \
+            --geno1 {input.g1} \
+            --geno2 {input.geno2} \
+            --output {output[0]}'

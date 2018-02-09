@@ -1,0 +1,5 @@
+out_prefix: wtccc_ctrl
+chromosome: '1-22'
+chr_string: 'chr'
+wtccc_ctrl-1: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/birthctrl/birthctrl.{chr}.mean.genotype.txt.gz'
+wtccc_ctrl-2: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/bloodctrl/bloodctrl.{chr}.mean.genotype.txt.gz'
