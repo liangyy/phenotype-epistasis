@@ -15,7 +15,7 @@ def get_ldpred_outputs_ext(prefix, fs, ext):
             out.append('%s_LDpred_p%0.4e%s' % (prefix, f, ext))
     except ValueError:
         out = '%s_LDpred_p%s%s' % (prefix, fs[0], ext)
-        print(out)
+        # print(out)
     return out
 
 ## for debug
