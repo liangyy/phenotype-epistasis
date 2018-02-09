@@ -7,7 +7,6 @@ parser.add_argument('--geno2', help = 'second genotype file in GZ')
 parser.add_argument('--output', help = 'output file name')
 args = parser.parse_args()
 
-import pandas as pd
 import sys, gzip
 
 rs_dic = {}
