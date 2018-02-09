@@ -9,7 +9,6 @@ wtccc_cad:
       name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cad/cad.{chr}.mean.genotype.txt.gz'
     snp-list:
       name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cad/cad.wtccc.{chr}.pos'
-
   combine_XT_YT:
     case-control: 2   # 1 for unaffected; 2 for affected
 wtccc_ctrl:
@@ -18,7 +17,6 @@ wtccc_ctrl:
       name-format: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/merge/wtccc_ctrl.{chr}.mean.genotype.txt.gz'
     snp-list:
       name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/birthctrl/birthctrl.wtccc.{chr}.pos'
-
   combine_XT_YT:
     case-control: 1
 MAGNETIC_HDL.C:

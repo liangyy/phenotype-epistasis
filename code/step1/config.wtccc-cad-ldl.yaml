@@ -25,7 +25,7 @@ MAGNETIC_HDL.C:
     header: 1  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,5,4,-6,6,3,9,7,11'  # add '-' before reffrq is the column is referring to altfrq
     sep: ' '
-  nsamples: 21555
+  nsamples: 21559
 
 ## other parameters
 ldpred-dir: '../../../ldpred/ldpred'
