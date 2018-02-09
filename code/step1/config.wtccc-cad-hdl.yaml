@@ -23,8 +23,8 @@ MAGNETIC_HDL.C:
   prepare_betaI:
     beta-ss: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/Summary_statistics_MAGNETIC_HDL.C.txt.gz'
     header: 1  # no header = 0, with header = 1
-    chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,5,4,-6,6,3,9,7,11'  # add '-' before reffrq is the column is referring to altfrq
-    sep: ' '
+    chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,5,4,-6,10,3,9,7,11'  # add '-' before reffrq is the column is referring to altfrq
+    sep: '" "'
   nsamples: 21555
 
 ## other parameters

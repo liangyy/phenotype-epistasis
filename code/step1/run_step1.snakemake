@@ -15,7 +15,7 @@ def get_ldpred_outputs(prefix, fs):
             out.append('%s_LDpred_p%0.4e.txt' % (prefix, f))
     except ValueError:
         out = '%s_LDpred_p%s.txt' % (prefix, fs[0])
-        print(out)
+        # print(out)
     return out
 
 def get_all_chr(string, nchr_info):
@@ -27,7 +27,7 @@ def get_all_chr(string, nchr_info):
     nchr_to = int(nchr_info[1])
     for i in range(nchr_from, nchr_to + 1):
         out.append(string.format(chr = nchr_name + str(i)))
-    print(out)
+    # print(out)
     return out
 
 ## pipeline output

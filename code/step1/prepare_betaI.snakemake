@@ -12,7 +12,7 @@ rule format_beta:
         lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['beta-ss']
     params:
         lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n'],
-        lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['header']
+        lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['header'],
         lambda wildcards: config[wildcards.intermediate]['prepare_betaI']['sep']
     output:
         'output-prepare_betaI/{intermediate}/beta-ss.txt.gz'
