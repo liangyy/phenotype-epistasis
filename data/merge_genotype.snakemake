@@ -2,7 +2,7 @@
 # it takes BIMBAM mean genotype file in GZ format
 
 def get_all(config):
-    string = 'merge/{out_prefix}.{chr}.mean.genotype.txt.gz'.format(out_prefix = config['out_prefix'])
+    string = 'merge/{out_prefix}.{{chr}}.mean.genotype.txt.gz'.format(out_prefix = config['out_prefix'])
     out = []
     chrm = config['chromosome']
     chrm = chrm.split('-')
@@ -10,6 +10,7 @@ def get_all(config):
     e = int(chrm[1])
     for i in range(s, e + 1):
         out.append(string.format(chr = config['chr_string'] + str(i)))
+    # print(out)
     return out
 
 rule all:
@@ -18,12 +19,12 @@ rule all:
 
 rule merge:
     input:
-        g1 = lambda wildcards: config[wildcards.out_prefix + '-1'],
-        g2 = lambda wildcards: config[wildcards.out_prefix + '-2']
+        g1 = lambda wildcards: config[wildcards.out_prefix + '-1'].format(chr = wildcards.chr),
+        g2 = lambda wildcards: config[wildcards.out_prefix + '-2'].format(chr = wildcards.chr)
     output:
         'merge/{out_prefix}.{chr}.mean.genotype.txt.gz'
     shell:
         'python scripts/merge_genotype.py \
             --geno1 {input.g1} \
-            --geno2 {input.geno2} \
+            --geno2 {input.g2} \
             --output {output[0]}'
