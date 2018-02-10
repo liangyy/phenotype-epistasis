@@ -27,27 +27,28 @@ cmd = 'plink --noweb \
                 --out {out}'.format(bim1 = args.bim1, bed1 = args.bed1, fam1 = args.fam1, mlist = args.merge_list, out = args.out_prefix)
 
 print('=============== PLINK wrapper START ================')
+
 print('Do:')
 print(cmd)
-try:
-    subprocess.call([cmd])
-except OSError:
+e = subprocess.run([cmd], shell = True)
+if e.returncode == 1:
     print ('There are mismatched SNPs')
     missnp = '{prefix}.missnp'.format(prefix = args.out_prefix)
 
-    clean_up_cmd = 'mv {missnp} temp.{missnp}; rm {prefix}*'.format(missnp = missnp, prefix = args.out_prefix)
+    clean_up_cmd = 'mv {missnp} {prefix}-temp; rm {prefix}.*'.format(missnp = missnp, prefix = args.out_prefix)
     print('Grabbing missnp list and cleaning up failure')
     print(clean_up_cmd)
-    os.sysmte(clean_up_cmd)
-    missnp = 'temp.' + missnp
+    os.system(clean_up_cmd)
+    missnp = '{prefix}-temp'.format(prefix = args.out_prefix)
 
     merge2 = {}
     with open(args.merge_list, 'r') as f:
         for i in f:
-            i = i.strip()
-            filename, file_extension = os.path.splitext(i)
-            merge2[file_extension] = i
-
+            i = i.strip().split(' ')
+            for j in i:
+                filename, file_extension = os.path.splitext(j)
+                merge2[file_extension] = j
+    print(merge2)
     cmd1 = 'plink --noweb \
                     --bim {bim1} \
                     --bed {bed1} \
@@ -65,17 +66,19 @@ except OSError:
                     --fam {fam1} \
                     --exclude {missnp} \
                     --make-bed \
-                    --out {out}_tmp2'.format(bim1 = merge2['bim'], bed1 = merge2['bed'], fam1 = merge2['fam'], missnp = missnp, out = args.out_prefix)
+                    --out {out}_tmp2'.format(bim1 = merge2['.bim'], bed1 = merge2['.bed'], fam1 = merge2['.fam'], missnp = missnp, out = args.out_prefix)
     print('Cleaning up set2:')
     print(cmd2)
     os.system(cmd2)
 
-    cmd3 = 'plink --bfile {out}_tmp1 --bmerge {out}_tmp2 --make-bed --out {out}'.format(out = args.out_prefix)
+    cmd3 = 'plink --noweb --bfile {out}_tmp1 --merge-list <( echo \'{out}_tmp2.bed {out}_tmp2.bim {out}_tmp2.fam\' ) --make-bed --out {out}'.format(out = args.out_prefix)
     print('Final merging:')
     print(cmd3)
-    os.system(cmd3)
+    os.system('CMD="{cmd3}"; bash -c "$CMD"'.format(cmd3 = cmd3))
 
-    clean_up_final_cmd = 'rm {out}_tmp1.*; rm {out}_tmp2.*'.format(out = args.out_prefix)
+    clean_up_final_cmd = 'rm {out}_tmp1.*; rm {out}_tmp2.*; rm {out}-temp'.format(out = args.out_prefix)
     print('Cleaning up temp files:')
-    os.sysmte(clean_up_final_cmd)
+    print(clean_up_final_cmd)
+    os.system(clean_up_final_cmd)
+
 print('=============== PLINK wrapper FINISH ===============')
