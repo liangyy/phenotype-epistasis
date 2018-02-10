@@ -32,8 +32,10 @@ while getopts ':ho:i:g:' option; do
   esac
 done
 if [ "${input##*.}" = 'gz' ]; then
-  awk 'NR==FNR{a[$1]=$3"\t"$2;next}{print $1,a[$1],0.1,$2,$3}' OFS="\t" FS=' ' <(zcat < $geno) FS='\t' <(zcat < $input) > $output.temp
+  # awk 'NR==FNR{a[$1]=$3"\t"$2;next}{print $1,a[$1],0.1,$2,$3}' OFS="\t" FS=' ' <(zcat < $geno) FS='\t' <(zcat < $input) > $output.temp
+  awk 'NR==FNR{a[$1]=$1;b[$1]="0.1\t"$2"\t"$3;next}{print a[$1],$3,$2,b[$1]}' OFS="\t" FS=' ' <(zcat < $input) FS='\t' <(zcat < $geno) > $output.temp
 else
-  awk 'NR==FNR{a[$1]=$3"\t"$2;next}{print $1,a[$1],0.1,$2,$3}' OFS="\t" FS=' ' <(zcat < $geno) FS='\t' <(cat $input) > $output.temp
+  # awk 'NR==FNR{a[$1]=$3"\t"$2;next}{print $1,a[$1],0.1,$2,$3}' OFS="\t" FS=' ' <(zcat < $geno) FS='\t' <(cat $input) > $output.temp
+  awk 'NR==FNR{a[$1]=$1;b[$1]="0.1\t"$2"\t"$3;next}{print a[$1],$3,$2,b[$1]}' OFS="\t" FS=' ' <(cat < $input) FS='\t' <(zcat < $geno) > $output.temp
 fi
 echo -e 'rs\tA\tB\taf\tchr\tpos' | cat - $output.temp | gzip > $output && rm $output.temp

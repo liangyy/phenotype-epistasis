@@ -23,7 +23,7 @@ rule mean2dist:
     output:
         'output-prepare_XT/{genotype}/genotype-dist-flip.{chr}.txt.gz'
     shell:
-        'python scripts/mean2dist.py --input {input[0]} --output {output[0]}'
+        'python scripts/mean2dist.py --input {input[0]} | gzip > {output[0]}'
 
 rule gen_snpinfo:
     input:

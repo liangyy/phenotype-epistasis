@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(prog='mean2dist.py', description='''
     [snp-id] [ref-allele] [alt-allele] [posterior-prob-of-ref-ref] [posterior-prob-of-ref-alt]
 ''')
 parser.add_argument('--input', help = 'input genotype mean file in GZ format')
-parser.add_argument('--output', help = 'file name of output genotype distribution file in GZ format')
+# parser.add_argument('--output', help = 'file name of output genotype distribution file in GZ format')
 args = parser.parse_args()
 
 import sys
