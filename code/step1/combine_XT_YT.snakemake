@@ -79,7 +79,13 @@ rule merge_genos:
         'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.fam'
     shell:
         '''
-        plink --noweb --bim {input.bim1} --bed {input.bed1} --fam {input.fam1} --merge-list {input.mlist} --make-bed --out {params.out}
+        # plink --noweb --bim {input.bim1} --bed {input.bed1} --fam {input.fam1} --merge-list {input.mlist} --make-bed --out {params.out}
+        python scripts/plink_merge_wrapper.py \
+            --bim1 {input.bim1} \
+            --bed1 {input.bed1} \
+            --fam1 {input.fam1} \
+            --merge_list {input.mlist} \
+            --out_prefix {params.out}
         '''
 
 rule quality_control:
