@@ -19,7 +19,7 @@ radius = yaml.load(f)
 radius = radius['ld-radius']
 f.close()
 
-cmd = 'python {dir}/Ldpred.py \
+cmd = 'python {dir}/LDpred.py \
         --coord {coord} \
         --ld_radius {radius} \
         --PS {fraction} \
