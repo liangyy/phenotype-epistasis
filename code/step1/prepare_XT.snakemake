@@ -17,6 +17,31 @@
 #         get_all(config)
 ## debug end
 
+def get_all_chr_plink(config):
+    out = []
+    nchr_info = config['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        for j in ['bed', 'bim', 'fam']:
+            out.append('output-prepare_XT/{{genotype}}/plink.{chr}.{ext}'.format(chr = nchr_name + str(i)), ext = j)
+    # print(out)
+    return out
+
+def get_all_chr_plink_str(config):
+    out = get_all_chr_plink(config)
+    out_str = ''
+    for i in range(len(out)):
+        if i % 3 == 0:
+            out_str = out_str + out[i]
+        if i % 3 == 1:
+            out_str = out_str + ' ' + out[i]
+        if i % 3 == 2:
+            out_str = out_str + ' ' + out[i] + '\n'
+    return out_str
+
 rule mean2dist:
     input:
         lambda wildcards: config[wildcards.genotype]['prepare_XT']['geno-mean']['name-format'].format(chr = wildcards.chr)
@@ -57,3 +82,16 @@ rule post_process_fam:
         '''
         cat {input[0]} | awk '{{print $1,$2,$3,$4,$5,$6}}' > {output[0]}
         '''
+
+rule combine_chromosomes:
+    input:
+        get_all_chr_plink(config)
+    output:
+        'output-prepare_XT/{genotype}/plink.fam',
+        'output-prepare_XT/{genotype}/plink.bim',
+        'output-prepare_XT/{genotype}/plink.bed'
+    params:
+        mlist = get_all_chr_plink_str(config),
+        out = 'output-prepare_XT/{genotype}/plink'
+    shell:
+        'plink --noweb --merge-list {params.mlist} --make-bed --out {params.out}'

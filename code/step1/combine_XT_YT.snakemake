@@ -3,14 +3,7 @@
 
 ## for debug
 def get_all(config):
-    out = []
-    nchr_info = config['chr-list'].split(',')
-    nchr_name = nchr_info[0]
-    nchr_info = nchr_info[1].split(':')
-    nchr_from = int(nchr_info[0])
-    nchr_to = int(nchr_info[1])
-    for i in range(nchr_from, nchr_to + 1):
-        out.append('output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bed'.format(geno1 = config['x1'], geno2 = config['x2'], chr = nchr_name + str(i)))
+    out = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bed'.format(geno1 = config['x1'], geno2 = config['x2'])
     return out
 
 rule all_XTYT:
@@ -21,11 +14,11 @@ rule all_XTYT:
 rule add_phenotype:
     input:
         # lambda wildcards: (config[wildcards.genotype]['combine_XT']['name-format'] + '.fam').format(chr = wildcards.chr)
-        'output-prepare_XT/{genotype}/plink.{chr}.fam'
+        'output-prepare_XT/{genotype}/plink.fam'
     params:
         label = lambda wildcards: config[wildcards.genotype]['combine_XT_YT']['case-control']
     output:
-        'output-combine_XT_YT/{genotype}/premerge.{chr}.fam.temp'
+        'output-combine_XT_YT/{genotype}/premerge.fam.temp'
     shell:
         '''
         bash scripts/add_phenotype.sh -p {params.label} -i {input[0]} -o {output[0]}
@@ -33,16 +26,16 @@ rule add_phenotype:
 
 rule update_id:
     input:
-        bed = 'output-prepare_XT/{genotype}/plink.{chr}.bed',
-        bim = 'output-prepare_XT/{genotype}/plink.{chr}.bim',
-        fam = temp('output-combine_XT_YT/{genotype}/premerge.{chr}.fam.temp')
+        bed = 'output-prepare_XT/{genotype}/plink.bed',
+        bim = 'output-prepare_XT/{genotype}/plink.bim',
+        fam = temp('output-combine_XT_YT/{genotype}/premerge.fam.temp')
     params:
         label = lambda wildcards: config[wildcards.genotype]['combine_XT_YT']['case-control'],
-        name = 'output-combine_XT_YT/{genotype}/premerge.{chr}'
+        name = 'output-combine_XT_YT/{genotype}/premerge'
     output:
-        'output-combine_XT_YT/{genotype}/premerge.{chr}.bed',
-        'output-combine_XT_YT/{genotype}/premerge.{chr}.bim',
-        'output-combine_XT_YT/{genotype}/premerge.{chr}.fam'
+        'output-combine_XT_YT/{genotype}/premerge.bed',
+        'output-combine_XT_YT/{genotype}/premerge.bim',
+        'output-combine_XT_YT/{genotype}/premerge.fam'
     shell:
         '''
         bash scripts/update_id.sh -p {params.label} -e {input[0]} -i {input[1]} -f {input[2]} -o {params.name}
@@ -50,9 +43,9 @@ rule update_id:
 
 rule generate_merge_list:
     params:
-        geno2 = 'output-combine_XT_YT/{geno2}/premerge.{chr}'
+        geno2 = 'output-combine_XT_YT/{geno2}/premerge'
     output:
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_list.{chr}.txt'
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_list.txt'
     shell:
         '''
         echo '{params.geno2}.bed {params.geno2}.bim {params.geno2}.fam' > {output[0]}
@@ -64,19 +57,19 @@ rule merge_genos:
         # lambda wildcards: (config[wildcards.geno2]['combine_XT']['name-format'] + '.bim').format(chr = wildcards.chr),
         # lambda wildcards: (config[wildcards.geno1]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
         # lambda wildcards: (config[wildcards.geno2]['combine_XT']['name-format'] + '.bed').format(chr = wildcards.chr),
-        fam1 = temp('output-combine_XT_YT/{geno1}/premerge.{chr}.fam'),
-        fam2 = temp('output-combine_XT_YT/{geno2}/premerge.{chr}.fam'),
-        bed1 = temp('output-combine_XT_YT/{geno1}/premerge.{chr}.bed'),
-        bde2 = temp('output-combine_XT_YT/{geno2}/premerge.{chr}.bed'),
-        bim1 = temp('output-combine_XT_YT/{geno1}/premerge.{chr}.bim'),
-        bim2 = temp('output-combine_XT_YT/{geno2}/premerge.{chr}.bim'),
-        mlist = temp('output-combine_XT_YT/{geno1}__{geno2}/merge_list.{chr}.txt')
+        fam1 = temp('output-combine_XT_YT/{geno1}/premerge.fam'),
+        fam2 = temp('output-combine_XT_YT/{geno2}/premerge.fam'),
+        bed1 = temp('output-combine_XT_YT/{geno1}/premerge.bed'),
+        bde2 = temp('output-combine_XT_YT/{geno2}/premerge.bed'),
+        bim1 = temp('output-combine_XT_YT/{geno1}/premerge.bim'),
+        bim2 = temp('output-combine_XT_YT/{geno2}/premerge.bim'),
+        mlist = temp('output-combine_XT_YT/{geno1}__{geno2}/merge_list.txt')
     params:
-        out = 'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}'
+        out = 'output-combine_XT_YT/{geno1}__{geno2}/merge'
     output:
-        'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.bim',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.bed',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.fam'
+        'output-combine_XT_YT/{geno1}__{geno2}/merge.bim',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge.bed',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge.fam'
     shell:
         '''
         # plink --noweb --bim {input.bim1} --bed {input.bed1} --fam {input.fam1} --merge-list {input.mlist} --make-bed --out {params.out}
@@ -90,16 +83,16 @@ rule merge_genos:
 
 rule quality_control:
     input:
-        'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.bim',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.bed',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}.fam'
+        'output-combine_XT_YT/{geno1}__{geno2}/merge.bim',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge.bed',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge.fam'
     output:
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bim',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bed',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.fam'
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bim',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bed',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.fam'
     params:
-        i = 'output-combine_XT_YT/{geno1}__{geno2}/merge.{chr}',
-        o = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}',
+        i = 'output-combine_XT_YT/{geno1}__{geno2}/merge',
+        o = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC',
         hwe = config['quality-control']['hwe'],
         maf = config['quality-control']['maf'],
         geno = config['quality-control']['geno']

@@ -18,17 +18,17 @@ def get_ldpred_outputs(prefix, fs):
         # print(out)
     return out
 
-def get_all_chr(string, nchr_info):
-    out = []
-    nchr_info = nchr_info.split(',')
-    nchr_name = nchr_info[0]
-    nchr_info = nchr_info[1].split(':')
-    nchr_from = int(nchr_info[0])
-    nchr_to = int(nchr_info[1])
-    for i in range(nchr_from, nchr_to + 1):
-        out.append(string.format(chr = nchr_name + str(i)))
-    # print(out)
-    return out
+# def get_all_chr(string, nchr_info):
+#     out = []
+#     nchr_info = nchr_info.split(',')
+#     nchr_name = nchr_info[0]
+#     nchr_info = nchr_info[1].split(':')
+#     nchr_from = int(nchr_info[0])
+#     nchr_to = int(nchr_info[1])
+#     for i in range(nchr_from, nchr_to + 1):
+#         out.append(string.format(chr = nchr_name + str(i)))
+#     # print(out)
+#     return out
 
 ## pipeline output
 def get_all(config, mtd):
@@ -50,14 +50,14 @@ ldpred_dir = config['ldpred-dir']
 rule gen_coordinate:
     input:
         beta_ss = 'output-prepare_betaI/{intermediate}/beta-ss.txt.gz',
-        geno_plink1 = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bed',
-        geno_plink2 = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bim',
-        geno_plink3 = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.fam'
+        geno_plink1 = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bed',
+        geno_plink2 = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bim',
+        geno_plink3 = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.fam'
     params:
-        geno_plink = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}',
+        geno_plink = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC',
         nsamples = lambda wildcards: config[wildcards.intermediate]['nsamples']
     output:
-        'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.{chr}.hdf5'
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.hdf5'
     shell:
         'python {ldpred_dir}/coord_genotypes.py \
             --gf {params.geno_plink} \
@@ -67,11 +67,11 @@ rule gen_coordinate:
 
 rule get_ld_radius:
     input:
-        'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.{chr}.hdf5'
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.hdf5'
     params:
         config['ldpred']['num-SNPs-per-xMb']
     output:
-        'output-run_step1/{intermediate}__{geno1}__{geno2}/ld-radius.{chr}.yaml'
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/ld-radius.yaml'
     shell:
         'python scripts/get_ld_radius.py \
             --input {input[0]} \
@@ -80,36 +80,36 @@ rule get_ld_radius:
 
 rule run_ldpred:
     input:
-        'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.{chr}.hdf5',
-        'output-run_step1/{intermediate}__{geno1}__{geno2}/ld-radius.{chr}.yaml'
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.hdf5',
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/ld-radius.yaml'
     params:
         config['ldpred']['causal-fraction'],
-        'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred.{chr}',
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred',
         lambda wildcards: config[wildcards.intermediate]['nsamples']
     output:
-        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred.{chr}', config['ldpred']['causal-fraction'])
+        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'])
     shell:
         'python scripts/ldpred_wrapper.py --coord {input[0]} \
             --ld_radius {input[1]} \
             --ldpred_dir {ldpred_dir} \
             --causal_fraction {params[0]} \
             --nsamples {params[2]} \
-            --prefix_of_pickle output-run_step1/{wildcards.intermediate}__{wildcards.geno1}__{wildcards.geno2}/coordinate.{wildcards.chr} \
+            --prefix_of_pickle output-run_step1/{wildcards.intermediate}__{wildcards.geno1}__{wildcards.geno2}/coordinate \
             --out {params[1]}'
 
 rule get_prs_ldpred:
     input:
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bim',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.bed',
-        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}.fam',
-        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred.{chr}', config['ldpred']['causal-fraction'])
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bim',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.bed',
+        'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.fam',
+        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'])
     params:
-        inprefix = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC.{chr}',
-        rfprefix = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred.{chr}',
+        inprefix = 'output-combine_XT_YT/{geno1}__{geno2}/merge_QC',
+        rfprefix = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred',
         fractions = config['ldpred']['causal-fraction'],
-        outprefix = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI.{chr}'
+        outprefix = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI'
     output:
-        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI.{chr}', config['ldpred']['causal-fraction'])
+        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'])
     shell:
         'python {ldpred_dir}/validate.py \
             --vgf {params.inprefix} \
@@ -117,12 +117,12 @@ rule get_prs_ldpred:
             --PS {params.fractions} \
             --out {params.outprefix}'
 
-rule combine_prs_ldpred:
-    input:
-        get_all_chr(get_ldpred_outputs('output-run_step1/{{intermediate}}__{{geno1}}__{{geno2}}/ldpredYI.{chr}', '{{pval}}'), nchr_info = config['chr-list'])
-    params:
-        ':'.join(get_all_chr(get_ldpred_outputs('output-run_step1/{{intermediate}}__{{geno1}}__{{geno2}}/ldpredYI.{chr}', '{{pval}}'), nchr_info = config['chr-list']))
-    output:
-        get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', '{pval}')
-    shell:
-        'Rscript scripts/combine_prs.R -i {params[0]} -o {output[0]}'
+# rule combine_prs_ldpred:
+#     input:
+#         get_all_chr(get_ldpred_outputs('output-run_step1/{{intermediate}}__{{geno1}}__{{geno2}}/ldpredYI.{chr}', '{{pval}}'), nchr_info = config['chr-list'])
+#     params:
+#         ':'.join(get_all_chr(get_ldpred_outputs('output-run_step1/{{intermediate}}__{{geno1}}__{{geno2}}/ldpredYI.{chr}', '{{pval}}'), nchr_info = config['chr-list']))
+#     output:
+#         get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', '{pval}')
+#     shell:
+#         'Rscript scripts/combine_prs.R -i {params[0]} -o {output[0]}'
