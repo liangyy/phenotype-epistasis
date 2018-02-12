@@ -1,0 +1,13 @@
+x1: 'wtccc_cad'
+x2: 'wtccc_ctrl'
+y: 'MAGNETIC_Serum.TG'
+
+wtccc_cad__wtccc_ctrl:
+  name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
+MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl:
+  name-format: '../step1/output-run_step1/{replace}/ldpred_LDpred_p'
+
+## other parameters
+ldpred-dir: '../../../ldpred/ldpred'
+ldpred:
+  causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'

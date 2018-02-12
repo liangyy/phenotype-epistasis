@@ -23,6 +23,9 @@ $ ls
 test.bplink.bed test.bplink.bim test.bplink.fam
 
 ## post process test.bplink.fam
+
+# combine all chromosomes
+$ plink --merge-list [all-chromosomes] --make-bed 
 ```
 
 ### Prepare $\beta_I$
@@ -60,9 +63,6 @@ $ python [ldpred-code-dir]/Ldpred.py [input: output of previous step + causal fr
 
 # calculate PRS based on LDpred output
 $ python [ldpred-code-dir]/validate.py [input: genotype data + LDpred output posterior mean of effect size]
-
-# combine results from all chromosomes
-$ python combine_prs.py --inputs [the collection of LDpred output under the same causal fraction] --output [ldpred.prs_by_causal_fraction]
 ```
 
 **TODO**: add P+T
