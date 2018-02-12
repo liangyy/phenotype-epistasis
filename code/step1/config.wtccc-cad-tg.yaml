@@ -1,6 +1,6 @@
 x1: 'wtccc_cad'
 x2: 'wtccc_ctrl'
-y: 'MAGNETIC_HDL.C'
+y: 'MAGNETIC_Serum.TG'
 
 ## data parameters
 wtccc_cad:
@@ -19,12 +19,12 @@ wtccc_ctrl:
       name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/birthctrl/birthctrl.wtccc.{chr}.pos'
   combine_XT_YT:
     case-control: 1
-MAGNETIC_HDL.C:
+MAGNETIC_Serum.TG:
   prepare_betaI:
     beta-ss: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/Summary_statistics_MAGNETIC_Serum.TG.txt.gz'
     header: 1  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,5,4,-6,10,3,9,7,11'  # add '-' before reffrq is the column is referring to altfrq
-    sep: ' '
+    sep: '" "'
   nsamples: 21545
 
 ## other parameters
