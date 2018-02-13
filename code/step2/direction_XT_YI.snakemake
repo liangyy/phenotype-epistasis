@@ -52,19 +52,6 @@ rule direction_xt:
     shell:
         'plink --noweb --bed {input.e} --bim {input.i} --fam {input.f} --logistic --out {params[1]}'
 
-
-
-rule direction_yi:
-    input:
-        get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'], '.txt')
-    params:
-        ':'.join(get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'], '.txt'))
-    output:
-        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
-    shell:
-        'Rscript scripts/direction_yi.R --inputs {params[0]} \
-            --output {output[0]}'
-
 rule prepare_covar:
     input:
         '../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI_LDpred_p{pval}.txt',
@@ -73,6 +60,17 @@ rule prepare_covar:
         'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar_LDpred_p{pval}.txt'
     shell:
         'Rscript scripts/prepare_covar.R -i {input[0]} -o {output[0]} -f {input[1]}'
+
+rule direction_yi:
+    input:
+        get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')
+    params:
+        ':'.join(get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'], '.txt'))
+    output:
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
+    shell:
+        'Rscript scripts/direction_yi.R --inputs {params[0]} \
+            --output {output[0]}'
 
 rule direction_xt_yi:
     input:

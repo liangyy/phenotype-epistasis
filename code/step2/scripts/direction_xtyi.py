@@ -25,6 +25,7 @@ for i in range(n):
         --allow-no-sex \
         --logistic \
         --covar {cov} \
+        --covar-name PRS \
         --out {out}'.format(geno = args.geno_prefix,
                             cov = cov_i,
                             out = out_i)

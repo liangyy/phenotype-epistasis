@@ -16,7 +16,15 @@ option_list = list(
 opt_parser = OptionParser(option_list=option_list, usage=help_text);
 opt = parse_args(opt_parser);
 
-covariate <- read.table(opt$input, sep = ' ', header = T)
+myRead <- function(f) {
+  covariate <- readLines(f)
+  covariate <- gsub(', ', ',', covariate)
+  covariate <- gsub(',$', '', covariate)
+  covariate <- read.table(textConnection(covariate), header = T, sep = ',')
+  return(covariate)
+}
+
+covariate <- myRead(opt$input)
 fam <- read.table(opt$fam, header = F, sep = ' ')
-out <- data.frame(FID = fam[, 1], IID = covariate[, 1], PRS = covariate[, 3])
+out <- data.frame(FID = fam[, 1], IID = covariate[, 1], RAW_PRS = covariate[, 3], PRS = covariate[, 4], PHENO = cvariate[, 2])
 write.table(out, file = opt$output, quote = F, row.names = F, col.names = T)
