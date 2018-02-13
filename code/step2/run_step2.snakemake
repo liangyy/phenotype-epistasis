@@ -1,0 +1,3 @@
+# this module run interaction test
+# Y_T \sim Y_I + SNPi + Y_I \cdot SNPi
+# Note that the test can be run on a pre-selected subset of SNP set
