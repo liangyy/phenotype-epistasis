@@ -65,7 +65,7 @@ rule direction_yi:
     input:
         get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')
     params:
-        ':'.join(get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpredYI', config['ldpred']['causal-fraction'], '.txt'))
+        ':'.join(get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'))
     output:
         'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     shell:
