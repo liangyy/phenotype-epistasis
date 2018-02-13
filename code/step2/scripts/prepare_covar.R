@@ -26,5 +26,5 @@ myRead <- function(f) {
 
 covariate <- myRead(opt$input)
 fam <- read.table(opt$fam, header = F, sep = ' ')
-out <- data.frame(FID = fam[, 1], IID = covariate[, 1], RAW_PRS = covariate[, 3], PRS = covariate[, 4], PHENO = cvariate[, 2])
+out <- data.frame(FID = fam[, 1], IID = covariate[, 1], RAW_PRS = covariate[, 3], PRS = covariate[, 4], PHENO = covariate[, 2])
 write.table(out, file = opt$output, quote = F, row.names = F, col.names = T)

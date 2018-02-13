@@ -50,7 +50,7 @@ rule direction_xt:
     output:
         'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic'
     shell:
-        'plink --noweb --bed {input.e} --bim {input.i} --fam {input.f} --logistic --out {params[1]}'
+        'plink --noweb --allow-no-sex --bed {input.e} --bim {input.i} --fam {input.f} --logistic --out {params[1]}'
 
 rule prepare_covar:
     input:
