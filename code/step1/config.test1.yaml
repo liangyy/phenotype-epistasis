@@ -24,7 +24,7 @@ intermediate1:
     beta-ss: '../../data/fake_data/beta/betatest1-genotest1.summary-statistic.txt.gz'
     header: 0  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,3,4,5,6,7,8,9,10'
-    sep: '\t'
+    sep: '"\t"'
   nsamples: 20000
 
 ## other parameters

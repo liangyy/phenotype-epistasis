@@ -1,0 +1,22 @@
+
+||====================================================================================||
+*-> Version: 1.0.7
+*-> Copyright:  GNU General Public License
+*-> Program Developer: 	
+	 Nab Raj Roshyara	 
+	 email: roshyara@yahoo.com	 
+	 Universitaet Leipzig		 
+	 Leipzig Research Center for Civilization Diseases(LIFE)
+	 Institute for Medical Informatics, Statistics and Epidemiology (IMISE)
+	 Group: Genetical Statistics and Systems Biology 
+	 Group Leader: Prof. Dr. Markus Scholz
+|--------------------------------------------------------------------------------------|
+*->fcGENE is a format converting tool for GENOTYPE DATA. The data may be given in different formats. Interface of this program is inspired by PLINK software.
+	*->To know about more options, please use the command:
+	**->"fcgene --help" for window system.
+	**->"./fcgene --help" for linux systems.
+	**->A pdf documentation file can be found in sourceforge site: "http://sourceforge.net/projects/fcgene/files/" .
+||====================================================================================||
+*->The analysis has ended at Wed Feb 14 10:08:56 2018
+
+*->Total time taken for the analysis is: 0 hours, 0 minutes and 0.00 seconds.

@@ -1,0 +1,1 @@
+output-combine_XT_YT/geno2_ctrl/premerge.bed output-combine_XT_YT/geno2_ctrl/premerge.bim output-combine_XT_YT/geno2_ctrl/premerge.fam

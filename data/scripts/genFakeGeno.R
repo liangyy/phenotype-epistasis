@@ -37,7 +37,7 @@ for(c in 1 : opt$nchr) {
   snp.names <- paste0('chr', c, 'snp', 1 : opt$nsnp)
   snp.chr <- rep(c, opt$nsnp) # sample(22, opt$nsnp, replace = T)
   snp.pos <- round(runif(opt$nsnp) * 1e6)
-  ordered.snp <- data.frame(x1 = snp.chr, x2 = snp.pos)
+  ordered.snp <- data.frame(x1 = snp.pos, x2 = snp.chr)
   ordered.snp <- ordered.snp[order(ordered.snp[, 1], ordered.snp[, 2]), ]
   snp <- data.frame(snp.names, ordered.snp$x1, ordered.snp$x2)
   bases <- c('A', 'T', 'C', 'G')

@@ -1,0 +1,53 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ output-combine_XT_YT/geno1_case/premerge.log ]
+Analysis started: Wed Feb 14 10:24:19 2018
+
+Options in effect:
+	--noweb
+	--bim output-prepare_XT/geno1_case/plink.bim
+	--bed output-prepare_XT/geno1_case/plink.bed
+	--fam output-combine_XT_YT/geno1_case/premerge.fam.temp
+	--update-ids output-combine_XT_YT/geno1_case/premerge.update-list.temp
+	--make-bed
+	--out output-combine_XT_YT/geno1_case/premerge
+
+Reading map (extended format) from [ output-prepare_XT/geno1_case/plink.bim ] 
+900 markers to be included from [ output-prepare_XT/geno1_case/plink.bim ]
+Reading pedigree information from [ output-combine_XT_YT/geno1_case/premerge.fam.temp ] 
+200 individuals read from [ output-combine_XT_YT/geno1_case/premerge.fam.temp ] 
+200 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+200 cases, 0 controls and 0 missing
+0 males, 0 females, and 200 of unspecified sex
+Warning, found 200 individuals with ambiguous sex codes
+Writing list of these individuals to [ output-combine_XT_YT/geno1_case/premerge.nosex ]
+Reading genotype bitfile from [ output-prepare_XT/geno1_case/plink.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Reading new FIDs and IIDs from [ output-combine_XT_YT/geno1_case/premerge.update-list.temp ]
+200 individuals found, 0 not in sample
+Before frequency and genotyping pruning, there are 900 SNPs
+200 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 900 SNPs
+After filtering, 200 cases, 0 controls and 0 missing
+After filtering, 0 males, 0 females, and 200 of unspecified sex
+Writing pedigree information to [ output-combine_XT_YT/geno1_case/premerge.fam ] 
+Writing map (extended format) information to [ output-combine_XT_YT/geno1_case/premerge.bim ] 
+Writing genotype bitfile to [ output-combine_XT_YT/geno1_case/premerge.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Wed Feb 14 10:24:19 2018
+

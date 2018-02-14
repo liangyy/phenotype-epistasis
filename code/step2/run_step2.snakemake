@@ -7,6 +7,11 @@
 # hypothesis: if Y_I and X_T affect Y_T through the same pathway, they tend to interact with each other
 # procedure: identify SNPi that affects Y_T and Y_I in the way that Y_T ~ SNPi is consistent with (can be explained by) Y_I ~ SNPi and Y_T ~ Y_I
 
+# for debug
+rule all_funcset:
+    input:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset.set'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
+# end debug
 rule functional_subsetting:
     input:
         ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
@@ -14,10 +19,9 @@ rule functional_subsetting:
         yixt = '../step1/output-prepare_betaI/{intermediate}/beta-ss.txt.gz'
     params:
         threshold = config['functional-subsetting']['pval-theshold'],
-        prefix = 'output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset.LDpred'
         pattern = config['yi-pattern']
     output:
-        get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset', config['ldpred']['causal-fraction'], '.set')
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset.set'
     shell:
         'Rscript scripts/functional_subsetting.R \
             --ytyi {input.ytyi} \
@@ -25,4 +29,4 @@ rule functional_subsetting:
             --yixt {input.yixt} \
             --pval_theshold {params.threshold} \
             --pattern {params.pattern} \
-            --prefix {params.prefix}'
+            --out {output[0]}'

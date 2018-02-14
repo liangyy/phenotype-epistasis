@@ -1,401 +1,401 @@
-FID IID PRS
-controlfamid0 controlindv0 -0.5788617
-controlfamid1 controlindv1 -0.1189318
-controlfamid2 controlindv2 -0.3998926
-controlfamid3 controlindv3 -0.3373924
-controlfamid4 controlindv4 0.0499573999999999
-controlfamid5 controlindv5 -0.5451939
-controlfamid6 controlindv6 0.01298066
-controlfamid7 controlindv7 0.0997071
-controlfamid8 controlindv8 -0.0422773000000001
-controlfamid9 controlindv9 0.31935458
-controlfamid10 controlindv10 -0.5109461
-controlfamid11 controlindv11 -0.4176417
-controlfamid12 controlindv12 -0.6132785
-controlfamid13 controlindv13 -0.3564267
-controlfamid14 controlindv14 0.60345404
-controlfamid15 controlindv15 -0.831129
-controlfamid16 controlindv16 -0.3915333
-controlfamid17 controlindv17 -0.052105
-controlfamid18 controlindv18 0.2255854
-controlfamid19 controlindv19 -0.5825884
-controlfamid20 controlindv20 0.141888
-controlfamid21 controlindv21 -0.373117
-controlfamid22 controlindv22 -0.5351395
-controlfamid23 controlindv23 -0.1725796
-controlfamid24 controlindv24 -0.2580693
-controlfamid25 controlindv25 -0.9166688
-controlfamid26 controlindv26 -0.30977812
-controlfamid27 controlindv27 -0.609637
-controlfamid28 controlindv28 -0.5000989
-controlfamid29 controlindv29 -0.318645
-controlfamid30 controlindv30 -1.0265042
-controlfamid31 controlindv31 0.01084508
-controlfamid32 controlindv32 -0.41177441
-controlfamid33 controlindv33 -0.5055961
-controlfamid34 controlindv34 -0.4523732
-controlfamid35 controlindv35 -0.33154449
-controlfamid36 controlindv36 -0.1779577
-controlfamid37 controlindv37 0.04684441
-controlfamid38 controlindv38 -0.6243369
-controlfamid39 controlindv39 -0.9502849
-controlfamid40 controlindv40 -0.7478656
-controlfamid41 controlindv41 -0.5163868
-controlfamid42 controlindv42 0.2645852729
-controlfamid43 controlindv43 -0.4011991
-controlfamid44 controlindv44 -0.5452159
-controlfamid45 controlindv45 -0.6063045
-controlfamid46 controlindv46 -0.7482194
-controlfamid47 controlindv47 -0.4662821
-controlfamid48 controlindv48 -0.6949676
-controlfamid49 controlindv49 -0.2794395
-controlfamid50 controlindv50 -0.2834281
-controlfamid51 controlindv51 -0.9701095
-controlfamid52 controlindv52 -1.17101562
-controlfamid53 controlindv53 -0.8555731
-controlfamid54 controlindv54 -0.5588448
-controlfamid55 controlindv55 -0.00201209999999996
-controlfamid56 controlindv56 -0.425858
-controlfamid57 controlindv57 -0.19259671
-controlfamid58 controlindv58 -0.5668611
-controlfamid59 controlindv59 -1.0610601
-controlfamid60 controlindv60 -0.1558155
-controlfamid61 controlindv61 -0.6860156
-controlfamid62 controlindv62 -0.48350134
-controlfamid63 controlindv63 -0.07613013
-controlfamid64 controlindv64 -0.102448
-controlfamid65 controlindv65 -0.6738604
-controlfamid66 controlindv66 -0.5827691
-controlfamid67 controlindv67 -0.6995823
-controlfamid68 controlindv68 -0.2120085
-controlfamid69 controlindv69 0.0663971
-controlfamid70 controlindv70 -0.55464119
-controlfamid71 controlindv71 -0.11717828
-controlfamid72 controlindv72 -0.892975
-controlfamid73 controlindv73 -0.1940056
-controlfamid74 controlindv74 -0.4209218
-controlfamid75 controlindv75 0.0494375000000001
-controlfamid76 controlindv76 -0.0470492
-controlfamid77 controlindv77 -0.5996743
-controlfamid78 controlindv78 -0.6720155
-controlfamid79 controlindv79 -0.6136648
-controlfamid80 controlindv80 -0.49375217
-controlfamid81 controlindv81 -0.85814548
-controlfamid82 controlindv82 -0.5779963
-controlfamid83 controlindv83 0.3902173
-controlfamid84 controlindv84 -0.553049
-controlfamid85 controlindv85 -0.09577231
-controlfamid86 controlindv86 -0.2243934
-controlfamid87 controlindv87 -0.6400286
-controlfamid88 controlindv88 -0.7186982
-controlfamid89 controlindv89 0.092050319
-controlfamid90 controlindv90 0.0733441
-controlfamid91 controlindv91 -0.3272
-controlfamid92 controlindv92 0.075701413
-controlfamid93 controlindv93 -0.1540851
-controlfamid94 controlindv94 -0.6994663
-controlfamid95 controlindv95 -0.3579976
-controlfamid96 controlindv96 -0.5242919
-controlfamid97 controlindv97 -0.0315735
-controlfamid98 controlindv98 -0.8959534
-controlfamid99 controlindv99 -0.3951135
-controlfamid100 controlindv100 -0.6908461
-controlfamid101 controlindv101 -0.0367165
-controlfamid102 controlindv102 -0.16670857
-controlfamid103 controlindv103 -0.0191713000000001
-controlfamid104 controlindv104 -0.4268172
-controlfamid105 controlindv105 -1.1729165
-controlfamid106 controlindv106 -0.987074
-controlfamid107 controlindv107 -0.3796439
-controlfamid108 controlindv108 -0.4084808
-controlfamid109 controlindv109 -0.2762266
-controlfamid110 controlindv110 -0.00581232000000004
-controlfamid111 controlindv111 -0.9374826
-controlfamid112 controlindv112 -0.8287171
-controlfamid113 controlindv113 -1.14818988
-controlfamid114 controlindv114 -0.3602654
-controlfamid115 controlindv115 -0.2911485
-controlfamid116 controlindv116 -0.039839
-controlfamid117 controlindv117 -0.776625
-controlfamid118 controlindv118 -0.6387898
-controlfamid119 controlindv119 -0.7384019
-controlfamid120 controlindv120 -0.2249687
-controlfamid121 controlindv121 -0.7939604
-controlfamid122 controlindv122 -0.7415811
-controlfamid123 controlindv123 -0.6225638
-controlfamid124 controlindv124 -0.3039181
-controlfamid125 controlindv125 -0.5133667
-controlfamid126 controlindv126 -0.3694195
-controlfamid127 controlindv127 -0.5537035
-controlfamid128 controlindv128 -0.2846028
-controlfamid129 controlindv129 -1.0052391
-controlfamid130 controlindv130 -0.0740694
-controlfamid131 controlindv131 -0.87347854
-controlfamid132 controlindv132 -0.2857754
-controlfamid133 controlindv133 -0.704038
-controlfamid134 controlindv134 -0.3291807
-controlfamid135 controlindv135 -0.3367425
-controlfamid136 controlindv136 -0.5861823
-controlfamid137 controlindv137 -0.5179723
-controlfamid138 controlindv138 -1.1057805
-controlfamid139 controlindv139 -0.3250644
-controlfamid140 controlindv140 0.0279394
-controlfamid141 controlindv141 -0.3616245
-controlfamid142 controlindv142 0.0708404000000001
-controlfamid143 controlindv143 -0.24936591
-controlfamid144 controlindv144 -0.2622673
-controlfamid145 controlindv145 -0.0285636
-controlfamid146 controlindv146 -0.43198598
-controlfamid147 controlindv147 -0.55664757
-controlfamid148 controlindv148 -0.5836372
-controlfamid149 controlindv149 -0.4842157
-controlfamid150 controlindv150 -0.1411994
-controlfamid151 controlindv151 -0.10128745
-controlfamid152 controlindv152 -0.9255396
-controlfamid153 controlindv153 -1.1056747
-controlfamid154 controlindv154 -0.1745441
-controlfamid155 controlindv155 -0.1369071
-controlfamid156 controlindv156 -0.39324818
-controlfamid157 controlindv157 -0.85572941
-controlfamid158 controlindv158 -1.2007734
-controlfamid159 controlindv159 -0.3237452
-controlfamid160 controlindv160 -0.7152261
-controlfamid161 controlindv161 0.0860915
-controlfamid162 controlindv162 -0.7003173
-controlfamid163 controlindv163 -1.0815234
-controlfamid164 controlindv164 -0.4583773
-controlfamid165 controlindv165 -0.76911869
-controlfamid166 controlindv166 -0.3900638
-controlfamid167 controlindv167 -0.7564222
-controlfamid168 controlindv168 -0.8191069
-controlfamid169 controlindv169 -0.8116795
-controlfamid170 controlindv170 -0.643276
-controlfamid171 controlindv171 -0.535196
-controlfamid172 controlindv172 -0.6297463
-controlfamid173 controlindv173 -0.4554949
-controlfamid174 controlindv174 -0.6638161
-controlfamid175 controlindv175 -0.5982036
-controlfamid176 controlindv176 0.34306563
-controlfamid177 controlindv177 -0.5546209
-controlfamid178 controlindv178 -0.9379121
-controlfamid179 controlindv179 -0.4660686
-controlfamid180 controlindv180 -0.43061961
-controlfamid181 controlindv181 -0.8210309
-controlfamid182 controlindv182 -0.4037069
-controlfamid183 controlindv183 -0.1788112
-controlfamid184 controlindv184 -0.2621527
-controlfamid185 controlindv185 -1.0964525
-controlfamid186 controlindv186 -0.35332087
-controlfamid187 controlindv187 -0.2560561
-controlfamid188 controlindv188 0.24234745
-controlfamid189 controlindv189 -0.66504314
-controlfamid190 controlindv190 -0.6827268
-controlfamid191 controlindv191 -0.5822974
-controlfamid192 controlindv192 -0.6572526
-controlfamid193 controlindv193 -0.7931568
-controlfamid194 controlindv194 -0.7312836
-controlfamid195 controlindv195 -0.4443249
-controlfamid196 controlindv196 -0.3853347
-controlfamid197 controlindv197 -0.2710053
-controlfamid198 controlindv198 -0.5600519
-controlfamid199 controlindv199 -0.7299053
-casefamid0 caseindv0 -0.5788617
-casefamid1 caseindv1 -0.1189318
-casefamid2 caseindv2 -0.3998926
-casefamid3 caseindv3 -0.3373924
-casefamid4 caseindv4 0.0499573999999999
-casefamid5 caseindv5 -0.5451939
-casefamid6 caseindv6 0.01298066
-casefamid7 caseindv7 0.0997071
-casefamid8 caseindv8 -0.0422773000000001
-casefamid9 caseindv9 0.31935458
-casefamid10 caseindv10 -0.5109461
-casefamid11 caseindv11 -0.4176417
-casefamid12 caseindv12 -0.6132785
-casefamid13 caseindv13 -0.3564267
-casefamid14 caseindv14 0.60345404
-casefamid15 caseindv15 -0.831129
-casefamid16 caseindv16 -0.3915333
-casefamid17 caseindv17 -0.052105
-casefamid18 caseindv18 0.2255854
-casefamid19 caseindv19 -0.5825884
-casefamid20 caseindv20 0.141888
-casefamid21 caseindv21 -0.373117
-casefamid22 caseindv22 -0.5351395
-casefamid23 caseindv23 -0.1725796
-casefamid24 caseindv24 -0.2580693
-casefamid25 caseindv25 -0.9166688
-casefamid26 caseindv26 -0.30977812
-casefamid27 caseindv27 -0.609637
-casefamid28 caseindv28 -0.5000989
-casefamid29 caseindv29 -0.318645
-casefamid30 caseindv30 -1.0265042
-casefamid31 caseindv31 0.01084508
-casefamid32 caseindv32 -0.41177441
-casefamid33 caseindv33 -0.5055961
-casefamid34 caseindv34 -0.4523732
-casefamid35 caseindv35 -0.33154449
-casefamid36 caseindv36 -0.1779577
-casefamid37 caseindv37 0.04684441
-casefamid38 caseindv38 -0.6243369
-casefamid39 caseindv39 -0.9502849
-casefamid40 caseindv40 -0.7478656
-casefamid41 caseindv41 -0.5163868
-casefamid42 caseindv42 0.2645852729
-casefamid43 caseindv43 -0.4011991
-casefamid44 caseindv44 -0.5452159
-casefamid45 caseindv45 -0.6063045
-casefamid46 caseindv46 -0.7482194
-casefamid47 caseindv47 -0.4662821
-casefamid48 caseindv48 -0.6949676
-casefamid49 caseindv49 -0.2794395
-casefamid50 caseindv50 -0.2834281
-casefamid51 caseindv51 -0.9701095
-casefamid52 caseindv52 -1.17101562
-casefamid53 caseindv53 -0.8555731
-casefamid54 caseindv54 -0.5588448
-casefamid55 caseindv55 -0.00201209999999996
-casefamid56 caseindv56 -0.425858
-casefamid57 caseindv57 -0.19259671
-casefamid58 caseindv58 -0.5668611
-casefamid59 caseindv59 -1.0610601
-casefamid60 caseindv60 -0.1558155
-casefamid61 caseindv61 -0.6860156
-casefamid62 caseindv62 -0.48350134
-casefamid63 caseindv63 -0.07613013
-casefamid64 caseindv64 -0.102448
-casefamid65 caseindv65 -0.6738604
-casefamid66 caseindv66 -0.5827691
-casefamid67 caseindv67 -0.6995823
-casefamid68 caseindv68 -0.2120085
-casefamid69 caseindv69 0.0663971
-casefamid70 caseindv70 -0.55464119
-casefamid71 caseindv71 -0.11717828
-casefamid72 caseindv72 -0.892975
-casefamid73 caseindv73 -0.1940056
-casefamid74 caseindv74 -0.4209218
-casefamid75 caseindv75 0.0494375000000001
-casefamid76 caseindv76 -0.0470492
-casefamid77 caseindv77 -0.5996743
-casefamid78 caseindv78 -0.6720155
-casefamid79 caseindv79 -0.6136648
-casefamid80 caseindv80 -0.49375217
-casefamid81 caseindv81 -0.85814548
-casefamid82 caseindv82 -0.5779963
-casefamid83 caseindv83 0.3902173
-casefamid84 caseindv84 -0.553049
-casefamid85 caseindv85 -0.09577231
-casefamid86 caseindv86 -0.2243934
-casefamid87 caseindv87 -0.6400286
-casefamid88 caseindv88 -0.7186982
-casefamid89 caseindv89 0.092050319
-casefamid90 caseindv90 0.0733441
-casefamid91 caseindv91 -0.3272
-casefamid92 caseindv92 0.075701413
-casefamid93 caseindv93 -0.1540851
-casefamid94 caseindv94 -0.6994663
-casefamid95 caseindv95 -0.3579976
-casefamid96 caseindv96 -0.5242919
-casefamid97 caseindv97 -0.0315735
-casefamid98 caseindv98 -0.8959534
-casefamid99 caseindv99 -0.3951135
-casefamid100 caseindv100 -0.6908461
-casefamid101 caseindv101 -0.0367165
-casefamid102 caseindv102 -0.16670857
-casefamid103 caseindv103 -0.0191713000000001
-casefamid104 caseindv104 -0.4268172
-casefamid105 caseindv105 -1.1729165
-casefamid106 caseindv106 -0.987074
-casefamid107 caseindv107 -0.3796439
-casefamid108 caseindv108 -0.4084808
-casefamid109 caseindv109 -0.2762266
-casefamid110 caseindv110 -0.00581232000000004
-casefamid111 caseindv111 -0.9374826
-casefamid112 caseindv112 -0.8287171
-casefamid113 caseindv113 -1.14818988
-casefamid114 caseindv114 -0.3602654
-casefamid115 caseindv115 -0.2911485
-casefamid116 caseindv116 -0.039839
-casefamid117 caseindv117 -0.776625
-casefamid118 caseindv118 -0.6387898
-casefamid119 caseindv119 -0.7384019
-casefamid120 caseindv120 -0.2249687
-casefamid121 caseindv121 -0.7939604
-casefamid122 caseindv122 -0.7415811
-casefamid123 caseindv123 -0.6225638
-casefamid124 caseindv124 -0.3039181
-casefamid125 caseindv125 -0.5133667
-casefamid126 caseindv126 -0.3694195
-casefamid127 caseindv127 -0.5537035
-casefamid128 caseindv128 -0.2846028
-casefamid129 caseindv129 -1.0052391
-casefamid130 caseindv130 -0.0740694
-casefamid131 caseindv131 -0.87347854
-casefamid132 caseindv132 -0.2857754
-casefamid133 caseindv133 -0.704038
-casefamid134 caseindv134 -0.3291807
-casefamid135 caseindv135 -0.3367425
-casefamid136 caseindv136 -0.5861823
-casefamid137 caseindv137 -0.5179723
-casefamid138 caseindv138 -1.1057805
-casefamid139 caseindv139 -0.3250644
-casefamid140 caseindv140 0.0279394
-casefamid141 caseindv141 -0.3616245
-casefamid142 caseindv142 0.0708404000000001
-casefamid143 caseindv143 -0.24936591
-casefamid144 caseindv144 -0.2622673
-casefamid145 caseindv145 -0.0285636
-casefamid146 caseindv146 -0.43198598
-casefamid147 caseindv147 -0.55664757
-casefamid148 caseindv148 -0.5836372
-casefamid149 caseindv149 -0.4842157
-casefamid150 caseindv150 -0.1411994
-casefamid151 caseindv151 -0.10128745
-casefamid152 caseindv152 -0.9255396
-casefamid153 caseindv153 -1.1056747
-casefamid154 caseindv154 -0.1745441
-casefamid155 caseindv155 -0.1369071
-casefamid156 caseindv156 -0.39324818
-casefamid157 caseindv157 -0.85572941
-casefamid158 caseindv158 -1.2007734
-casefamid159 caseindv159 -0.3237452
-casefamid160 caseindv160 -0.7152261
-casefamid161 caseindv161 0.0860915
-casefamid162 caseindv162 -0.7003173
-casefamid163 caseindv163 -1.0815234
-casefamid164 caseindv164 -0.4583773
-casefamid165 caseindv165 -0.76911869
-casefamid166 caseindv166 -0.3900638
-casefamid167 caseindv167 -0.7564222
-casefamid168 caseindv168 -0.8191069
-casefamid169 caseindv169 -0.8116795
-casefamid170 caseindv170 -0.643276
-casefamid171 caseindv171 -0.535196
-casefamid172 caseindv172 -0.6297463
-casefamid173 caseindv173 -0.4554949
-casefamid174 caseindv174 -0.6638161
-casefamid175 caseindv175 -0.5982036
-casefamid176 caseindv176 0.34306563
-casefamid177 caseindv177 -0.5546209
-casefamid178 caseindv178 -0.9379121
-casefamid179 caseindv179 -0.4660686
-casefamid180 caseindv180 -0.43061961
-casefamid181 caseindv181 -0.8210309
-casefamid182 caseindv182 -0.4037069
-casefamid183 caseindv183 -0.1788112
-casefamid184 caseindv184 -0.2621527
-casefamid185 caseindv185 -1.0964525
-casefamid186 caseindv186 -0.35332087
-casefamid187 caseindv187 -0.2560561
-casefamid188 caseindv188 0.24234745
-casefamid189 caseindv189 -0.66504314
-casefamid190 caseindv190 -0.6827268
-casefamid191 caseindv191 -0.5822974
-casefamid192 caseindv192 -0.6572526
-casefamid193 caseindv193 -0.7931568
-casefamid194 caseindv194 -0.7312836
-casefamid195 caseindv195 -0.4443249
-casefamid196 caseindv196 -0.3853347
-casefamid197 caseindv197 -0.2710053
-casefamid198 caseindv198 -0.5600519
-casefamid199 caseindv199 -0.7299053
+FID IID RAW_PRS PRS PHENO
+casefamid0 caseindv0 2.125622 -0.4105484 2
+casefamid1 caseindv1 1.539032 -0.5431438 2
+casefamid2 caseindv2 2.385276 -0.5504009 2
+casefamid3 caseindv3 1.701965 -0.4951139 2
+casefamid4 caseindv4 -0.03230489 -0.454759 2
+casefamid5 caseindv5 -0.9005498 -0.4776184 2
+casefamid6 caseindv6 0.09346231 -0.8162306 2
+casefamid7 caseindv7 3.078161 -0.6475511 2
+casefamid8 caseindv8 0.8896825 -0.2555335 2
+casefamid9 caseindv9 2.085312 -0.7176723 2
+casefamid10 caseindv10 -4.36522 -0.4596735 2
+casefamid11 caseindv11 -1.139185 -0.1896605 2
+casefamid12 caseindv12 2.373592 -0.57905 2
+casefamid13 caseindv13 2.608187 -0.6332225 2
+casefamid14 caseindv14 4.232021 -0.8471696 2
+casefamid15 caseindv15 2.557555 -0.5116261 2
+casefamid16 caseindv16 2.646105 -0.7267489 2
+casefamid17 caseindv17 -1.871696 0.2652742 2
+casefamid18 caseindv18 2.313693 -0.3655393 2
+casefamid19 caseindv19 0.6048918 -0.6412955 2
+casefamid20 caseindv20 4.487396 -0.6747436 2
+casefamid21 caseindv21 -6.53975 0.3603822 2
+casefamid22 caseindv22 -8.00877 -0.007072062 2
+casefamid23 caseindv23 6.667389 -0.7903216 2
+casefamid24 caseindv24 4.874456 -0.4804583 2
+casefamid25 caseindv25 11.21977 -1.096064 2
+casefamid26 caseindv26 -1.374217 -0.4852157 2
+casefamid27 caseindv27 4.918491 -1.010607 2
+casefamid28 caseindv28 1.204726 -0.3223043 2
+casefamid29 caseindv29 14.23454 -1.46577 2
+casefamid30 caseindv30 1.221482 -0.3357178 2
+casefamid31 caseindv31 5.796807 -0.6502545 2
+casefamid32 caseindv32 4.486933 -0.6353512 2
+casefamid33 caseindv33 5.968758 -0.6214859 2
+casefamid34 caseindv34 -2.691079 -0.3925387 2
+casefamid35 caseindv35 -2.907148 -0.02269289 2
+casefamid36 caseindv36 6.177056 -0.7685053 2
+casefamid37 caseindv37 0.4154552 -0.4223897 2
+casefamid38 caseindv38 6.307012 -0.7970817 2
+casefamid39 caseindv39 3.664127 -0.7845139 2
+casefamid40 caseindv40 2.36554 -0.8701943 2
+casefamid41 caseindv41 4.00415 -0.6842672 2
+casefamid42 caseindv42 3.33734 -0.691651 2
+casefamid43 caseindv43 6.164342 -1.078188 2
+casefamid44 caseindv44 2.765085 -0.8398738 2
+casefamid45 caseindv45 -0.8680922 -0.8195037 2
+casefamid46 caseindv46 -2.189873 -0.4490729 2
+casefamid47 caseindv47 1.490666 -0.4642039 2
+casefamid48 caseindv48 10.98931 -1.170664 2
+casefamid49 caseindv49 -3.925 -0.5927589 2
+casefamid50 caseindv50 7.938524 -0.8841557 2
+casefamid51 caseindv51 3.249395 -0.5628948 2
+casefamid52 caseindv52 10.10491 -1.154553 2
+casefamid53 caseindv53 -3.893771 -0.6387719 2
+casefamid54 caseindv54 -2.176313 -0.5730853 2
+casefamid55 caseindv55 0.8461295 -0.3634116 2
+casefamid56 caseindv56 8.475476 -1.129492 2
+casefamid57 caseindv57 7.233784 -1.018607 2
+casefamid58 caseindv58 0.4744161 -0.6802907 2
+casefamid59 caseindv59 -0.8502745 -0.03846735 2
+casefamid60 caseindv60 1.683863 -0.3720651 2
+casefamid61 caseindv61 4.565473 -0.8950261 2
+casefamid62 caseindv62 0.671212 -0.1441702 2
+casefamid63 caseindv63 -1.098388 -0.09883296 2
+casefamid64 caseindv64 -0.6652119 -0.7209068 2
+casefamid65 caseindv65 -4.886511 -0.1867061 2
+casefamid66 caseindv66 2.856959 -0.6229855 2
+casefamid67 caseindv67 -4.189093 -0.08094556 2
+casefamid68 caseindv68 10.69542 -1.382102 2
+casefamid69 caseindv69 6.24111 -0.9003664 2
+casefamid70 caseindv70 2.384879 -0.3163303 2
+casefamid71 caseindv71 2.305242 -0.5796083 2
+casefamid72 caseindv72 12.46679 -1.259333 2
+casefamid73 caseindv73 7.87328 -1.010262 2
+casefamid74 caseindv74 -1.225086 -0.5099153 2
+casefamid75 caseindv75 4.033948 -1.054579 2
+casefamid76 caseindv76 6.507849 -0.8764057 2
+casefamid77 caseindv77 8.974944 -1.102429 2
+casefamid78 caseindv78 3.308271 -0.1383069 2
+casefamid79 caseindv79 4.295394 -0.7815415 2
+casefamid80 caseindv80 -2.414154 -0.2716114 2
+casefamid81 caseindv81 -4.874675 -0.07022798 2
+casefamid82 caseindv82 10.79078 -0.9887643 2
+casefamid83 caseindv83 0.09110828 -0.6135997 2
+casefamid84 caseindv84 5.629783 -1.113426 2
+casefamid85 caseindv85 6.86962 -1.130427 2
+casefamid86 caseindv86 -0.5422839 -0.1156735 2
+casefamid87 caseindv87 4.119681 -0.3752444 2
+casefamid88 caseindv88 7.281633 -1.115473 2
+casefamid89 caseindv89 4.089659 -0.4812267 2
+casefamid90 caseindv90 4.671208 -0.5452888 2
+casefamid91 caseindv91 4.117476 -1.012097 2
+casefamid92 caseindv92 5.832862 -1.219104 2
+casefamid93 caseindv93 4.939635 -0.9152095 2
+casefamid94 caseindv94 2.173229 -0.7067423 2
+casefamid95 caseindv95 2.701132 -0.7462506 2
+casefamid96 caseindv96 4.292912 -0.880747 2
+casefamid97 caseindv97 -7.092889 0.04878832 2
+casefamid98 caseindv98 -4.750311 0.2750937 2
+casefamid99 caseindv99 6.059903 -0.8493232 2
+casefamid100 caseindv100 4.202423 -0.613024 2
+casefamid101 caseindv101 5.629674 -0.6470936 2
+casefamid102 caseindv102 5.43186 -0.7410039 2
+casefamid103 caseindv103 9.374972 -1.244241 2
+casefamid104 caseindv104 8.649147 -1.238755 2
+casefamid105 caseindv105 0.08453037 -0.426135 2
+casefamid106 caseindv106 6.979792 -0.7121209 2
+casefamid107 caseindv107 3.301886 -0.7940018 2
+casefamid108 caseindv108 7.078377 -1.00342 2
+casefamid109 caseindv109 8.488582 -1.178096 2
+casefamid110 caseindv110 5.871697 -0.634568 2
+casefamid111 caseindv111 4.579998 -0.7446878 2
+casefamid112 caseindv112 -0.4792453 -0.2884986 2
+casefamid113 caseindv113 2.831844 -0.5049031 2
+casefamid114 caseindv114 2.34385 -0.389572 2
+casefamid115 caseindv115 2.859812 -0.6503155 2
+casefamid116 caseindv116 1.526435 -0.2551887 2
+casefamid117 caseindv117 1.542462 -0.8211823 2
+casefamid118 caseindv118 2.550675 -0.915642 2
+casefamid119 caseindv119 3.193011 -0.7682464 2
+casefamid120 caseindv120 3.025468 -0.8220734 2
+casefamid121 caseindv121 -6.754573 0.07898795 2
+casefamid122 caseindv122 4.636974 -0.8376417 2
+casefamid123 caseindv123 4.114517 -0.728904 2
+casefamid124 caseindv124 2.552696 -0.7223867 2
+casefamid125 caseindv125 4.216156 -0.4066326 2
+casefamid126 caseindv126 3.272973 -0.368349 2
+casefamid127 caseindv127 4.470766 -0.6598276 2
+casefamid128 caseindv128 0.4103974 -0.2639922 2
+casefamid129 caseindv129 8.18806 -1.276616 2
+casefamid130 caseindv130 -4.650986 -0.2786565 2
+casefamid131 caseindv131 -0.2083199 -0.4286485 2
+casefamid132 caseindv132 -0.4158256 -0.4746327 2
+casefamid133 caseindv133 -3.059843 -0.3568961 2
+casefamid134 caseindv134 -4.37049 -0.0432593 2
+casefamid135 caseindv135 0.83534 -0.4550618 2
+casefamid136 caseindv136 3.778345 -0.5206372 2
+casefamid137 caseindv137 5.96745 -1.01103 2
+casefamid138 caseindv138 -0.895471 -0.2393844 2
+casefamid139 caseindv139 -3.290398 0.0638694 2
+casefamid140 caseindv140 9.045473 -1.008216 2
+casefamid141 caseindv141 1.442519 -0.5131457 2
+casefamid142 caseindv142 8.956331 -0.9977099 2
+casefamid143 caseindv143 5.080637 -0.6545677 2
+casefamid144 caseindv144 -0.6887663 -0.5135905 2
+casefamid145 caseindv145 2.933714 -0.7630033 2
+casefamid146 caseindv146 6.933282 -0.7660505 2
+casefamid147 caseindv147 -1.531733 -0.3580363 2
+casefamid148 caseindv148 2.38136 -0.8891427 2
+casefamid149 caseindv149 3.219899 -0.5377933 2
+casefamid150 caseindv150 2.7085 -0.4678842 2
+casefamid151 caseindv151 2.014653 -0.5475478 2
+casefamid152 caseindv152 -1.181432 -0.3959388 2
+casefamid153 caseindv153 2.896942 -0.5307173 2
+casefamid154 caseindv154 9.034894 -1.1758 2
+casefamid155 caseindv155 1.497621 -0.3373583 2
+casefamid156 caseindv156 2.480974 -0.9491248 2
+casefamid157 caseindv157 4.212483 -0.9937619 2
+casefamid158 caseindv158 3.958974 -0.6262947 2
+casefamid159 caseindv159 -0.5288139 -0.6628318 2
+casefamid160 caseindv160 5.898802 -0.4687546 2
+casefamid161 caseindv161 3.903954 -0.783605 2
+casefamid162 caseindv162 -0.4160783 -0.42058 2
+casefamid163 caseindv163 -5.354041 0.03796163 2
+casefamid164 caseindv164 -2.063265 -0.1350901 2
+casefamid165 caseindv165 3.078445 -0.5464869 2
+casefamid166 caseindv166 7.058382 -1.024786 2
+casefamid167 caseindv167 6.324892 -1.213462 2
+casefamid168 caseindv168 -0.9313048 -0.5352579 2
+casefamid169 caseindv169 4.358406 -0.7703754 2
+casefamid170 caseindv170 8.667798 -1.288602 2
+casefamid171 caseindv171 3.367918 -0.5732119 2
+casefamid172 caseindv172 1.812619 -0.9033266 2
+casefamid173 caseindv173 4.303155 -0.5893802 2
+casefamid174 caseindv174 -1.130337 -0.235381 2
+casefamid175 caseindv175 -0.04171353 -0.2871939 2
+casefamid176 caseindv176 0.008684594 -0.4937554 2
+casefamid177 caseindv177 3.525209 -0.6164246 2
+casefamid178 caseindv178 4.990253 -0.9228837 2
+casefamid179 caseindv179 1.016303 -0.5483121 2
+casefamid180 caseindv180 -0.4987755 -0.1322064 2
+casefamid181 caseindv181 5.147936 -0.6246312 2
+casefamid182 caseindv182 5.579591 -0.7860082 2
+casefamid183 caseindv183 1.729749 -0.5397142 2
+casefamid184 caseindv184 -4.355912 -0.2743241 2
+casefamid185 caseindv185 6.826978 -0.881407 2
+casefamid186 caseindv186 -0.202288 -0.2219723 2
+casefamid187 caseindv187 1.729117 -0.1961717 2
+casefamid188 caseindv188 -1.101985 -0.6343275 2
+casefamid189 caseindv189 0.9717579 -0.5863073 2
+casefamid190 caseindv190 2.945872 -0.7601298 2
+casefamid191 caseindv191 2.7554 -0.4173237 2
+casefamid192 caseindv192 4.069459 -0.7279911 2
+casefamid193 caseindv193 9.243804 -1.271521 2
+casefamid194 caseindv194 4.852073 -0.7457863 2
+casefamid195 caseindv195 1.737131 -0.6372806 2
+casefamid196 caseindv196 4.391178 -0.6959317 2
+casefamid197 caseindv197 4.750126 -0.96211 2
+casefamid198 caseindv198 3.649216 -0.4612271 2
+casefamid199 caseindv199 -0.09243059 -0.4974534 2
+controlfamid0 controlindv0 2.125622 -0.4105484 1
+controlfamid1 controlindv1 1.539032 -0.5431438 1
+controlfamid2 controlindv2 2.385276 -0.5504009 1
+controlfamid3 controlindv3 1.701965 -0.4951139 1
+controlfamid4 controlindv4 -0.03230489 -0.454759 1
+controlfamid5 controlindv5 -0.9005498 -0.4776184 1
+controlfamid6 controlindv6 0.09346231 -0.8162306 1
+controlfamid7 controlindv7 3.078161 -0.6475511 1
+controlfamid8 controlindv8 0.8896825 -0.2555335 1
+controlfamid9 controlindv9 2.085312 -0.7176723 1
+controlfamid10 controlindv10 -4.36522 -0.4596735 1
+controlfamid11 controlindv11 -1.139185 -0.1896605 1
+controlfamid12 controlindv12 2.373592 -0.57905 1
+controlfamid13 controlindv13 2.608187 -0.6332225 1
+controlfamid14 controlindv14 4.232021 -0.8471696 1
+controlfamid15 controlindv15 2.557555 -0.5116261 1
+controlfamid16 controlindv16 2.646105 -0.7267489 1
+controlfamid17 controlindv17 -1.871696 0.2652742 1
+controlfamid18 controlindv18 2.313693 -0.3655393 1
+controlfamid19 controlindv19 0.6048918 -0.6412955 1
+controlfamid20 controlindv20 4.487396 -0.6747436 1
+controlfamid21 controlindv21 -6.53975 0.3603822 1
+controlfamid22 controlindv22 -8.00877 -0.007072062 1
+controlfamid23 controlindv23 6.667389 -0.7903216 1
+controlfamid24 controlindv24 4.874456 -0.4804583 1
+controlfamid25 controlindv25 11.21977 -1.096064 1
+controlfamid26 controlindv26 -1.374217 -0.4852157 1
+controlfamid27 controlindv27 4.918491 -1.010607 1
+controlfamid28 controlindv28 1.204726 -0.3223043 1
+controlfamid29 controlindv29 14.23454 -1.46577 1
+controlfamid30 controlindv30 1.221482 -0.3357178 1
+controlfamid31 controlindv31 5.796807 -0.6502545 1
+controlfamid32 controlindv32 4.486933 -0.6353512 1
+controlfamid33 controlindv33 5.968758 -0.6214859 1
+controlfamid34 controlindv34 -2.691079 -0.3925387 1
+controlfamid35 controlindv35 -2.907148 -0.02269289 1
+controlfamid36 controlindv36 6.177056 -0.7685053 1
+controlfamid37 controlindv37 0.4154552 -0.4223897 1
+controlfamid38 controlindv38 6.307012 -0.7970817 1
+controlfamid39 controlindv39 3.664127 -0.7845139 1
+controlfamid40 controlindv40 2.36554 -0.8701943 1
+controlfamid41 controlindv41 4.00415 -0.6842672 1
+controlfamid42 controlindv42 3.33734 -0.691651 1
+controlfamid43 controlindv43 6.164342 -1.078188 1
+controlfamid44 controlindv44 2.765085 -0.8398738 1
+controlfamid45 controlindv45 -0.8680922 -0.8195037 1
+controlfamid46 controlindv46 -2.189873 -0.4490729 1
+controlfamid47 controlindv47 1.490666 -0.4642039 1
+controlfamid48 controlindv48 10.98931 -1.170664 1
+controlfamid49 controlindv49 -3.925 -0.5927589 1
+controlfamid50 controlindv50 7.938524 -0.8841557 1
+controlfamid51 controlindv51 3.249395 -0.5628948 1
+controlfamid52 controlindv52 10.10491 -1.154553 1
+controlfamid53 controlindv53 -3.893771 -0.6387719 1
+controlfamid54 controlindv54 -2.176313 -0.5730853 1
+controlfamid55 controlindv55 0.8461295 -0.3634116 1
+controlfamid56 controlindv56 8.475476 -1.129492 1
+controlfamid57 controlindv57 7.233784 -1.018607 1
+controlfamid58 controlindv58 0.4744161 -0.6802907 1
+controlfamid59 controlindv59 -0.8502745 -0.03846735 1
+controlfamid60 controlindv60 1.683863 -0.3720651 1
+controlfamid61 controlindv61 4.565473 -0.8950261 1
+controlfamid62 controlindv62 0.671212 -0.1441702 1
+controlfamid63 controlindv63 -1.098388 -0.09883296 1
+controlfamid64 controlindv64 -0.6652119 -0.7209068 1
+controlfamid65 controlindv65 -4.886511 -0.1867061 1
+controlfamid66 controlindv66 2.856959 -0.6229855 1
+controlfamid67 controlindv67 -4.189093 -0.08094556 1
+controlfamid68 controlindv68 10.69542 -1.382102 1
+controlfamid69 controlindv69 6.24111 -0.9003664 1
+controlfamid70 controlindv70 2.384879 -0.3163303 1
+controlfamid71 controlindv71 2.305242 -0.5796083 1
+controlfamid72 controlindv72 12.46679 -1.259333 1
+controlfamid73 controlindv73 7.87328 -1.010262 1
+controlfamid74 controlindv74 -1.225086 -0.5099153 1
+controlfamid75 controlindv75 4.033948 -1.054579 1
+controlfamid76 controlindv76 6.507849 -0.8764057 1
+controlfamid77 controlindv77 8.974944 -1.102429 1
+controlfamid78 controlindv78 3.308271 -0.1383069 1
+controlfamid79 controlindv79 4.295394 -0.7815415 1
+controlfamid80 controlindv80 -2.414154 -0.2716114 1
+controlfamid81 controlindv81 -4.874675 -0.07022798 1
+controlfamid82 controlindv82 10.79078 -0.9887643 1
+controlfamid83 controlindv83 0.09110828 -0.6135997 1
+controlfamid84 controlindv84 5.629783 -1.113426 1
+controlfamid85 controlindv85 6.86962 -1.130427 1
+controlfamid86 controlindv86 -0.5422839 -0.1156735 1
+controlfamid87 controlindv87 4.119681 -0.3752444 1
+controlfamid88 controlindv88 7.281633 -1.115473 1
+controlfamid89 controlindv89 4.089659 -0.4812267 1
+controlfamid90 controlindv90 4.671208 -0.5452888 1
+controlfamid91 controlindv91 4.117476 -1.012097 1
+controlfamid92 controlindv92 5.832862 -1.219104 1
+controlfamid93 controlindv93 4.939635 -0.9152095 1
+controlfamid94 controlindv94 2.173229 -0.7067423 1
+controlfamid95 controlindv95 2.701132 -0.7462506 1
+controlfamid96 controlindv96 4.292912 -0.880747 1
+controlfamid97 controlindv97 -7.092889 0.04878832 1
+controlfamid98 controlindv98 -4.750311 0.2750937 1
+controlfamid99 controlindv99 6.059903 -0.8493232 1
+controlfamid100 controlindv100 4.202423 -0.613024 1
+controlfamid101 controlindv101 5.629674 -0.6470936 1
+controlfamid102 controlindv102 5.43186 -0.7410039 1
+controlfamid103 controlindv103 9.374972 -1.244241 1
+controlfamid104 controlindv104 8.649147 -1.238755 1
+controlfamid105 controlindv105 0.08453037 -0.426135 1
+controlfamid106 controlindv106 6.979792 -0.7121209 1
+controlfamid107 controlindv107 3.301886 -0.7940018 1
+controlfamid108 controlindv108 7.078377 -1.00342 1
+controlfamid109 controlindv109 8.488582 -1.178096 1
+controlfamid110 controlindv110 5.871697 -0.634568 1
+controlfamid111 controlindv111 4.579998 -0.7446878 1
+controlfamid112 controlindv112 -0.4792453 -0.2884986 1
+controlfamid113 controlindv113 2.831844 -0.5049031 1
+controlfamid114 controlindv114 2.34385 -0.389572 1
+controlfamid115 controlindv115 2.859812 -0.6503155 1
+controlfamid116 controlindv116 1.526435 -0.2551887 1
+controlfamid117 controlindv117 1.542462 -0.8211823 1
+controlfamid118 controlindv118 2.550675 -0.915642 1
+controlfamid119 controlindv119 3.193011 -0.7682464 1
+controlfamid120 controlindv120 3.025468 -0.8220734 1
+controlfamid121 controlindv121 -6.754573 0.07898795 1
+controlfamid122 controlindv122 4.636974 -0.8376417 1
+controlfamid123 controlindv123 4.114517 -0.728904 1
+controlfamid124 controlindv124 2.552696 -0.7223867 1
+controlfamid125 controlindv125 4.216156 -0.4066326 1
+controlfamid126 controlindv126 3.272973 -0.368349 1
+controlfamid127 controlindv127 4.470766 -0.6598276 1
+controlfamid128 controlindv128 0.4103974 -0.2639922 1
+controlfamid129 controlindv129 8.18806 -1.276616 1
+controlfamid130 controlindv130 -4.650986 -0.2786565 1
+controlfamid131 controlindv131 -0.2083199 -0.4286485 1
+controlfamid132 controlindv132 -0.4158256 -0.4746327 1
+controlfamid133 controlindv133 -3.059843 -0.3568961 1
+controlfamid134 controlindv134 -4.37049 -0.0432593 1
+controlfamid135 controlindv135 0.83534 -0.4550618 1
+controlfamid136 controlindv136 3.778345 -0.5206372 1
+controlfamid137 controlindv137 5.96745 -1.01103 1
+controlfamid138 controlindv138 -0.895471 -0.2393844 1
+controlfamid139 controlindv139 -3.290398 0.0638694 1
+controlfamid140 controlindv140 9.045473 -1.008216 1
+controlfamid141 controlindv141 1.442519 -0.5131457 1
+controlfamid142 controlindv142 8.956331 -0.9977099 1
+controlfamid143 controlindv143 5.080637 -0.6545677 1
+controlfamid144 controlindv144 -0.6887663 -0.5135905 1
+controlfamid145 controlindv145 2.933714 -0.7630033 1
+controlfamid146 controlindv146 6.933282 -0.7660505 1
+controlfamid147 controlindv147 -1.531733 -0.3580363 1
+controlfamid148 controlindv148 2.38136 -0.8891427 1
+controlfamid149 controlindv149 3.219899 -0.5377933 1
+controlfamid150 controlindv150 2.7085 -0.4678842 1
+controlfamid151 controlindv151 2.014653 -0.5475478 1
+controlfamid152 controlindv152 -1.181432 -0.3959388 1
+controlfamid153 controlindv153 2.896942 -0.5307173 1
+controlfamid154 controlindv154 9.034894 -1.1758 1
+controlfamid155 controlindv155 1.497621 -0.3373583 1
+controlfamid156 controlindv156 2.480974 -0.9491248 1
+controlfamid157 controlindv157 4.212483 -0.9937619 1
+controlfamid158 controlindv158 3.958974 -0.6262947 1
+controlfamid159 controlindv159 -0.5288139 -0.6628318 1
+controlfamid160 controlindv160 5.898802 -0.4687546 1
+controlfamid161 controlindv161 3.903954 -0.783605 1
+controlfamid162 controlindv162 -0.4160783 -0.42058 1
+controlfamid163 controlindv163 -5.354041 0.03796163 1
+controlfamid164 controlindv164 -2.063265 -0.1350901 1
+controlfamid165 controlindv165 3.078445 -0.5464869 1
+controlfamid166 controlindv166 7.058382 -1.024786 1
+controlfamid167 controlindv167 6.324892 -1.213462 1
+controlfamid168 controlindv168 -0.9313048 -0.5352579 1
+controlfamid169 controlindv169 4.358406 -0.7703754 1
+controlfamid170 controlindv170 8.667798 -1.288602 1
+controlfamid171 controlindv171 3.367918 -0.5732119 1
+controlfamid172 controlindv172 1.812619 -0.9033266 1
+controlfamid173 controlindv173 4.303155 -0.5893802 1
+controlfamid174 controlindv174 -1.130337 -0.235381 1
+controlfamid175 controlindv175 -0.04171353 -0.2871939 1
+controlfamid176 controlindv176 0.008684594 -0.4937554 1
+controlfamid177 controlindv177 3.525209 -0.6164246 1
+controlfamid178 controlindv178 4.990253 -0.9228837 1
+controlfamid179 controlindv179 1.016303 -0.5483121 1
+controlfamid180 controlindv180 -0.4987755 -0.1322064 1
+controlfamid181 controlindv181 5.147936 -0.6246312 1
+controlfamid182 controlindv182 5.579591 -0.7860082 1
+controlfamid183 controlindv183 1.729749 -0.5397142 1
+controlfamid184 controlindv184 -4.355912 -0.2743241 1
+controlfamid185 controlindv185 6.826978 -0.881407 1
+controlfamid186 controlindv186 -0.202288 -0.2219723 1
+controlfamid187 controlindv187 1.729117 -0.1961717 1
+controlfamid188 controlindv188 -1.101985 -0.6343275 1
+controlfamid189 controlindv189 0.9717579 -0.5863073 1
+controlfamid190 controlindv190 2.945872 -0.7601298 1
+controlfamid191 controlindv191 2.7554 -0.4173237 1
+controlfamid192 controlindv192 4.069459 -0.7279911 1
+controlfamid193 controlindv193 9.243804 -1.271521 1
+controlfamid194 controlindv194 4.852073 -0.7457863 1
+controlfamid195 controlindv195 1.737131 -0.6372806 1
+controlfamid196 controlindv196 4.391178 -0.6959317 1
+controlfamid197 controlindv197 4.750126 -0.96211 1
+controlfamid198 controlindv198 3.649216 -0.4612271 1
+controlfamid199 controlindv199 -0.09243059 -0.4974534 1
