@@ -12,8 +12,6 @@ output:
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 library(ggplot2)
 library(reshape2)
-library(pander)
-panderOptions('table.split.table', Inf)
 source('../scripts/myRLib.R')
 ```
 
