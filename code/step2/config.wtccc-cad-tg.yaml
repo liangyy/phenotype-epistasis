@@ -11,3 +11,6 @@ MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl:
 ldpred-dir: '../../../ldpred/ldpred'
 ldpred:
   causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
+yi-pattern: 'covar_LDpred_:.txt'
+functional-subsetting:
+  pval-theshold: 0.1
