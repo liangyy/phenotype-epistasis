@@ -1,3 +1,28 @@
 # this module run interaction test
 # Y_T \sim Y_I + SNPi + Y_I \cdot SNPi
-# Note that the test can be run on a pre-selected subset of SNP set
+# Note that the test can be run on a subset of SNP set
+
+# subset strategy
+# 1. functional subsetting
+# hypothesis: if Y_I and X_T affect Y_T through the same pathway, they tend to interact with each other
+# procedure: identify SNPi that affects Y_T and Y_I in the way that Y_T ~ SNPi is consistent with (can be explained by) Y_I ~ SNPi and Y_T ~ Y_I
+
+rule functional_subsetting:
+    input:
+        ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
+        ytxt = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic',
+        yixt = '../step1/output-prepare_betaI/{intermediate}/beta-ss.txt.gz'
+    params:
+        threshold = config['functional-subsetting']['pval-theshold'],
+        prefix = 'output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset.LDpred'
+        pattern = config['yi-pattern']
+    output:
+        get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset', config['ldpred']['causal-fraction'], '.set')
+    shell:
+        'Rscript scripts/functional_subsetting.R \
+            --ytyi {input.ytyi} \
+            --ytxt {input.ytxt} \
+            --yixt {input.yixt} \
+            --pval_theshold {params.threshold} \
+            --pattern {params.pattern} \
+            --prefix {params.prefix}'
