@@ -62,10 +62,10 @@ ytxt$SNP <- as.character(ytxt$SNP)
 yixt$rs <- as.character(yixt$rs)
 ytxt <- ytxt[order(ytxt$SNP), ]
 yixt <- yixt[order(yixt$rs), ]
-ambiguious.snp.ind <- isNotIdentifiable(yixt$ref, yixt$alt)
+ambiguious.snp.ind <- isNotIdentifiable(as.character(yixt$ref), as.character(yixt$alt))
 ytxt <- ytxt[!ambiguious.snp.ind, ]
 yixt <- yixt[!ambiguious.snp.ind, ]
-ytxt$STAT <- correctAllele(yixt$ref, yixt$alt, ytxt$A1, ytxt$STAT)
+ytxt$STAT <- correctAllele(as.character(yixt$ref), as.character(yixt$alt), as.character(ytxt$A1), as.numeric(ytxt$STAT))
 
 # remove too weak signal by thredholding
 weak.snp.ind <- ytxt$P > opt$threshold | yixt$pval > opt$threshold
