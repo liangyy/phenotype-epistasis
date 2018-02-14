@@ -23,34 +23,7 @@ opt_parser = OptionParser(option_list=option_list, usage=help_text);
 opt = parse_args(opt_parser);
 
 # functions
-flipStrand <- function(x) {
-  x[x == 'A'] <- 'T'
-  x[x == 'T'] <- 'A'
-  x[x == 'C'] <- 'G'
-  x[x == 'G'] <- 'C'
-  return(x)
-}
-isNotIdentifiable <- function(x, y) {
-  x <- flipStrand(x)
-  return( x == y )
-}
-correctAllele <- function(ref.ref, ref.alt, now.alt, now.eff) {
-  ref.ref.flip <- flipStrand(ref.ref)
-  need.flip <- rep(FALSE, length(now.eff))
-  need.flip[ref.ref == now.alt] <- TRUE
-  need.flip[ref.ref.flip == now.alt] <- TRUE
-  now.eff[need.flip] <- - now.eff[need.flip]
-  return(now.eff)
-}
-trimString <- function(string, pattern) {
-  string <- as.character(string)
-  string <- basename(string)
-  parts <- strsplit(pattern, ':')[[1]]
-  for(p in parts) {
-    string <- sub(p, '', string)
-  }
-  return(string)
-}
+source('myRLib.R')
 
 # read input
 ytxt <- read.table(opt$ytxt, header = T)
@@ -76,12 +49,12 @@ yixt <- yixt[!weak.snp.ind, ]
 yi <- trimString(ytyi[, 1], opt$pattern)
 
 # extract functional consistent instances
-ytxt.direction <- ((ytxt$STAT > 0) * 1 - 0.5) * 2
-yixt.direction <- ((yixt$effalt > 0) * 1 - 0.5) * 2
+ytxt.direction <- getDirection(ytxt$STAT)
+yixt.direction <- getDirection(yixt$effalt)
 for(i in 1 : nrow(ytyi)) {
   # check consistency
   yi.name <- yi[i]
-  ytyi.direction <- ((ytyi[i, 'prs.estmate'] > 0) * 1 - 0.5) * 2
+  ytyi.direction <-  getDirection(ytyi[i, 'prs.estmate'])
   xt.consistent.ind <- (ytxt.direction * yixt.direction * ytyi.direction) == 1
   # write to file
   cat(paste0(c(yi.name, ytxt[xt.consistent.ind, 'SNP'], 'END\n\n'), collapse = '\n'), file=opt$out, append = TRUE)

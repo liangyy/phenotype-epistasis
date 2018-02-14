@@ -1,0 +1,57 @@
+---
+title: "Epistasis - Coronary heart disease x LDL"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+  
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+library(reshape2)
+library(pander)
+panderOptions('table.split.table', Inf)
+source('../scripts/myRLib.R')
+```
+
+# Read data
+
+```{r}
+ytxt <- read.table('../output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/xt.assoc.logistic', header = T)
+ytyi <- read.table('../output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/yi.logistic.assoc', header = T)
+ytxt$SNP <- as.character(ytxt$SNP)
+yis <- trimString(ytyi[, 1], 'covar_LDpred_:.txt')
+i <- 9
+```
+
+## Read interaction data
+
+```{r}
+interaction <- read.table('../output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/interaction.func_subset_LDpred_p1.0000e-04.assoc.logistic', header = T)
+```
+
+## QQplot
+
+```{r}
+interaction <- interaction[interaction$TEST == 'ADDxPRS', ]
+qqplot(1 : nrow(interaction) / nrow(interaction),interaction$P, xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+```
+
+## Direction
+
+```{r}
+interaction$SNP <- as.character(interaction$SNP)
+interaction <- interaction[order(interaction$SNP), ]
+ytxt.sub <- ytxt[ytxt$SNP %in% interaction$SNP, ]
+ytxt.sub <- ytxt.sub[order(ytxt.sub$SNP), ]
+ytyi.sub <- ytyi[i, ]
+ytxt.direction <- getDirection(ytxt.sub$STAT)
+ytyi.direction <- getDirection(ytyi.sub$prs.estmate)
+yixt.direction <- ytxt.direction * ytyi.direction
+inter.direction <- getDirection(interaction$STAT)
+direction.table <- data.frame(cases = paste(ytxt.direction, ytyi.direction, yixt.direction, sep = ','), interaction = inter.direction)
+ggplot(direction.table) + geom_bar(aes(x = cases, group = interaction, fill = as.factor(interaction)), position = "dodge") + ggtitle('Interaction direction by cases: Y ~ I, Y ~ Gi, I ~ Gi')
+```

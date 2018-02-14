@@ -60,3 +60,14 @@ rule test_interaction_by_set:
             --geno_prefix {params.genotype} \
             --set {input.subset} \
             --pattern {params.pattern}'
+
+rule report_top_interaction_rmd:
+    input:
+        inter = get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/interaction.{subset}', config['ldpred']['causal-fraction'], '.assoc.logistic'),
+        xt = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic',
+        ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
+        xtyiyt = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', config['ldpred']['causal-fraction'], '.assoc.logistic')
+    output:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.Rmd'
+    run:
+        rmd = ''
