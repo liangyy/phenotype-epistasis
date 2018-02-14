@@ -7,11 +7,20 @@
 # hypothesis: if Y_I and X_T affect Y_T through the same pathway, they tend to interact with each other
 # procedure: identify SNPi that affects Y_T and Y_I in the way that Y_T ~ SNPi is consistent with (can be explained by) Y_I ~ SNPi and Y_T ~ Y_I
 
+include: 'direction_XT_YI.snakemake'
+
 # for debug
+def get_functest(config):
+    out = get_ldpred_outputs_ext('output-run_step2/{yt}/interaction.{subset}'.format(yt = config['y'] + '__' + config['x1'] + '__' + config['x2'], subset = 'func_subset'), config['ldpred']['causal-fraction'], '.assoc.logistic')
+    return out
 rule all_funcset:
     input:
         'output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset.set'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
+rule all_functest:
+    input:
+        get_functest(config)
 # end debug
+
 rule functional_subsetting:
     input:
         ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
@@ -30,3 +39,24 @@ rule functional_subsetting:
             --pval_theshold {params.threshold} \
             --pattern {params.pattern} \
             --out {output[0]}'
+
+rule test_interaction_by_set:
+    input:
+        yi = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', '{pval}', '.txt'),
+        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bed',
+        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
+        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.fam',
+        subset = 'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}.set'
+    params:
+        genotype = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config),
+        oprefix = lambda wildcards:  get_ldpred_outputs_ext('output-run_step2/{i}__{g1}__{g2}/interaction.{subset}'.format(i = wildcards.intermediate, g1 = wildcards.geno1, g2 = wildcards.geno2, subset = wildcards.subset), wildcards.pval, ''),
+        pattern = config['yi-pattern']
+    output:
+        o = get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/interaction.{subset}', '{pval}', '.assoc.logistic')
+    shell:
+        'python scripts/interaction_by_set.py \
+            --inputs {input.yi} \
+            --output {params.oprefix} \
+            --geno_prefix {params.genotype} \
+            --set {input.subset} \
+            --pattern {params.pattern}'

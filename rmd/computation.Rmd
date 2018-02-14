@@ -68,10 +68,35 @@ The following four scenarios are considered (suppose a is risk allele):
   , namely every genotype has a specific contribution function.
 Note that the effect size is respective to the reference allele (non-risk allele). The effect of non-risk allele is obserbed into $\alpha + \gamma I$.
 
-## Procedure
+<!-- ## Procedure -->
 
-1. determine the risk allele by vanilla GWAS
-2. estimate $\alpha$ and $\gamma$. Namely perform regression $Y \sim 1 + I$ with link function logistic and determine the positive direction of $I$ (the direction that decreases liability)
-3. estimate the parameters in $\mathbf{p}(I)$. Specifically, let $p_i$ as degree $n$ polynomial. In practice $n = 1, 2$
-4. test if the parameters of $p_i$ other than zero order are significantly different from zero
-5. identify loci with protective epistasis, namely the effect of risk allele goes down if the genetic background goes to the positive direction
+<!-- 1. determine the risk allele by vanilla GWAS -->
+<!-- 2. estimate $\alpha$ and $\gamma$. Namely perform regression $Y \sim 1 + I$ with link function logistic and determine the positive direction of $I$ (the direction that decreases liability) -->
+<!-- 3. estimate the parameters in $\mathbf{p}(I)$. Specifically, let $p_i$ as degree $n$ polynomial. In practice $n = 1, 2$ -->
+<!-- 4. test if the parameters of $p_i$ other than zero order are significantly different from zero -->
+<!-- 5. identify loci with protective epistasis, namely the effect of risk allele goes down if the genetic background goes to the positive direction -->
+
+## Interpretation under linear model
+
+We focus on the following model
+\begin{align*}
+  \logit(\Pr(Y = 1 | G_i, I)) &= \alpha + \beta_1 G_i + \beta_2 I + \gamma I G_i 
+\end{align*}
+Then, $p(I) = \beta_1 + \gamma I$ in this case. 
+
+## Functionally consistent SNP set
+
+Let's consider the set of SNPs such that the association signals can be explained by $Y \sim I \sim G_i$. Namely, restrict to the following four scenaros.
+```{r, echo=FALSE}
+library(pander)
+panderOptions('table.split.table', Inf)
+scenarios <- matrix(c(rep('+', 3), rep('-', 3 * 3)), ncol = 3, byrow = T)
+for(i in 2 : 4) {
+  scenarios[i, i - 1] <- '+'
+}
+colnames(scenarios) <- c('Y ~ I', 'Y ~ Gi', 'I ~ Gi')
+row.names(scenarios) <- paste0('case', 1 : 4, sep = ' ')
+pander(scenarios)
+```
+
+The hypothesis is that if $G_i$ acts on $Y$ via $I$, there might be epistatic effect between $I$ and $G_i$. Namely, the effect of $G_i$ depends on the background level of $I$.  

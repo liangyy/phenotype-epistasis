@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -304,7 +306,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Implementation</h1>
-<h4 class="date"><em>01 February, 2018</em></h4>
+<h4 class="date"><em>14 February, 2018</em></h4>
 
 </div>
 
@@ -372,8 +374,8 @@ Current we test the following two types of interactions
 <div id="combine-x_t-and-y_t" class="section level2">
 <h2><span class="header-section-number">2.1</span> Combine <span class="math inline">\(X_T\)</span> and <span class="math inline">\(Y_T\)</span></h2>
 <pre><code># change the last column to phenotype (1 unaffected, 2 affected)
-$ bash add_phenotype.sh -p 1 -i data1.fam -o data1_phenotyped.fam 
-$ bash add_phenotype.sh -p 2 -i data2.fam -o data2_phenotyped.fam 
+$ bash add_phenotype.sh -p 1 -i data1.fam -o data1_phenotyped.fam
+$ bash add_phenotype.sh -p 2 -i data2.fam -o data2_phenotyped.fam
 
 # rename *.bim and *.bed files accordingly
 $ mv data1.bim data1_phenotyped.bim.fam; mv data1.bed data1_phenotyped.bed
@@ -382,35 +384,42 @@ $ mv data2.bim data2_phenotyped.bim.fam; mv data2.bed data2_phenotyped.bed
 # merge two data sets
 $ plink --bfile data1_phenotyped --bmerge data2_phenotyped --make-bed --out merged_data
 
-# QC 
+# QC
 $ plink --bfile merged_data --make-bed --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out merged_data_QC</code></pre>
 </div>
+<div id="get-pcs-of-x_t" class="section level2">
+<h2><span class="header-section-number">2.2</span> Get PCs of <span class="math inline">\(X_T\)</span></h2>
+<pre><code>Rscript getQC.R --geno merged_data_QC -nPCs 2 --output PCs.merged_data_QC.txt.gz</code></pre>
+</div>
 <div id="determine-the-direction-of-effect" class="section level2">
-<h2><span class="header-section-number">2.2</span> Determine the direction of effect</h2>
+<h2><span class="header-section-number">2.3</span> Determine the direction of effect</h2>
 <div id="direction-of-x_t" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> Direction of <span class="math inline">\(X_T\)</span></h3>
-<pre><code>$ plink --bfile merged_data_QC --logistic --out log_assoc_merged_data_QC
-$ Rscript extractDirection.R --input log_assoc.merged_data_QC.logistic --output direction.merge_data_QC.txt.gz</code></pre>
+<h3><span class="header-section-number">2.3.1</span> Direction of <span class="math inline">\(X_T\)</span></h3>
+<pre><code>$ plink --bfile merged_data_QC --logistic --out log_assoc_merged_data_QC --covar &lt;(zcat &lt; PCs.merged_data_QC.txt.gz)
+$ Rscript extractDirection.R --input log_assoc.merged_data_QC.logistic --output direction_XT.merge_data_QC.txt.gz</code></pre>
 </div>
 <div id="direction-of-y_i" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> Direction of <span class="math inline">\(Y_I\)</span></h3>
+<h3><span class="header-section-number">2.3.2</span> Direction of <span class="math inline">\(Y_I\)</span></h3>
 <pre><code># predict Y_I based on merged_data_QC
-$ python ldpred/validate.py SOMETHING --input merged_data_QC --out merged_data_QC_YI  # ignore the prediction accuracy since the phenotype is wrong 
+$ python ldpred/validate.py SOMETHING --input merged_data_QC --out merged_data_QC_YI  # ignore the prediction accuracy since the phenotype is wrong
 
 # determine the direction
-$ Rscript computeDirection.R --input merged_data_QC_YI.txt.gz --output directon.merged_data_QC_YI.txt.gz</code></pre>
+$ Rscript computeDirection.R --input merged_data_QC_YI.txt.gz --output directon_YI.merged_data_QC.txt.gz</code></pre>
 </div>
 </div>
 <div id="perform-interaction-test" class="section level2">
-<h2><span class="header-section-number">2.3</span> Perform interaction test</h2>
-<pre><code># additive model
-$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; merged_data_QC_YI.txt.gz) --interaction --out interaction_add.merged_data_QC_YI
+<h2><span class="header-section-number">2.4</span> Perform interaction test</h2>
+<pre><code># merge covariates
+bash merge_two_covar.sh -a YI.merged_data_QC.txt.gz -b PCs.merged_data_QC.txt.gz -o covars.merged_data_QC.txt.gz
+
+# additive model
+$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; YI.merged_data_QC.txt.gz) --interaction --out interaction_add_YI.merged_data_QC
 
 # dominant/recessive model
 ## note that the dominant/recessive is respective to reference allele but not the risk one
 ## in the end, the dominant and recessive will be reassigned according to direction files
-$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; merged_data_QC_YI.txt.gz) --interaction --dominant --out interaction_dom.merged_data_QC_YI 
-$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; merged_data_QC_YI.txt.gz) --interaction --recessive --out interaction_rec.merged_data_QC_YI </code></pre>
+$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; YI.merged_data_QC.txt.gz) --interaction --dominant --out interaction_dom_YI.merged_data_QC
+$ plink --bfile merged_data_QC --logistic --covar &lt;(zcat &lt; YI.merged_data_QC.txt.gz) --interaction --recessive --out interaction_rec_YI.merged_data_QC</code></pre>
 </div>
 </div>
 

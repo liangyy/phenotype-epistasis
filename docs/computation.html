@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -304,7 +306,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Computation</h1>
-<h4 class="date"><em>01 February, 2018</em></h4>
+<h4 class="date"><em>14 February, 2018</em></h4>
 
 </div>
 
@@ -370,16 +372,67 @@ G_i &amp;= \begin{cases}
   \end{align*}\]</span>
 , namely every genotype has a specific contribution function. Note that the effect size is respective to the reference allele (non-risk allele). The effect of non-risk allele is obserbed into <span class="math inline">\(\alpha + \gamma I\)</span>.</li>
 </ol>
+<!-- ## Procedure -->
+<!-- 1. determine the risk allele by vanilla GWAS -->
+<!-- 2. estimate $\alpha$ and $\gamma$. Namely perform regression $Y \sim 1 + I$ with link function logistic and determine the positive direction of $I$ (the direction that decreases liability) -->
+<!-- 3. estimate the parameters in $\mathbf{p}(I)$. Specifically, let $p_i$ as degree $n$ polynomial. In practice $n = 1, 2$ -->
+<!-- 4. test if the parameters of $p_i$ other than zero order are significantly different from zero -->
+<!-- 5. identify loci with protective epistasis, namely the effect of risk allele goes down if the genetic background goes to the positive direction -->
 </div>
-<div id="procedure" class="section level2">
-<h2><span class="header-section-number">2.3</span> Procedure</h2>
-<ol style="list-style-type: decimal">
-<li>determine the risk allele by vanilla GWAS</li>
-<li>estimate <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>. Namely perform regression <span class="math inline">\(Y \sim 1 + I\)</span> with link function logistic and determine the positive direction of <span class="math inline">\(I\)</span> (the direction that decreases liability)</li>
-<li>estimate the parameters in <span class="math inline">\(\mathbf{p}(I)\)</span>. Specifically, let <span class="math inline">\(p_i\)</span> as degree <span class="math inline">\(n\)</span> polynomial. In practice <span class="math inline">\(n = 1, 2\)</span></li>
-<li>test if the parameters of <span class="math inline">\(p_i\)</span> other than zero order are significantly different from zero</li>
-<li>identify loci with protective epistasis, namely the effect of risk allele goes down if the genetic background goes to the positive direction</li>
-</ol>
+<div id="interpretation-under-linear-model" class="section level2">
+<h2><span class="header-section-number">2.3</span> Interpretation under linear model</h2>
+We focus on the following model
+<span class="math display">\[\begin{align*}
+  \logit(\Pr(Y = 1 | G_i, I)) &amp;= \alpha + \beta_1 G_i + \beta_2 I + \gamma I G_i 
+\end{align*}\]</span>
+<p>Then, <span class="math inline">\(p(I) = \beta_1 + \gamma I\)</span> in this case.</p>
+</div>
+<div id="functionally-consistent-snp-set" class="section level2">
+<h2><span class="header-section-number">2.4</span> Functionally consistent SNP set</h2>
+<p>Let’s consider the set of SNPs such that the association signals can be explained by <span class="math inline">\(Y \sim I \sim G_i\)</span>. Namely, restrict to the following four scenaros.</p>
+<table style="width:53%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Y ~ I</th>
+<th align="center">Y ~ Gi</th>
+<th align="center">I ~ Gi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>case1</strong></td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>case2</strong></td>
+<td align="center">+</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>case3</strong></td>
+<td align="center">-</td>
+<td align="center">+</td>
+<td align="center">-</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>case4</strong></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">+</td>
+</tr>
+</tbody>
+</table>
+<p>The hypothesis is that if <span class="math inline">\(G_i\)</span> acts on <span class="math inline">\(Y\)</span> via <span class="math inline">\(I\)</span>, there might be epistatic effect between <span class="math inline">\(I\)</span> and <span class="math inline">\(G_i\)</span>. Namely, the effect of <span class="math inline">\(G_i\)</span> depends on the background level of <span class="math inline">\(I\)</span>.</p>
 </div>
 </div>
 
