@@ -68,7 +68,7 @@ yixt <- yixt[!ambiguious.snp.ind, ]
 ytxt$STAT <- correctAllele(yixt$ref, yixt$alt, ytxt$A1, ytxt$STAT)
 
 # remove too weak signal by thredholding
-weak.snp.ind <- ytxt$P > opt$threshold | yixt$pval > opt$threshold
+weak.snp.ind <- (ytxt$P > opt$pval_theshold) | (yixt$pval > opt$pval_theshold)
 ytxt <- ytxt[!weak.snp.ind, ]
 yixt <- yixt[!weak.snp.ind, ]
 
