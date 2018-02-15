@@ -152,7 +152,7 @@ for(i in 1 : length(xtyi.files)) {{
   pander(yi[i, 2:ncol(yi)])
   qqplot(-log10((1 : length(xt$P)) / length(xt$P)), -log10(xt$P), main = 'QQplot - Gi: Y ~ Gi', xlab = '-log10 expected pval', ylab = '-log10 observed pval'); abline(a = 0, b = 1, col = 'red')
   qqplot(-log10((1 : length(xtyi[xtyi$TEST == 'ADD', 'P'])) / length(xtyi[xtyi$TEST == 'ADD', 'P'])), -log10(xtyi[xtyi$TEST == 'ADD', 'P']), main = 'QQplot - Gi: Y ~ Gi + I', xlab = '-log10 expected pval', ylab = '-log10 observed pval'); abline(a = 0, b = 1, col = 'red')
-  qqplot(-log10((1 : length(xtyi[xtyi$TEST == 'PRS', 'P'])) / length(xtyi[xtyi$TEST == 'PRS', 'P'])), -log10(xtyi[xtyi$TEST == 'PRS', 'P']), main = 'QQplot - I: Y ~ Gi + I', xlab = '-log10 expected pval', ylab = '-log10 observed pval'); abline(a = 0, b = 1, col = 'red')
+  hist(log(xtyi[xtyi$TEST == 'PRS', 'P']), main = 'Hist - I: Y ~ Gi + I', xlab = 'OR'); abline(v = yi[i, 'prs.estmate'], col = 'red') ; polygon(c(yi[i, 'prs.estmate'] - yi[i, 'prs.std'], yi[i, 'prs.estmate'] + yi[i, 'prs.std']), c(0, Inf), col = "grey30", border = NA)
   plot(xt$P, xtyi[xtyi$TEST == 'ADD', 'P'], main = 'P-value of Gi: Gi + I vs Gi', xlab = 'Gi', ylab = 'Gi + I')
   cat('\\n')
   cat('\\n')
