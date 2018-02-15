@@ -1,0 +1,10 @@
+filename: 'test'
+test:
+  name: 'test.gz'
+  chr: 2
+  pos: 3
+  ref: 4
+  alt: 5
+  meta: 1
+  sep: ' '
+  cat: 'zcat'
