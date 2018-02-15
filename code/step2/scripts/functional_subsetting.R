@@ -11,8 +11,8 @@ option_list = list(
               help='association Y_T ~ X_T', metavar='character'),
   make_option(c('-i', '--yixt'), type='character',
               help='association Y_I ~ X_T', metavar='character'),
-  make_option(c('-p', '--pval_theshold'), type='character',
-              help='p-value thredhold to call SNP effect', metavar='character'),
+  make_option(c('-p', '--pval_theshold'), type='numeric',
+              help='p-value thredhold to call SNP effect', metavar='numeric'),
   make_option(c('-a', '--pattern'), type='character',
               help='the pattern used to exact file name identifier from ytyi input 1st column (example: [first_part_to_remove]:[second_part_to_remove])', metavar='character'),
   make_option(c('-o', '--out'), type='character',
@@ -23,7 +23,7 @@ opt_parser = OptionParser(option_list=option_list, usage=help_text);
 opt = parse_args(opt_parser);
 
 # functions
-source('myRLib.R')
+source('scripts/myRLib.R')
 
 # read input
 ytxt <- read.table(opt$ytxt, header = T)
