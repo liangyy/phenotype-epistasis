@@ -28,6 +28,9 @@ def get_xt(config):
 def get_yi(config):
     out = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
     return out
+def get_plot(config):
+    out = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_report.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
+    return out
 rule all_XTYI:
     input:
         get_xtyi(config)
@@ -37,6 +40,9 @@ rule all_XT:
 rule all_YI:
     input:
         get_yi(config)
+rule all_plot:
+    input:
+        get_plot(config)
 ## end debug
 
 rule direction_xt:
@@ -85,3 +91,84 @@ rule direction_xt_yi:
         o = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', '{pval}', '.assoc.logistic'),
     shell:
         'python scripts/direction_xtyi.py --inputs {input.yi} --outputs {params.oprefix} --geno_prefix {params.genotype}'
+
+rule plot_report:
+    input:
+        xtyi = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', config['ldpred']['causal-fraction'], '.assoc.logistic'),
+        xt = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic',
+        yi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
+    params:
+        files = lambda wildcards: ':'.join(get_ldpred_outputs_ext('output-direction_XT_YI/{i}__{g1}__{g2}/xtyi'.format(i = wildcards.intermediate, g1 = wildcards.geno1, g2 = wildcards.geno2), config['ldpred']['causal-fraction'], '.assoc.logistic')),
+        pvals = ':'.join(config['ldpred']['causal-fraction'].split(',')),
+        y = config['x1'],
+        i = config['y']
+    output:
+        temp('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_report.Rmd')
+    run:
+        rmd = '''---
+title: "Direction - Y ({y}); I ({i})"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{{r setup, echo=FALSE}}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+library(pander)
+panderOptions('knitr.auto.asis', FALSE)
+panderOptions('table.split.table', Inf)
+knitr::opts_knit$set(root.dir = '../../')
+```
+
+# Read data
+
+```{{r}}
+source('scripts/myRLib.R')
+xt <- read.table('{xt}', header= T)
+xt$SNP <- as.character(xt$SNP)
+xt <- xt[order(xt$SNP), ]
+yi <- read.table('{yi}', header = T)
+xtyi.files <- strsplit('{files}', ':')[[1]]
+ps <- strsplit('{pvals}', ':')[[1]]
+```
+
+# Plots
+
+```{{r, results='asis'}}
+for(i in 1 : length(xtyi.files)) {{
+  xtyi <- read.table(xtyi.files[i], header = T)
+  xtyi$SNP <- as.character(xtyi$SNP)
+  xtyi <- xtyi[order(xtyi$SNP), ]
+  p <- ps[i]
+  cat('##', 'Cutoff =', p, '\\n')
+  cat('\\n')
+  cat('\\n')
+  cat('Filename is', as.character(yi[i, 1]))
+  cat('\\n')
+  pander(yi[i, 2:ncol(yi)])
+  qqplot((1 : length(xt$P)) / length(xtyi$P), xtyi$P, main = 'QQplot - Gi: Y ~ Gi', xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+  qqplot((1 : length(xtyi[xtyi$TEST == 'ADD', 'P'])) / length(xtyi[xtyi$TEST == 'ADD', 'P']), xtyi[xtyi$TEST == 'ADD', 'P'], main = 'QQplot - Gi: Y ~ Gi + I', xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+  qqplot((1 : length(xtyi[xtyi$TEST == 'PRS', 'P'])) / length(xtyi[xtyi$TEST == 'PRS', 'P']), xtyi[xtyi$TEST == 'PRS', 'P'], main = 'QQplot - I: Y ~ Gi + I', xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+  plot(xt$P, xtyi[xtyi$TEST == 'ADD', 'P'], main = 'P-value of Gi: Gi + I vs Gi', xlab = 'Gi', ylab = 'Gi + I')
+  cat('\\n')
+  cat('\\n')
+}}
+```
+'''.format(xt = input.xt, files = params.files, pvals = params.pvals, yi = input.yi, y = params.y, i = params.i)
+        o = open(output[0], 'w')
+        o.write(rmd)
+        o.close()
+
+rule plot_report_exec:
+    input:
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_report.Rmd'
+    output:
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_report.html'
+    shell:
+        '''
+        R -e "rmarkdown::render('{input[0]}')"
+        '''

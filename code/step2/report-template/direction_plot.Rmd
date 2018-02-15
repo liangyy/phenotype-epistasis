@@ -1,0 +1,44 @@
+---
+title: "Direction - Coronary heart disease x LDL"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+  
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+source('../scripts/myRLib.R')
+```
+
+# Read data
+
+```{r}
+xt <- read.table('../output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xt.assoc.logistic', header= T)
+xt$SNP <- as.character(xt$SNP)
+xt <- xt[order(xt$SNP), ]
+xtyi.files <- strsplit('../output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi_LDpred_p1.0000e-01.assoc.logistic:../output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi_LDpred_p1.0000e-01.assoc.logistic', ':')[[1]]
+ps <- strsplit('p1.0000e-01:p1.0000e-01', ':')[[1]]
+```
+
+# Plots
+
+```{r, results='asis'}
+for(i in 1 : length(xtyi.files)) {
+  xtyi <- read.table(xtyi.files[i], header = T)
+  xtyi$SNP <- as.character(xtyi$SNP)
+  xtyi <- xtyi[order(xtyi$SNP), ]
+  p <- ps[i]
+  cat('##', p, '\n')
+  cat('\n')
+  qqplot((1 : length(xt$P)) / length(xtyi$P), xtyi$P, main = 'QQplot - Gi: Y ~ Gi', xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+  qqplot((1 : length(xtyi[xtyi$TEST == 'ADD', 'P'])) / length(xtyi[xtyi$TEST == 'ADD', 'P']), xtyi[xtyi$TEST == 'ADD', 'P'], main = 'QQplot - Gi: Y ~ Gi + I', xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+  qqplot((1 : length(xtyi[xtyi$TEST == 'PRS', 'P'])) / length(xtyi[xtyi$TEST == 'PRS', 'P']), xtyi[xtyi$TEST == 'PRS', 'P'], main = 'QQplot - I: Y ~ Gi + I', xlab = 'expected pval', ylab = 'observed pval'); abline(a = 0, b = 1, col = 'red')
+  plot(xt$P, xtyi[xtyi$TEST == 'ADD', 'P'], main = 'P-value of Gi: Gi + I vs Gi', xlab = 'Gi', ylab = 'Gi + I')
+  cat('\n')
+  cat('\n')
+}
+```
