@@ -25,7 +25,7 @@ id.counter <- id.counter + 1
 data.inter <- rbind(data.inter, data.inter.blood)
 ```
 
-* [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/AstleWJ_27863252_GCST004602)
+* [Data](ftp://ftp.sanger.ac.uk/pub/project/humgen/summary_statistics/human/2017-12-12/)
 * [Paper](http://www.cell.com/cell/fulltext/S0092-8674(16)31463-5)
 * Meta-data
 
@@ -82,6 +82,25 @@ pander(data.inter.personality)
 The phenotype information is [here](https://github.com/liangyy/phenotype-epistasis/blob/master/docs-data/ng.3736-S1-table-s2.pdf) (Table S2)
 
 Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
+
+## C-reactive protein
+
+```{r, echo=FALSE}
+data.inter.crp <- genDataLine(id = c(id.counter), phenotype = c('C reactive protein'), num.of.traits = c(1), sample.size = c(9961), num.of.variants = c(2.4e7), heritability.mean = c(0.16), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.crp)
+```
+
+* [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005067)
+* [Paper](http://europepmc.org/articles/PMC5591265;jsessionid=5D3CD9A68BA57635985D74A3530E36BF)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.crp)
+```
+
+There are many other phenotypes, health-related biomarkers, that the paper has collected, see [here](http://europepmc.org/articles/PMC5591265/table/Tab1/) for a complement list.
+
 
 ## Summary
 
