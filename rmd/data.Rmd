@@ -109,6 +109,8 @@ The individual level data is needed here since we need to calculate the predicte
 
 Posterior mean genotype is available from Nick in BIMBAM format.
 
+The GWAS result of WTCCC 2009 is [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2719288/figure/F3/).
+
 ## Autism
 
 TODO
