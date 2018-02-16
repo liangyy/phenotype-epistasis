@@ -1,4 +1,8 @@
 filename: 'test'
+dbtype: '1000g2015aug_eur'
+dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
+buildver: 'hg19'
+suffix: 'hg19_EUR.sites.2015_08_dropped'
 test:
   name: 'test.gz'
   chr: 2

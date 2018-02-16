@@ -15,6 +15,31 @@ rule prepare_input:
         temp('add-maf/{name}.avinput')
     shell:
         '''
-        zcat {input[0]} | awk -F"{params.sep}" 'NR==FNR{{a[${params.meta}]=length${params.ref}}}'
+        awk 'NR==FNR{{a[${params.meta}]=length(${params.ref});next}}${params.meta}!=""{{print ${params.chr},${params.pos},${params.pos}-1+a[${params.meta}],${params.ref},${params.alt},${params.meta};next}}' OFS='\\t' FS="{params.sep}" <({params.cat} < {input[0]}) OFS='\\t' FS="{params.sep}" <({params.cat} < {input[0]}) > {output[0]}
         '''
-awk 'NR==FNR{a[$1]=$1;b[$1]="0.1\t"$3"\t"$2;next}{print a[$1],$3,$2,b[$1]}' OFS="\t" FS='\t' <(zcat < $input) FS=' ' <(zcat < $geno) > $output.temp
+
+rule annovar:
+    input:
+        'add-maf/{name}.avinput'
+    output:
+        'add-maf/{{name}}.{suffix}'.format(suffix = config['suffix'])
+    params:
+        dbdtype = config['dbtype'],
+        buildver = config['buildver'],
+        prefix = 'add-maf/{name}',
+        dbdir = config['dbdir']
+    shell:
+        'annotate_variation.pl -filter -dbtype {params.dbtype} -buildver {params.buildver} -out {params.prefix} {input[0]} {params.dbdir}'
+
+rule merge:
+    input:
+        maf = 'add-maf/{{name}}.{suffix}'.format(suffix = config['suffix']),
+        inp = lambda wildcards: config[wildcards.name]['name']
+    params:
+        meta = lambda wildcards: config[wildcards.name]['meta']
+    output:
+        'add-maf/{{name}}.with-maf.gz'
+    shell:
+        '''
+        awk 'NR==FNR{{a[$8]=$2;next}}{{print $0,a[${params.meta}];next}}' FS="\\t" <(cat < {input.maf}) OFS="{params.sep}" FS="{params.sep}" <({params.cat} < {input.inp}) | gzip > {output[0]}
+        '''
