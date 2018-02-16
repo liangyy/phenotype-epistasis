@@ -11,7 +11,7 @@
 
 
 
-<title>Home</title>
+<title>Results</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -308,63 +308,49 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">Results</h1>
 <h4 class="date"><em>16 February, 2018</em></h4>
 
 </div>
 
 
-<div id="data" class="section level1">
-<h1><span class="header-section-number">1</span> Data</h1>
-<p>Go to <a href="data.html">data</a></p>
-<div id="intermediate-gwas" class="section level2">
-<h2><span class="header-section-number">1.1</span> Intermediate GWAS</h2>
-<p>The candidate phenotypes/traits should be highly inheritable. The intuition is that it may capture one aspect of genetic background in an as informative as possible manner.</p>
-<p>Here is a list of publicly available GWAS summary statistics <a href="https://www.ebi.ac.uk/gwas/downloads/summary-statistics">link</a>.</p>
-</div>
-<div id="disease-phenotypes" class="section level2">
-<h2><span class="header-section-number">1.2</span> Disease Phenotypes</h2>
-<ol style="list-style-type: decimal">
-<li>WTCCC: type 1 diabetes, type 2 diabetes, coronary heart disease, hypertension, bipolar disorder, rheumatoid arthritis and Crohn’s disease</li>
-<li>Autism</li>
-</ol>
-</div>
-<div id="gwas-for-prs-validation" class="section level2">
-<h2><span class="header-section-number">1.3</span> GWAS for PRS Validation</h2>
-<p>GWAS summary statistics that can be used to benchmark the validation of PRS calculation.</p>
-</div>
-</div>
-<div id="computation" class="section level1">
-<h1><span class="header-section-number">2</span> Computation</h1>
-<p>Go to <a href="computation.html">computation</a>.</p>
-<div id="computing-intermediate-phenotype" class="section level2">
-<h2><span class="header-section-number">2.1</span> Computing intermediate phenotype</h2>
-<p>Methods available:</p>
+<div id="summary" class="section level1">
+<h1><span class="header-section-number">1</span> Summary</h1>
+<p>This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait.</p>
+<p>Every subsection presents the following information.</p>
 <ul>
-<li>P+T</li>
-<li>LDpred</li>
+<li>Marginal association:
+<ul>
+<li><span class="math inline">\(Y \sim I\)</span></li>
+<li><span class="math inline">\(Y \sim G_i\)</span></li>
+<li><span class="math inline">\(Y \sim I + G_i\)</span></li>
+</ul></li>
+<li>Interaction test results based on functional subsetting</li>
+<li>Follow up comment on the results if any</li>
 </ul>
 </div>
-<div id="testing-interaction" class="section level2">
-<h2><span class="header-section-number">2.2</span> Testing interaction</h2>
-<p>Hypothesis testing under linear model.</p>
-</div>
-</div>
-<div id="implementation" class="section level1">
-<h1><span class="header-section-number">3</span> Implementation</h1>
-<p>Go to <a href="implementation.html">implementation</a> for details.</p>
-<p>Pipeline overview is as follow.</p>
-<p>Let</p>
+<div id="coronary-heart-disease" class="section level1">
+<h1><span class="header-section-number">2</span> Coronary heart disease</h1>
+<div id="hdl" class="section level2">
+<h2><span class="header-section-number">2.1</span> HDL</h2>
 <ol style="list-style-type: decimal">
-<li><span class="math inline">\(\beta_I\)</span> be summary statistic of intermediate GWAS</li>
-<li><span class="math inline">\(Y_t\)</span> be phenotype of interest with corresponding genotype <span class="math inline">\(X_t\)</span></li>
-<li><span class="math inline">\(\hat{Y}_I\)</span> be the predicted intermediate phenotype</li>
-<li><span class="math inline">\(I_T\)</span> be interaction of <span class="math inline">\(X_T\)</span> and <span class="math inline">\(\hat{Y}_I\)</span></li>
+<li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
+<li>Interaction test results are <a href="">here</a></li>
 </ol>
-<embed src="index_files/figure-html/unnamed-chunk-1-1.pdf" width="150" height="300" style="display: block; margin: auto;" type="application/pdf" />
-<div id="obtaining-haty_i" class="section level2">
-<h2><span class="header-section-number">3.1</span> Obtaining <span class="math inline">\(\hat{Y}_I\)</span></h2>
-<p>Current available <span class="math inline">\(f: (\beta_I, X_T) \rightarrow \hat{Y}_I\)</span> are <code>PRSice</code> and <code>LDpred</code> (see <a href="computation.html#1_computing_intermediate_phenotype">here</a>).</p>
+</div>
+<div id="ldl" class="section level2">
+<h2><span class="header-section-number">2.2</span> LDL</h2>
+<ol style="list-style-type: decimal">
+<li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
+<li>Interaction test results are <a href="">here</a></li>
+</ol>
+</div>
+<div id="serum-concentration" class="section level2">
+<h2><span class="header-section-number">2.3</span> Serum concentration</h2>
+<ol style="list-style-type: decimal">
+<li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
+<li>Interaction test results are <a href="">here</a></li>
+</ol>
 </div>
 </div>
 

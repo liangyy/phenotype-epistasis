@@ -30,3 +30,38 @@ trimString <- function(string, pattern) {
 getDirection <- function(x) {
   return(((x > 0) * 1 - 0.5) * 2)
 }
+
+parseFuncSet <- function(str) {
+  out <- list()
+  i <- 0
+  state <- NA
+  while(i <= length(str)) {
+    i <- i + 1
+    if(is.na(state)) {
+      state <- str[i]
+      out[[state]] <- c()
+    } else {
+      if(str[i] == '') {
+        state <- NA
+      } else if(str[i] == 'END') {
+        next 
+      } else {
+        out[[state]] <- c(out[[state]], str[i])
+      }
+    }
+  }
+  return(out)
+}
+
+getStdFromPval <- function(pval, beta) {
+  # assuming two-tail p-value
+  zval <- abs(pnorm(pval / 2))
+  beta.std <- abs(beta) / zval
+  return(beta.std)
+}
+
+getMeanStd <- function(name, pval, or, type) {
+  o <- cbind(log(or), getStdFromPval(pval, log(or)))
+  df <- data.frame(SNP = name, Mean = o[, 1], Std = o[, 2], Type = type)
+  return(df)
+}

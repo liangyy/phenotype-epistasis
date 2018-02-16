@@ -1,0 +1,76 @@
+---
+title: "Epistasis - Y ({y}); I ({i})"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+  
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+library(pander)
+library(dplyr)
+panderOptions('knitr.auto.asis', FALSE)
+panderOptions('table.split.table', Inf)
+knitr::opts_knit$set(root.dir = '../')
+```
+
+# Read data
+
+```{r}
+source('scripts/myRLib.R')
+xt <- read.table('output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xt.assoc.logistic', header= T)
+xt$SNP <- as.character(xt$SNP)
+xt <- xt[order(xt$SNP), ]
+yi <- read.table('output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/yi.logistic.assoc', header = T)
+funcset <- readLines('output-run_step2/intermediate1__geno1_case__geno2_ctrl/func_subset.set')
+funcset <- parseFuncSet(funcset)
+funcset.names <- names(funcset)
+xtyi.files <- strsplit('output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi_LDpred_p1.0000e+00.assoc.logistic:direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi_LDpred_p1.0000e-01.assoc.logistic', ':')[[1]]
+ps <- strsplit('p1.0000e+00:p1.0000e-01', ':')[[1]]
+inter.files <- strsplit('output-run_step2/intermediate1__geno1_case__geno2_ctrl/interaction.func_subset_LDpred_p1.0000e+00.assoc.logistic:output-run_step2/intermediate1__geno1_case__geno2_ctrl/interaction.func_subset_LDpred_p1.0000e-01.assoc.logistic', ':')[[1]]
+```
+
+# Epistasis
+
+```{r, results='asis}
+for(i in 1 : length(xtyi.files)) {
+  cat('##', funcset.names[i])
+  cat('\n')
+  cat('\n')
+  snp.subset <- funcset[[funcset.names[i]]]
+  yt.xt <- xt[xt$SNP %in% snp.subset, ]
+  yt.yi <- yi[i, ]
+  xtyi <- read.table(xtyi.files[i], header = T)
+  xtyi$SNP <- as.character(xtyi$SNP)
+  yt.xtyi <- xtyi[xtyi$SNP %in% snp.subset, ]
+  yt.xtyi.xt <- yt.xtyi[yt.xtyi$TYPE == 'ADD', ]
+  yt.xtyi.yi <- yt.xtyi[yt.xtyi$TYPE == 'PRS', ]
+  inter <- read.table(inter.files[i], header = T)
+  inter$SNP <- as.character(inter$SNP)
+  inter <- inter[inter$TYPE == 'ADDxPRS', ]
+  yt.inter <- inter[inter$SNP %in% snp.subset, ]
+  
+  # order all rows
+  yt.xt <- yt.xt[order(yt.xt$SNP), ]
+  yt.xtyi.xt <- yt.xtyi.xt[order(yt.xtyi.xt$SNP), ]
+  yt.xtyi.yi <- yt.xtyi.yi[order(yt.xtyi.yi$SNP), ]
+  inter <- inter[order(inter$SNP), ]
+  
+  # get row info
+  yt.xt.mean.std <- getMeanStd(yt.xt$SNP, yt.xt$P, yt.xt$OR, 'Y~Gi')
+  yt.xtyi.xt.mean.std <- getMeanStd(yt.xtyi.xt$SNP, yt.xtyi.xt$P, yt.xtyi.xt$OR, 'Y~Gi+I (Gi)')
+  yt.xtyi.yi.mean.std <- getMeanStd(yt.xtyi.yi$SNP, yt.xtyi.yi$P, yt.xtyi.yi$OR, 'Y~Gi+I (I)')
+  inter <- getMeanStd(inter$SNP, inter$P, inter$OR)
+  yt.yi.mean.std <- data.frame(SNP = inter$SNP, Mean = yt.yi$prs.estmate, Std = yt.yi$prs.std, 'Y~I')
+  
+  # create data frame for plot
+  df <- inner_join(yt.xt.mean.std, yt.xtyi.xt.mean.std, by = 'SNP')
+  df <- inner_join(df, yt.xtyi.yi.mean.std, by = 'SNP')
+  df <- inner_join(df, inter, by = 'SNP')
+  df <- inner_join(df, yt.yi.mean.std, by = 'SNP')
+}
+```

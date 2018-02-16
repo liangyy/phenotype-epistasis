@@ -61,12 +61,24 @@ rule test_interaction_by_set:
             --set {input.subset} \
             --pattern {params.pattern}'
 
+rule get_posterior_mean_by_set:
+    input:
+        subset = 'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}.set',
+        get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'], 'txt')
+    params:
+        fraction = ':'.join(config['ldpred']['causal-fraction'].split(','))
+    output:
+        o = get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/posterior-mean.{subset}', '{pval}', 'txt')
+
+
 rule report_top_interaction_rmd:
     input:
         inter = get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/interaction.{subset}', config['ldpred']['causal-fraction'], '.assoc.logistic'),
         xt = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic',
         ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
         xtyiyt = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', config['ldpred']['causal-fraction'], '.assoc.logistic')
+    params:
+        fraction = config['ldpred']['causal-fraction']
     output:
         'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.Rmd'
     run:
