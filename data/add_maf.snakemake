@@ -1,5 +1,9 @@
 # this module uses ANNOVAR to add allele frequency to the input summary statistic file
 
+rule all:
+    input:
+        'add-maf/{name}.with-maf.gz'.format(name = config['filename'])
+
 rule prepare_input:
     input:
         lambda wildcards: config[wildcards.name]['name'],
@@ -24,7 +28,7 @@ rule annovar:
     output:
         'add-maf/{{name}}.{suffix}'.format(suffix = config['suffix'])
     params:
-        dbdtype = config['dbtype'],
+        dbtype = config['dbtype'],
         buildver = config['buildver'],
         prefix = 'add-maf/{name}',
         dbdir = config['dbdir']
@@ -36,10 +40,12 @@ rule merge:
         maf = 'add-maf/{{name}}.{suffix}'.format(suffix = config['suffix']),
         inp = lambda wildcards: config[wildcards.name]['name']
     params:
-        meta = lambda wildcards: config[wildcards.name]['meta']
+        meta = lambda wildcards: config[wildcards.name]['meta'],
+        sep = lambda wildcards: config[wildcards.name]['sep'],
+        cat = lambda wildcards: config[wildcards.name]['cat']
     output:
-        'add-maf/{{name}}.with-maf.gz'
+        'add-maf/{name}.with-maf.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[$8]=$2;next}}{{print $0,a[${params.meta}];next}}' FS="\\t" <(cat < {input.maf}) OFS="{params.sep}" FS="{params.sep}" <({params.cat} < {input.inp}) | gzip > {output[0]}
+        awk 'NR==FNR{{a[${params.meta}]=$0;next}}{{print a[$8],$2;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.maf}) | gzip > {output[0]}
         '''
