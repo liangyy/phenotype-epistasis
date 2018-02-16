@@ -116,3 +116,18 @@ $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --o
 $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --dominant --out interaction_dom_YI.merged_data_QC
 $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --recessive --out interaction_rec_YI.merged_data_QC
 ```
+
+
+# TODO list:
+
+## Code:
+
+1. finish the scripts to extract PRS (computed by LDpred) and original beta (derived from pval and sample size). note that the nt1 and ref and nt2 is alt and direction may be flipped comparing to summary statistic file since the correction is done based on genotype data.
+2. write report rules to plot the PRS against original values.
+3. modify direction module accordingly to make use of PRS instead of original SS(may be refactorize the direction to make all direction is relative to genotype)
+4. add PRS or original beta into the plot (maybe the latter since it has SE)
+
+## Analysis:
+
+1. do Crohn's disease w/ wbc and crp
+2. finish analysis on cad
