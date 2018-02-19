@@ -55,7 +55,7 @@ parseFuncSet <- function(str) {
 
 getStdFromPval <- function(pval, beta) {
   # assuming two-tail p-value
-  zval <- abs(pnorm(qval / 2))
+  zval <- abs(qnorm(pval / 2))
   beta.std <- abs(beta) / zval
   return(beta.std)
 }
