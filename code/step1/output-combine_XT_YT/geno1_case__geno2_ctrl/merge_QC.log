@@ -10,7 +10,7 @@
 
 Skipping web check... [ --noweb ] 
 Writing this text to log file [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.log ]
-Analysis started: Wed Feb 14 10:24:20 2018
+Analysis started: Sun Feb 18 22:20:19 2018
 
 Options in effect:
 	--noweb
@@ -51,5 +51,5 @@ Writing map (extended format) information to [ output-combine_XT_YT/geno1_case__
 Writing genotype bitfile to [ output-combine_XT_YT/geno1_case__geno2_ctrl/merge_QC.bed ] 
 Using (default) SNP-major mode
 
-Analysis finished: Wed Feb 14 10:24:20 2018
+Analysis finished: Sun Feb 18 22:20:19 2018
 

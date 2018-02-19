@@ -18,18 +18,6 @@ def get_ldpred_outputs(prefix, fs):
         # print(out)
     return out
 
-def get_ldpred_outputs_ext(prefix, fs, ext):
-    fs = fs.split(',')
-    try:
-        fs = [ float(f) for f in fs ]
-        out = []
-        for f in fs:
-            out.append('%s_LDpred_p%0.4e%s' % (prefix, f, ext))
-    except ValueError:
-        out = '%s_LDpred_p%s%s' % (prefix, fs[0], ext)
-        # print(out)
-    return out
-
 # def get_all_chr(string, nchr_info):
 #     out = []
 #     nchr_info = nchr_info.split(',')
@@ -129,16 +117,11 @@ rule get_prs_ldpred:
             --PS {params.fractions} \
             --out {params.outprefix}'
 
-rule compare_prs_and_original:
+rule get_original_beta:
     input:
-        files = get_ldpred_outputs_ext('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'], 'txt'),
-        ss = 'output-prepare_betaI/{intermediate}/beta-ss.txt.gz'
-    params:
-        fraction = config['ldpred']['causal-fraction']
-        out_prefix = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred-combine'
+        infile = get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'].split(',')[0]),
+        ss = 'output-run_step1/{intermediate}__{geno1}__{geno2}/coordinate.hdf5'
     output:
-        get_ldpred_outputs_ext('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred-combine', config['ldpred']['causal-fraction'], 'txt.gz')
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred-ori-beta.txt.gz'
     shell:
-        'python scripts/compare_prs_and_original_wrapper.py --inputs {input.files} --summary_statistic {input.ss} --fraction {params.fraction} --out_prefix {params.out_prefix}'
-
-#         'Rscript scripts/combine_prs.R -i {params[0]} -o {output[0]}'
+        'python scripts/get_original_beta.py --input {input.infile} --coordinate {input.ss} --out {output[0]}'

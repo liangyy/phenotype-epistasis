@@ -10,7 +10,7 @@
 
 Skipping web check... [ --noweb ] 
 Writing this text to log file [ output-prepare_XT/geno1_case/plink.log ]
-Analysis started: Wed Feb 14 10:24:19 2018
+Analysis started: Sun Feb 18 22:20:17 2018
 
 Options in effect:
 	--noweb
@@ -36,5 +36,5 @@ Writing map (extended format) information to [ output-prepare_XT/geno1_case/plin
 Writing genotype bitfile to [ output-prepare_XT/geno1_case/plink.bed ] 
 Using (default) SNP-major mode
 
-Analysis finished: Wed Feb 14 10:24:19 2018
+Analysis finished: Sun Feb 18 22:20:18 2018
 
