@@ -139,6 +139,9 @@ for(i in 1 : length(xtyi.files)) {{
   prs.sub <- prs.sub[order(prs.sub$sid), ]
 
   # check direction
+  prs.sub$nt1 <- as.character(prs.sub$nt1)
+  yt.xtyi.xt$A1 <- as.character(yt.xtyi.xt$A1)
+  yt.inter$A1 <- as.character(yt.inter$A1)
   if(sum(prs.sub$nt1 != yt.xtyi.xt$A1) != 0 | sum(prs.sub$nt1 != yt.inter$A1) != 0) {{
     print('Direction does not match. Exit!')
     quit()
