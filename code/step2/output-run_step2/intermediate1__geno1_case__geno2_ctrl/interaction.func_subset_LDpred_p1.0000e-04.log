@@ -10,7 +10,7 @@
 
 Skipping web check... [ --noweb ] 
 Writing this text to log file [ output-run_step2/intermediate1__geno1_case__geno2_ctrl/interaction.func_subset_LDpred_p1.0000e-04.log ]
-Analysis started: Wed Feb 14 15:32:00 2018
+Analysis started: Mon Feb 19 15:29:16 2018
 
 Options in effect:
 	--noweb
@@ -57,5 +57,5 @@ Read 1 sets to extract
 Converting data to Individual-major format
 Writing logistic model association results to [ output-run_step2/intermediate1__geno1_case__geno2_ctrl/interaction.func_subset_LDpred_p1.0000e-04.assoc.logistic ] 
 
-Analysis finished: Wed Feb 14 15:32:00 2018
+Analysis finished: Mon Feb 19 15:29:16 2018
 

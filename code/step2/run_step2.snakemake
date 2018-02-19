@@ -19,6 +19,9 @@ rule all_funcset:
 rule all_functest:
     input:
         get_functest(config)
+rule all_funcplot:
+    input:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'], subset = 'func_subset')
 # end debug
 
 rule functional_subsetting:
@@ -61,25 +64,112 @@ rule test_interaction_by_set:
             --set {input.subset} \
             --pattern {params.pattern}'
 
-rule get_posterior_mean_by_set:
-    input:
-        subset = 'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}.set',
-        get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'], 'txt')
-    params:
-        fraction = ':'.join(config['ldpred']['causal-fraction'].split(','))
-    output:
-        o = get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/posterior-mean.{subset}', '{pval}', 'txt')
-
-
 rule report_top_interaction_rmd:
     input:
+        funcset = 'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}.set',
         inter = get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/interaction.{subset}', config['ldpred']['causal-fraction'], '.assoc.logistic'),
-        xt = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic',
-        ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
-        xtyiyt = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', config['ldpred']['causal-fraction'], '.assoc.logistic')
+        prs  = get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'], '.txt'),
+        xtyi = get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', config['ldpred']['causal-fraction'], '.assoc.logistic')
     params:
-        fraction = config['ldpred']['causal-fraction']
+        fractions = config['ldpred']['causal-fraction'],
+        interfiles = ':'.join(get_ldpred_outputs_ext('output-run_step2/{intermediate}__{geno1}__{geno2}/interaction.{subset}', config['ldpred']['causal-fraction'], '.assoc.logistic')),
+        xtyifiles = ':'.join(get_ldpred_outputs_ext('output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xtyi', config['ldpred']['causal-fraction'], '.assoc.logistic')),
+        prsfiles = ':'.join(get_ldpred_outputs_ext('../step1/output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'], '.txt'))
     output:
-        'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.Rmd'
+        temp('output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.Rmd')
     run:
-        rmd = ''
+        rmd = '''---
+title: "Epistasis - Y ({y}); I ({i})"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{{r setup, echo=FALSE}}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+knitr::opts_knit$set(root.dir = '../../')
+```
+
+# Read data
+
+```{{r}}
+source('scripts/myRLib.R')
+funcset <- readLines('{funcset}')
+funcset <- parseFuncSet(funcset)
+funcset.names <- names(funcset)
+xtyi.files <- strsplit('{xtyifiles}', ':')[[1]]
+ps <- strsplit('{fractions}', ',')[[1]]
+inter.files <- strsplit('{interfiles}', ':')[[1]]
+prs.files <- strsplit('{prsfiles}', ':')[[1]]
+```
+
+# Epistasis
+
+```{{r, results='asis'}}
+for(i in 1 : length(xtyi.files)) {{
+  cat('##', funcset.names[i])
+  cat('\n')
+  cat('\n')
+  snp.subset <- funcset[[funcset.names[i]]]
+
+  # read I ~ SNP
+  prs <- read.table(prs.files[i], header = T)
+  prs$sid <- as.character(prs$sid)
+  prs.sub <- prs[prs$sid %in% snp.subset, ]
+
+  # read others
+  xtyi <- read.table(xtyi.files[i], header = T)
+  xtyi$SNP <- as.character(xtyi$SNP)
+  yt.xtyi <- xtyi[(xtyi$SNP %in% snp.subset) & (xtyi$SNP %in% prs.sub$sid), ]
+  yt.xtyi.xt <- yt.xtyi[yt.xtyi$TEST == 'ADD', ]
+  yt.xtyi.yi <- yt.xtyi[yt.xtyi$TEST == 'PRS', ]
+  inter <- read.table(inter.files[i], header = T)
+  inter$SNP <- as.character(inter$SNP)
+  inter <- inter[inter$TEST == 'ADDxPRS', ]
+  yt.inter <- inter[(inter$SNP %in% snp.subset) & (inter$SNP %in% prs.sub$sid), ]
+
+  # order all rows
+  yt.xtyi.xt <- yt.xtyi.xt[order(yt.xtyi.xt$SNP), ]
+  yt.xtyi.yi <- yt.xtyi.yi[order(yt.xtyi.yi$SNP), ]
+  yt.inter <- yt.inter[order(yt.inter$SNP), ]
+  prs.sub <- prs.sub[order(prs.sub$sid), ]
+
+  # check direction
+  if(sum(prs.sub$nt1 != yt.xtyi.xt$A1) != 0 | sum(prs.sub$nt1 != yt.inter$A1) != 0) {{
+    print('Direction does not match. Exit!')
+    quit()
+  }}
+
+  yt.xtyi.xt.mean.std <- getMeanStd(yt.xtyi.xt$SNP, yt.xtyi.xt$P, yt.xtyi.xt$OR, 'Y~Gi+I (Gi)')
+  yt.xtyi.yi.mean.std <- getMeanStd(yt.xtyi.yi$SNP, yt.xtyi.yi$P, yt.xtyi.yi$OR, 'Y~Gi+I (I)')
+  yt.inter.mean.std <- getMeanStd(yt.inter$SNP, yt.inter$P, yt.inter$OR, 'Y~Gi*I')
+  prs.sub.mean.std <- data.frame(SNP = prs.sub$sid, Mean = prs.sub$ldpred_beta, Std = 0, Type = 'I~Gi')
+
+  # create data frame for plot
+  df <- rbind(yt.xtyi.xt.mean.std, yt.xtyi.yi.mean.std, prs.sub.mean.std, yt.inter.mean.std)
+  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + facet_grid(. ~ Type) + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1))
+  p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value')
+  print(p)
+  print(p2)
+  cat('\n')
+  cat('\n')
+}}
+```
+'''.format(funcset = input.funcset, xtyifiles = params.xtyifiles, fractions = params.fractions, interfiles = params.interfiles, prsfiles = params.prsfiles, y = wildcards.geno1, i = wildcards.intermediate)
+        o = open(output[0], 'w')
+        o.write(rmd)
+        o.close()
+
+rule report_top_interaction_html:
+    input:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.Rmd'
+    output:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.html'
+    shell:
+        '''
+        R -e "rmarkdown::render('{input[0]}')"
+        '''

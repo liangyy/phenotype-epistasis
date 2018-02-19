@@ -10,7 +10,7 @@
 
 Skipping web check... [ --noweb ] 
 Writing this text to log file [ output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi_LDpred_p3.0000e-02.log ]
-Analysis started: Wed Feb 14 10:32:13 2018
+Analysis started: Mon Feb 19 15:29:18 2018
 
 Options in effect:
 	--noweb
@@ -51,5 +51,5 @@ After filtering, 0 males, 0 females, and 400 of unspecified sex
 Converting data to Individual-major format
 Writing logistic model association results to [ output-direction_XT_YI/intermediate1__geno1_case__geno2_ctrl/xtyi_LDpred_p3.0000e-02.assoc.logistic ] 
 
-Analysis finished: Wed Feb 14 10:32:13 2018
+Analysis finished: Mon Feb 19 15:29:18 2018
 
