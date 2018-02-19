@@ -41,6 +41,8 @@ rule all_pt:
 rule all_ldpred:
     input:
         get_all(config, 'ldpredYI')
+rule all_plot:
+    'output-run_step1/{intermediate}__{geno1}__{geno2}/prs_report.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
 ## pipeline output end
 
 
