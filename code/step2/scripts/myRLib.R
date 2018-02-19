@@ -65,3 +65,13 @@ getMeanStd <- function(name, pval, or, type) {
   df <- data.frame(SNP = name, Mean = o[, 1], Std = o[, 2], Type = type)
   return(df)
 }
+
+# revised from https://stackoverflow.com/questions/7549694/adding-regression-line-equation-and-r2-on-graph
+lm_eqn_nointer <- function(df){
+  m <- lm(y ~ 0 + x, df);
+  eq <- substitute(italic(y) == a %.% italic(x)*","~~italic(r)^2~"="~r2, 
+                   list(a = format(coef(m)[1], digits = 2), 
+                        r2 = format(summary(m)$r.squared, digits = 3)))
+  as.character(as.expression(eq));                 
+}
+

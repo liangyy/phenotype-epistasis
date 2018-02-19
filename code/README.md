@@ -25,7 +25,7 @@ test.bplink.bed test.bplink.bim test.bplink.fam
 ## post process test.bplink.fam
 
 # combine all chromosomes
-$ plink --merge-list [all-chromosomes] --make-bed 
+$ plink --merge-list [all-chromosomes] --make-bed
 ```
 
 ### Prepare $\beta_I$
@@ -122,7 +122,7 @@ $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --r
 
 ## Code:
 
-1. finish the scripts to extract PRS (computed by LDpred) and original beta (derived from pval and sample size). note that the nt1 and ref and nt2 is alt and direction may be flipped comparing to summary statistic file since the correction is done based on genotype data.
+1. finish the scripts to extract PRS (computed by LDpred) and original beta (derived from pval and sample size). note that the nt1 is alt and nt2 is ref (so beta is flipped in the coord_genotypes.py) and direction may be flipped comparing to summary statistic file since the correction is done based on genotype data.
 2. write report rules to plot the PRS against original values.
 3. modify direction module accordingly to make use of PRS instead of original SS(may be refactorize the direction to make all direction is relative to genotype)
 4. add PRS or original beta into the plot (maybe the latter since it has SE)

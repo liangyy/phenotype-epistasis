@@ -125,3 +125,77 @@ rule get_original_beta:
         'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred-ori-beta.txt.gz'
     shell:
         'python scripts/get_original_beta.py --input {input.infile} --coordinate {input.ss} --out {output[0]}'
+
+rule report_comparison_rmd:
+    input:
+        ori_beta = 'output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred-ori-beta.txt.gz',
+        computed_betas = get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction'])
+    params:
+        fractions = config['ldpred']['causal-fraction'],
+        files = ':'.join(get_ldpred_outputs('output-run_step1/{intermediate}__{geno1}__{geno2}/ldpred', config['ldpred']['causal-fraction']))
+    output:
+        temp('output-run_step1/{intermediate}__{geno1}__{geno2}/prs_report.Rmd')
+    run:
+        rmd = '''---
+title: "Polygenic risk score - Y ({y}); I ({i})"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{{r setup, echo=FALSE}}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+source('../../step2/scripts/myRLib.R')
+knitr::opts_knit$set(root.dir = '../../')
+```
+
+# Read data
+
+```{{r}}
+beta.ori <- read.table('{ori_beta}', header = T)
+beta.ori$sid <- as.character(beta.ori$sid)
+beta.ori <- beta.ori[order(beta.ori$sid), ]
+files <- strsplit('{files}', ':')[[1]]
+ps <- strsplit('{fractions}', ',')[[1]]
+```
+
+# Plot
+
+```{{r, results='asis'}}
+for(i in 1 : length(ps)) {{
+  file.i <- files[i]
+  p.i <- ps[i]
+  cat('##', p.i, '\n')
+  cat('\n')
+  prs.i <- read.table(file.i, header = T)
+  prs.i$sid <- as.character(prs.i$sid)
+  prs.i <- prs.i[order(prs.i$sid), ]
+  prs.i$log_odds <- correctAllele(prs.i$nt2, prs.i$nt1, beta.ori$a1, beta.ori$log_odds)
+  prs.i$ori_beta <- correctAllele(prs.i$nt2, prs.i$nt1, beta.ori$a1, beta.ori$beta_ori)
+  p1<- ggplot(prs.i) + geom_histogram(aes(x = ori_beta, fill = 'Original Beta'), alpha = .3, bins = 1e2) + geom_histogram(aes(x = ldpred_beta, fill = 'LDpred Beta'), alpha = .3, bins = 1e2) + ggtitle('Histogram of Beta') + xlab('Beta')
+  df <- data.frame(x = prs.i$ori_beta, y = prs.i$ldpred_beta)
+  p2 <- ggplot(data = prs.i, aes(x = ori_beta, y = ldpred_beta)) + geom_point() + geom_smooth(method = "lm", se=FALSE, color="black", formula = y ~ 0 + x) + geom_text(x = quantile(df$x, 0.1), y = quantile(df$y, 0.99), label = lm_eqn_nointer(df), parse = TRUE) + xlab('Original Beta') + ylab('LDpred Beta') + ggtitle('Ldpred vs. Raw Beta')
+  print(p1)
+  print(p2)
+  cat('\n')
+  cat('\n')
+}}
+```
+'''.format(ori_beta = input.ori_beta, files = params.files, fractions = params.fractions, y = wildcards.geno1, i = wildcards.intermediate)
+        o = open(output[0], 'w')
+        o.write(rmd)
+        o.close()
+
+rule report_comparison_html:
+    input:
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/prs_report.Rmd'
+    output:
+        'output-run_step1/{intermediate}__{geno1}__{geno2}/prs_report.html'
+    shell:
+        '''
+        R -e "rmarkdown::render('{input[0]}')"
+        '''
