@@ -152,13 +152,13 @@ output:
 ```{{r setup, echo=FALSE}}
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 library(ggplot2)
-source('../../step2/scripts/myRLib.R')
 knitr::opts_knit$set(root.dir = '../../')
 ```
 
 # Read data
 
 ```{{r}}
+source('../step2/scripts/myRLib.R')
 beta.ori <- read.table('{ori_beta}', header = T)
 beta.ori$sid <- as.character(beta.ori$sid)
 beta.ori <- beta.ori[order(beta.ori$sid), ]
