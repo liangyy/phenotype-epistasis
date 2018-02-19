@@ -76,7 +76,7 @@ for(i in 1 : length(xtyi.files)) {
   
   # create data frame for plot
   df <- rbind(yt.xtyi.xt.mean.std, yt.xtyi.yi.mean.std, prs.sub.mean.std, yt.inter.mean.std)
-  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + facet_grid(. ~ Type) + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1))
+  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + geom_hline(yintercept=0, color = 'red') + facet_grid(. ~ Type, scales = 'free_y') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1))
   p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value')
   print(p)
   print(p2)
