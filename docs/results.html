@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,12 +34,10 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
 }
 </script>
 
@@ -309,7 +307,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Results</h1>
-<h4 class="date"><em>16 February, 2018</em></h4>
+<h4 class="date"><em>19 February, 2018</em></h4>
 
 </div>
 
@@ -319,6 +317,7 @@ div.tocify {
 <p>This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait.</p>
 <p>Every subsection presents the following information.</p>
 <ul>
+<li>Comparison between raw <span class="math inline">\(\beta\)</span> and posterior mean of <span class="math inline">\(\beta\)</span> for computing PRS</li>
 <li>Marginal association:
 <ul>
 <li><span class="math inline">\(Y \sim I\)</span></li>
@@ -334,22 +333,25 @@ div.tocify {
 <div id="hdl" class="section level2">
 <h2><span class="header-section-number">2.1</span> HDL</h2>
 <ol style="list-style-type: decimal">
+<li>Comparison of <span class="math inline">\(\beta\)</span> <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="">here</a></li>
+<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
 </div>
 <div id="ldl" class="section level2">
 <h2><span class="header-section-number">2.2</span> LDL</h2>
 <ol style="list-style-type: decimal">
+<li>Comparison of <span class="math inline">\(\beta\)</span> <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="">here</a></li>
+<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
 </div>
 <div id="serum-concentration" class="section level2">
 <h2><span class="header-section-number">2.3</span> Serum concentration</h2>
 <ol style="list-style-type: decimal">
+<li>Comparison of <span class="math inline">\(\beta\)</span> <a href="%5Bhere%5D(https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html)">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="">here</a></li>
+<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
 </div>
 </div>
