@@ -47,5 +47,5 @@ rule merge:
         'add-maf/{name}.with-maf.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[${params.meta}]=$0;next}}{{print a[$8],$2;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.maf}) | gzip > {output[0]}
+        awk 'NR==FNR{{a[${params.meta}]=$0;next}}{{print a[$8]$2;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.maf}) | gzip > {output[0]}
         '''
