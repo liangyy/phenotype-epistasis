@@ -24,7 +24,7 @@ UKBB_wbc:
     beta-ss: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/wbc_N172435_ukbb_ukbil_meta.tsv.gz'
     header: 1  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '2,3,5,4,-7,12,1,10,8,11'  # add '-' before reffrq is the column is referring to altfrq. Drop n if no sample size
-    sep: '\\t'
+    sep: '"\t"'
   nsamples: 131969
 
 ## other parameters
