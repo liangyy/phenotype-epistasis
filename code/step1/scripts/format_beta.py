@@ -25,15 +25,18 @@ else:
 
 col_indices_ori = args.col_index.split(',')
 col_indices = [ abs(int(i)) - 1 for i in col_indices_ori ]
-col_names = [ 'chr', 'pos', 'ref', 'alt', 'reffrq', 'info', 'rs', 'pval', 'effalt', 'n' ]
-
+if len(col_indices_ori) == 10:
+    col_names = [ 'chr', 'pos', 'ref', 'alt', 'reffrq', 'info', 'rs', 'pval', 'effalt', 'n' ]
+elif len(col_indices_ori) == 9:
+    col_names = [ 'chr', 'pos', 'ref', 'alt', 'reffrq', 'info', 'rs', 'pval', 'effalt']
+    
 beta = pd.read_table(args.input, sep = args.sep, header = None, skiprows = header, compression = 'gzip')  # , dtype = {'pos': int, 'reffrq': float}, skiprows = header, compression = 'gzip', usecols = col_indices, names = col_names)
 
 data_dic = {}
 for i in range(len(col_indices)):
     coln = col_indices[i]
     name = col_names[i]
-    data_dic[name] = beta[coln] 
+    data_dic[name] = beta[coln]
 out_table = pd.DataFrame(data_dic)
 
 if int(col_indices_ori[4]) < 0:  # flip allele frequency
