@@ -10,6 +10,7 @@ This page presents the results of analysis that have been done. Every section is
 
 Every subsection presents the following information.
 
+* Comparison between raw $\beta$ and posterior mean of $\beta$ for computing PRS
 * Marginal association: 
     - $Y \sim I$
     - $Y \sim G_i$
@@ -21,15 +22,18 @@ Every subsection presents the following information.
 
 ## HDL
 
-1. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
-2. Interaction test results are [here]()
+1. Comparison of $\beta$ [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/prs_report.html)
+2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
+3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
 
 ## LDL
 
-1. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
-2. Interaction test results are [here]()
+1. Comparison of $\beta$ [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/prs_report.html)
+2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
+3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
 
 ## Serum concentration
 
-1. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html)
-2. Interaction test results are [here]()
+1. Comparison of $\beta$ [here]([here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html))
+2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html)
+3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
