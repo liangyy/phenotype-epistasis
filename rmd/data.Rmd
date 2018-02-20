@@ -86,7 +86,7 @@ Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversi
 ## C-reactive protein
 
 ```{r, echo=FALSE}
-data.inter.crp <- genDataLine(id = c(id.counter), phenotype = c('C reactive protein'), num.of.traits = c(1), sample.size = c(9961), num.of.variants = c(2.4e7), heritability.mean = c(0.16), ancestry = c('european'))
+data.inter.crp <- genDataLine(id = c(id.counter), phenotype = c('C reactive protein'), num.of.traits = c(1), sample.size = c(5000), num.of.variants = c(2.4e7), heritability.mean = c('16%'), ancestry = c('european'))
 id.counter <- id.counter + 1
 data.inter <- rbind(data.inter, data.inter.crp)
 ```

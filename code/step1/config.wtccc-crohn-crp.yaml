@@ -25,7 +25,7 @@ Prins_hscrp:
     header: 0  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '2,3,4,5,-9,8,1,6,7'  # add '-' before reffrq is the column is referring to altfrq
     sep: '" "'
-  nsamples: 9961
+  nsamples: 5350
 
 ## other parameters
 ldpred-dir: '../../../ldpred/ldpred'
