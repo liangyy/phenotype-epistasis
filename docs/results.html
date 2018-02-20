@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,12 +34,10 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
 }
 </script>
 
@@ -355,6 +353,19 @@ div.tocify {
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 <li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+</div>
+</div>
+<div id="crohns-disease" class="section level1">
+<h1><span class="header-section-number">3</span> Crohn’s disease</h1>
+<div id="c-reactive-protein" class="section level2">
+<h2><span class="header-section-number">3.1</span> C-reactive protein</h2>
+<p>It turns out that the GWAS signal goes away if limiting to loci which occur in WTCCC genotype data.</p>
+</div>
+<div id="insulin-like-growth-factor" class="section level2">
+<h2><span class="header-section-number">3.2</span> Insulin-like growth factor</h2>
+</div>
+<div id="white-blood-cell-count" class="section level2">
+<h2><span class="header-section-number">3.3</span> White blood cell count</h2>
 </div>
 </div>
 

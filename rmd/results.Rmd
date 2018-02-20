@@ -6,12 +6,12 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 
 # Summary
 
-This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait. 
+This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait.
 
 Every subsection presents the following information.
 
 * Comparison between raw $\beta$ and posterior mean of $\beta$ for computing PRS
-* Marginal association: 
+* Marginal association:
     - $Y \sim I$
     - $Y \sim G_i$
     - $Y \sim I + G_i$
@@ -37,3 +37,13 @@ Every subsection presents the following information.
 1. Comparison of $\beta$ [here]([here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html))
 2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html)
 3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
+
+# Crohn's disease
+
+## C-reactive protein
+
+It turns out that the GWAS signal goes away if limiting to loci which occur in WTCCC genotype data.
+
+## Insulin-like growth factor
+
+## White blood cell count

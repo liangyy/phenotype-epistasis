@@ -83,23 +83,28 @@ The phenotype information is [here](https://github.com/liangyy/phenotype-epistas
 
 Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).
 
-## C-reactive protein
+## C-reactive protein & Insulin-like growth factor 1
 
 ```{r, echo=FALSE}
 data.inter.crp <- genDataLine(id = c(id.counter), phenotype = c('C reactive protein'), num.of.traits = c(1), sample.size = c(5000), num.of.variants = c(2.4e7), heritability.mean = c('16%'), ancestry = c('european'))
 id.counter <- id.counter + 1
 data.inter <- rbind(data.inter, data.inter.crp)
+data.inter.igf1 <- genDataLine(id = c(id.counter), phenotype = c('Insulin-like growth factor 1'), num.of.traits = c(1), sample.size = c(5000), num.of.variants = c(2.4e7), heritability.mean = c('20%'), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.igf1)
 ```
 
-* [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005067)
+* [Data CRP](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005067)
+* [Data IGF1](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005071)
 * [Paper](http://europepmc.org/articles/PMC5591265;jsessionid=5D3CD9A68BA57635985D74A3530E36BF)
 * Meta-data
 
 ```{r, echo=FALSE}
 pander(data.inter.crp)
+pander(data.inter.igf1)
 ```
 
-There are many other phenotypes, health-related biomarkers, that the paper has collected, see [here](http://europepmc.org/articles/PMC5591265/table/Tab1/) for a complement list.
+There are many other phenotypes, health-related biomarkers, that the paper has collected, see [here](http://europepmc.org/articles/PMC5591265/table/Tab1/) for a complement list. And heritability is listed [here](http://europepmc.org/articles/PMC5591265/table/Tab2/)
 
 
 ## Summary

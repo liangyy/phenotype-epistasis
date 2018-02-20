@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,12 +34,10 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
 }
 </script>
 
@@ -1592,10 +1590,11 @@ Flow cytometry gates
 <p>The phenotype information is <a href="https://github.com/liangyy/phenotype-epistasis/blob/master/docs-data/ng.3736-S1-table-s2.pdf">here</a> (Table S2)</p>
 <p>Keep in mind that the sample size is 17375 (63661 for neuroticism and extraversion) even if it is explicitly told in the readme file).</p>
 </div>
-<div id="c-reactive-protein" class="section level2">
-<h2><span class="header-section-number">1.4</span> C-reactive protein</h2>
+<div id="c-reactive-protein-insulin-like-growth-factor-1" class="section level2">
+<h2><span class="header-section-number">1.4</span> C-reactive protein &amp; Insulin-like growth factor 1</h2>
 <ul>
-<li><a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005067">Data</a></li>
+<li><a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005067">Data CRP</a></li>
+<li><a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/PrinsBP_28887542_GCST005071">Data IGF1</a></li>
 <li><a href="http://europepmc.org/articles/PMC5591265;jsessionid=5D3CD9A68BA57635985D74A3530E36BF">Paper</a></li>
 <li>Meta-data</li>
 </ul>
@@ -1632,19 +1631,52 @@ Flow cytometry gates
 </tr>
 </tbody>
 </table>
-<p>There are many other phenotypes, health-related biomarkers, that the paper has collected, see <a href="http://europepmc.org/articles/PMC5591265/table/Tab1/">here</a> for a complement list.</p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="27%" />
+<col width="14%" />
+<col width="12%" />
+<col width="15%" />
+<col width="17%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">id</th>
+<th align="center">phenotype</th>
+<th align="center">num.of.traits</th>
+<th align="center">sample.size</th>
+<th align="center">num.of.variants</th>
+<th align="center">heritability.mean</th>
+<th align="center">ancestry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">Insulin-like growth factor 1</td>
+<td align="center">1</td>
+<td align="center">5000</td>
+<td align="center">2.4e+07</td>
+<td align="center">20%</td>
+<td align="center">european</td>
+</tr>
+</tbody>
+</table>
+<p>There are many other phenotypes, health-related biomarkers, that the paper has collected, see <a href="http://europepmc.org/articles/PMC5591265/table/Tab1/">here</a> for a complement list. And heritability is listed <a href="http://europepmc.org/articles/PMC5591265/table/Tab2/">here</a></p>
 </div>
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">1.5</span> Summary</h2>
 <table>
 <colgroup>
 <col width="4%" />
-<col width="23%" />
+<col width="27%" />
 <col width="14%" />
 <col width="12%" />
-<col width="16%" />
-<col width="18%" />
-<col width="9%" />
+<col width="15%" />
+<col width="17%" />
+<col width="8%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1692,6 +1724,15 @@ Flow cytometry gates
 <td align="center">5000</td>
 <td align="center">2.4e+07</td>
 <td align="center">16%</td>
+<td align="center">european</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">Insulin-like growth factor 1</td>
+<td align="center">1</td>
+<td align="center">5000</td>
+<td align="center">2.4e+07</td>
+<td align="center">20%</td>
 <td align="center">european</td>
 </tr>
 </tbody>
