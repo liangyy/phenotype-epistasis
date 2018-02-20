@@ -1,0 +1,48 @@
+---
+title: "Polygenic risk score - Coronary heart disease x LDL"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+  
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+source('../../step2/scripts/myRLib.R')
+```
+
+# Read data
+
+```{r}
+beta.ori <- read.table('../output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred-ori-beta.txt.gz', header = T)
+beta.ori$sid <- as.character(beta.ori$sid)
+beta.ori <- beta.ori[order(beta.ori$sid), ]
+files <- strsplit('../output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred_LDpred_p1.0000e+00.txt:../output-run_step1/intermediate1__geno1_case__geno2_ctrl/ldpred_LDpred_p1.0000e-01.txt', ':')[[1]]
+ps <- strsplit('p1.0000e+00:p1.0000e-01', ':')[[1]]
+```
+
+# Plot
+
+```{r, results='asis'}
+for(i in 1 : length(ps)) {
+  file.i <- files[i]
+  p.i <- ps[i]
+  cat('##', p.i, '\n')
+  cat('\n')
+  prs.i <- read.table(file.i, header = T)
+  prs.i$sid <- as.character(prs.i$sid)
+  prs.i <- prs.i[order(prs.i$sid), ]
+  prs.i$log_odds <- correctAllele(prs.i$nt2, prs.i$nt1, beta.ori$a1, beta.ori$log_odds)
+  prs.i$ori_beta <- correctAllele(prs.i$nt2, prs.i$nt1, beta.ori$a1, beta.ori$beta_ori)
+  p1<- ggplot(prs.i) + geom_histogram(aes(x = ori_beta, fill = 'Original Beta'), alpha = .3, bins = 1e2) + geom_histogram(aes(x = ldpred_beta, fill = 'LDpred Beta'), alpha = .3, bins = 1e2) + ggtitle('Histogram of Beta') + xlab('Beta')
+  df <- data.frame(x = prs.i$ori_beta, y = prs.i$ldpred_beta)
+  p2 <- ggplot(data = prs.i, aes(x = ori_beta, y = ldpred_beta)) + geom_point() + geom_smooth(method = "lm", se=FALSE, color="black", formula = y ~ 0 + x) + geom_text(x = quantile(df$x, 0.1), y = quantile(df$y, 0.99), label = lm_eqn_nointer(df), parse = TRUE) + xlab('Original Beta') + ylab('LDpred Beta') + ggtitle('Ldpred vs. Raw Beta')
+  print(p1)
+  print(p2)
+  cat('\n')
+  cat('\n')
+}
+```

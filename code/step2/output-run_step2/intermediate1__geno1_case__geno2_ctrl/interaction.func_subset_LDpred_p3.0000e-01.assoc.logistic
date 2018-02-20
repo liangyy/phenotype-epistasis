@@ -20,9 +20,15 @@
    1  chr1snp15          0    A        ADD      400          1    2.566e-17            1
    1  chr1snp15          0    A        PRS      400          1    2.196e-17            1
    1  chr1snp15          0    A    ADDxPRS      400          1            0            1
+   1  chr1snp17          0    A        ADD      400          1   -6.513e-17            1
+   1  chr1snp17          0    A        PRS      400          1    1.366e-17            1
+   1  chr1snp17          0    A    ADDxPRS      400          1   -1.593e-17            1
    1  chr1snp18          0    G        ADD      400          1    3.186e-17            1
    1  chr1snp18          0    G        PRS      400          1    1.288e-17            1
    1  chr1snp18          0    G    ADDxPRS      400          1   -1.353e-16            1
+   1  chr1snp19          0    G        ADD      400          1   -1.568e-16            1
+   1  chr1snp19          0    G        PRS      400          1    1.584e-16            1
+   1  chr1snp19          0    G    ADDxPRS      400          1    1.577e-17            1
    1  chr1snp20          0    A        ADD      400          1   -5.122e-17            1
    1  chr1snp20          0    A        PRS      400          1   -7.371e-17            1
    1  chr1snp20          0    A    ADDxPRS      400          1    8.262e-18            1
@@ -50,6 +56,9 @@
    1  chr1snp59          0    C        ADD      400          1   -7.644e-17            1
    1  chr1snp59          0    C        PRS      400          1            0            1
    1  chr1snp59          0    C    ADDxPRS      400          1   -3.052e-17            1
+   1  chr1snp61          0    C        ADD      400          1      6.3e-17            1
+   1  chr1snp61          0    C        PRS      400          1     -3.8e-17            1
+   1  chr1snp61          0    C    ADDxPRS      400          1    1.103e-16            1
    1  chr1snp62          0    C        ADD      400          1    6.073e-17            1
    1  chr1snp62          0    C        PRS      400          1   -6.265e-17            1
    1  chr1snp62          0    C    ADDxPRS      400          1    4.023e-18            1
@@ -74,6 +83,9 @@
    1  chr1snp76          0    G        ADD      400          1   -7.815e-17            1
    1  chr1snp76          0    G        PRS      400          1   -6.601e-17            1
    1  chr1snp76          0    G    ADDxPRS      400          1   -8.167e-17            1
+   1  chr1snp80          0    G        ADD      400          1            0            1
+   1  chr1snp80          0    G        PRS      400          1   -9.766e-17            1
+   1  chr1snp80          0    G    ADDxPRS      400          1    2.436e-17            1
    1  chr1snp83          0    T        ADD      400          1   -6.937e-17            1
    1  chr1snp83          0    T        PRS      400          1    4.037e-17            1
    1  chr1snp83          0    T    ADDxPRS      400          1   -1.502e-16            1
@@ -104,6 +116,12 @@
    1 chr1snp104          0    A        ADD      400          1   -2.293e-17            1
    1 chr1snp104          0    A        PRS      400          1   -4.945e-17            1
    1 chr1snp104          0    A    ADDxPRS      400          1    3.346e-17            1
+   1 chr1snp108          0    T        ADD      400          1    4.175e-17            1
+   1 chr1snp108          0    T        PRS      400          1   -1.013e-16            1
+   1 chr1snp108          0    T    ADDxPRS      400          1   -4.631e-17            1
+   1 chr1snp109          0    G        ADD      400          1   -2.318e-17            1
+   1 chr1snp109          0    G        PRS      400          1    2.521e-17            1
+   1 chr1snp109          0    G    ADDxPRS      400          1    8.156e-18            1
    1 chr1snp110          0    C        ADD      400          1   -2.113e-16            1
    1 chr1snp110          0    C        PRS      400          1   -2.418e-17            1
    1 chr1snp110          0    C    ADDxPRS      400          1    1.099e-16            1
@@ -146,6 +164,9 @@
    1 chr1snp159          0    G        ADD      400          1   -3.332e-17            1
    1 chr1snp159          0    G        PRS      400          1    -1.12e-16            1
    1 chr1snp159          0    G    ADDxPRS      400          1    6.573e-17            1
+   1 chr1snp167          0    A        ADD      400          1    2.239e-17            1
+   1 chr1snp167          0    A        PRS      400          1    1.284e-17            1
+   1 chr1snp167          0    A    ADDxPRS      400          1            0            1
    1 chr1snp170          0    C        ADD      400          1   -1.103e-17            1
    1 chr1snp170          0    C        PRS      400          1   -1.314e-16            1
    1 chr1snp170          0    C    ADDxPRS      400          1    6.532e-17            1
@@ -203,6 +224,9 @@
    1 chr1snp210          0    C        ADD      400          1   -9.825e-17            1
    1 chr1snp210          0    C        PRS      400          1   -6.677e-18            1
    1 chr1snp210          0    C    ADDxPRS      400          1   -2.022e-17            1
+   1 chr1snp216          0    A        ADD      400          1   -7.698e-18            1
+   1 chr1snp216          0    A        PRS      400          1     3.42e-17            1
+   1 chr1snp216          0    A    ADDxPRS      400          1    2.609e-17            1
    1 chr1snp217          0    T        ADD      400          1     4.39e-17            1
    1 chr1snp217          0    T        PRS      400          1   -1.193e-16            1
    1 chr1snp217          0    T    ADDxPRS      400          1     8.33e-17            1
@@ -230,6 +254,9 @@
    1 chr1snp241          0    T        ADD      400          1   -5.211e-17            1
    1 chr1snp241          0    T        PRS      400          1   -1.443e-16            1
    1 chr1snp241          0    T    ADDxPRS      400          1     1.53e-16            1
+   1 chr1snp244          0    A        ADD      400          1   -6.424e-17            1
+   1 chr1snp244          0    A        PRS      400          1    1.129e-17            1
+   1 chr1snp244          0    A    ADDxPRS      400          1            0            1
    1 chr1snp248          0    A        ADD      400          1    1.294e-16            1
    1 chr1snp248          0    A        PRS      400          1   -1.333e-16            1
    1 chr1snp248          0    A    ADDxPRS      400          1    -1.03e-16            1
@@ -266,6 +293,9 @@
    1 chr1snp275          0    C        ADD      400          1    8.387e-17            1
    1 chr1snp275          0    C        PRS      400          1   -1.024e-16            1
    1 chr1snp275          0    C    ADDxPRS      400          1    8.435e-17            1
+   1 chr1snp279          0    T        ADD      400          1    1.044e-17            1
+   1 chr1snp279          0    T        PRS      400          1   -2.389e-17            1
+   1 chr1snp279          0    T    ADDxPRS      400          1   -7.551e-18            1
    1 chr1snp280          0    C        ADD      400          1    6.324e-17            1
    1 chr1snp280          0    C        PRS      400          1   -2.578e-17            1
    1 chr1snp280          0    C    ADDxPRS      400          1   -1.175e-17            1
@@ -314,6 +344,9 @@
    2  chr2snp30          0    C        ADD      400          1    1.039e-16            1
    2  chr2snp30          0    C        PRS      400          1   -1.465e-16            1
    2  chr2snp30          0    C    ADDxPRS      400          1    2.411e-17            1
+   2  chr2snp36          0    A        ADD      400          1     8.65e-17            1
+   2  chr2snp36          0    A        PRS      400          1   -3.709e-17            1
+   2  chr2snp36          0    A    ADDxPRS      400          1    4.832e-17            1
    2  chr2snp38          0    A        ADD      400          1   -1.424e-18            1
    2  chr2snp38          0    A        PRS      400          1    7.601e-17            1
    2  chr2snp38          0    A    ADDxPRS      400          1    4.362e-17            1
@@ -350,6 +383,9 @@
    2  chr2snp63          0    T        ADD      400          1    -5.05e-17            1
    2  chr2snp63          0    T        PRS      400          1   -2.383e-17            1
    2  chr2snp63          0    T    ADDxPRS      400          1   -4.051e-18            1
+   2  chr2snp64          0    C        ADD      400          1    5.672e-17            1
+   2  chr2snp64          0    C        PRS      400          1    6.832e-18            1
+   2  chr2snp64          0    C    ADDxPRS      400          1   -4.035e-18            1
    2  chr2snp65          0    C        ADD      400          1     3.68e-17            1
    2  chr2snp65          0    C        PRS      400          1    2.397e-17            1
    2  chr2snp65          0    C    ADDxPRS      400          1    1.277e-16            1
@@ -380,6 +416,9 @@
    2  chr2snp91          0    A        ADD      400          1    6.808e-17            1
    2  chr2snp91          0    A        PRS      400          1    2.056e-17            1
    2  chr2snp91          0    A    ADDxPRS      400          1    6.953e-17            1
+   2  chr2snp94          0    A        ADD      400          1            0            1
+   2  chr2snp94          0    A        PRS      400          1   -3.752e-17            1
+   2  chr2snp94          0    A    ADDxPRS      400          1   -2.343e-17            1
    2  chr2snp95          0    G        ADD      400          1    1.197e-16            1
    2  chr2snp95          0    G        PRS      400          1    1.369e-16            1
    2  chr2snp95          0    G    ADDxPRS      400          1   -8.074e-17            1
@@ -431,9 +470,15 @@
    2 chr2snp138          0    T        ADD      400          1   -3.898e-17            1
    2 chr2snp138          0    T        PRS      400          1   -6.197e-17            1
    2 chr2snp138          0    T    ADDxPRS      400          1   -6.314e-17            1
+   2 chr2snp139          0    G        ADD      400          1   -4.222e-17            1
+   2 chr2snp139          0    G        PRS      400          1    8.328e-17            1
+   2 chr2snp139          0    G    ADDxPRS      400          1    3.752e-18            1
    2 chr2snp140          0    T        ADD      400          1   -8.015e-17            1
    2 chr2snp140          0    T        PRS      400          1    -1.26e-17            1
    2 chr2snp140          0    T    ADDxPRS      400          1    1.532e-16            1
+   2 chr2snp141          0    C        ADD      400          1   -9.875e-18            1
+   2 chr2snp141          0    C        PRS      400          1   -4.552e-17            1
+   2 chr2snp141          0    C    ADDxPRS      400          1   -5.113e-17            1
    2 chr2snp146          0    T        ADD      400          1    1.144e-17            1
    2 chr2snp146          0    T        PRS      400          1    3.246e-17            1
    2 chr2snp146          0    T    ADDxPRS      400          1     2.15e-16            1
@@ -497,9 +542,18 @@
    2 chr2snp210          0    T        ADD      400          1   -1.042e-17            1
    2 chr2snp210          0    T        PRS      400          1    1.006e-17            1
    2 chr2snp210          0    T    ADDxPRS      400          1   -1.131e-16            1
+   2 chr2snp214          0    A        ADD      400          1   -2.754e-18            1
+   2 chr2snp214          0    A        PRS      400          1   -1.261e-17            1
+   2 chr2snp214          0    A    ADDxPRS      400          1   -5.018e-17            1
    2 chr2snp215          0    G        ADD      400          1    -4.14e-17            1
    2 chr2snp215          0    G        PRS      400          1    4.178e-17            1
    2 chr2snp215          0    G    ADDxPRS      400          1   -8.228e-17            1
+   2 chr2snp216          0    G        ADD      400          1   -6.704e-17            1
+   2 chr2snp216          0    G        PRS      400          1    2.252e-17            1
+   2 chr2snp216          0    G    ADDxPRS      400          1    2.412e-17            1
+   2 chr2snp222          0    C        ADD      400          1   -1.064e-17            1
+   2 chr2snp222          0    C        PRS      400          1     2.67e-16            1
+   2 chr2snp222          0    C    ADDxPRS      400          1            0            1
    2 chr2snp225          0    T        ADD      400          1    3.194e-17            1
    2 chr2snp225          0    T        PRS      400          1    6.269e-18            1
    2 chr2snp225          0    T    ADDxPRS      400          1   -3.706e-17            1
@@ -521,6 +575,9 @@
    2 chr2snp249          0    T        ADD      400          1    4.517e-17            1
    2 chr2snp249          0    T        PRS      400          1   -1.859e-17            1
    2 chr2snp249          0    T    ADDxPRS      400          1    3.146e-17            1
+   2 chr2snp253          0    A        ADD      400          1    1.022e-16            1
+   2 chr2snp253          0    A        PRS      400          1   -4.547e-17            1
+   2 chr2snp253          0    A    ADDxPRS      400          1    2.337e-17            1
    2 chr2snp257          0    A        ADD      400          1   -4.983e-17            1
    2 chr2snp257          0    A        PRS      400          1    5.172e-17            1
    2 chr2snp257          0    A    ADDxPRS      400          1   -1.873e-17            1
@@ -575,12 +632,21 @@
    2 chr2snp300          0    G        ADD      400          1   -6.295e-17            1
    2 chr2snp300          0    G        PRS      400          1   -2.912e-17            1
    2 chr2snp300          0    G    ADDxPRS      400          1   -6.884e-17            1
+   3   chr3snp1          0    G        ADD      400          1   -1.527e-16            1
+   3   chr3snp1          0    G        PRS      400          1   -1.869e-16            1
+   3   chr3snp1          0    G    ADDxPRS      400          1   -1.041e-16            1
    3   chr3snp2          0    C        ADD      400          1    2.862e-16            1
    3   chr3snp2          0    C        PRS      400          1    9.953e-17            1
    3   chr3snp2          0    C    ADDxPRS      400          1   -5.223e-17            1
+   3   chr3snp4          0    A        ADD      400          1    7.727e-17            1
+   3   chr3snp4          0    A        PRS      400          1   -5.793e-17            1
+   3   chr3snp4          0    A    ADDxPRS      400          1            0            1
    3   chr3snp7          0    A        ADD      400          1            0            1
    3   chr3snp7          0    A        PRS      400          1   -2.806e-17            1
    3   chr3snp7          0    A    ADDxPRS      400          1    6.049e-17            1
+   3   chr3snp8          0    A        ADD      400          1    1.329e-17            1
+   3   chr3snp8          0    A        PRS      400          1    -1.28e-16            1
+   3   chr3snp8          0    A    ADDxPRS      400          1    1.985e-17            1
    3  chr3snp12          0    T        ADD      400          1    2.193e-17            1
    3  chr3snp12          0    T        PRS      400          1    2.905e-18            1
    3  chr3snp12          0    T    ADDxPRS      400          1   -5.776e-17            1
@@ -590,6 +656,9 @@
    3  chr3snp15          0    A        ADD      400          1   -9.035e-17            1
    3  chr3snp15          0    A        PRS      400          1    1.968e-17            1
    3  chr3snp15          0    A    ADDxPRS      400          1   -1.051e-16            1
+   3  chr3snp16          0    T        ADD      400          1    1.053e-16            1
+   3  chr3snp16          0    T        PRS      400          1    1.566e-17            1
+   3  chr3snp16          0    T    ADDxPRS      400          1    1.654e-17            1
    3  chr3snp30          0    A        ADD      400          1    3.003e-17            1
    3  chr3snp30          0    A        PRS      400          1   -1.333e-16            1
    3  chr3snp30          0    A    ADDxPRS      400          1   -1.153e-16            1
@@ -677,6 +746,9 @@
    3 chr3snp109          0    C        ADD      400          1    6.684e-17            1
    3 chr3snp109          0    C        PRS      400          1   -5.071e-17            1
    3 chr3snp109          0    C    ADDxPRS      400          1   -7.171e-18            1
+   3 chr3snp110          0    A        ADD      400          1    2.196e-17            1
+   3 chr3snp110          0    A        PRS      400          1    2.454e-17            1
+   3 chr3snp110          0    A    ADDxPRS      400          1    1.273e-17            1
    3 chr3snp114          0    T        ADD      400          1    9.772e-17            1
    3 chr3snp114          0    T        PRS      400          1   -1.276e-17            1
    3 chr3snp114          0    T    ADDxPRS      400          1   -2.114e-17            1
@@ -758,6 +830,12 @@
    3 chr3snp200          0    C        ADD      400          1   -3.208e-17            1
    3 chr3snp200          0    C        PRS      400          1    5.637e-17            1
    3 chr3snp200          0    C    ADDxPRS      400          1    1.283e-16            1
+   3 chr3snp205          0    A        ADD      400          1    8.445e-17            1
+   3 chr3snp205          0    A        PRS      400          1    1.124e-16            1
+   3 chr3snp205          0    A    ADDxPRS      400          1    1.149e-17            1
+   3 chr3snp206          0    T        ADD      400          1    1.202e-16            1
+   3 chr3snp206          0    T        PRS      400          1   -1.287e-17            1
+   3 chr3snp206          0    T    ADDxPRS      400          1    1.935e-17            1
    3 chr3snp208          0    A        ADD      400          1    8.441e-17            1
    3 chr3snp208          0    A        PRS      400          1   -5.133e-17            1
    3 chr3snp208          0    A    ADDxPRS      400          1    3.873e-18            1
@@ -773,6 +851,9 @@
    3 chr3snp219          0    A        ADD      400          1   -3.403e-17            1
    3 chr3snp219          0    A        PRS      400          1   -3.064e-17            1
    3 chr3snp219          0    A    ADDxPRS      400          1   -8.039e-17            1
+   3 chr3snp220          0    G        ADD      400          1    5.403e-17            1
+   3 chr3snp220          0    G        PRS      400          1   -2.588e-17            1
+   3 chr3snp220          0    G    ADDxPRS      400          1   -1.654e-16            1
    3 chr3snp224          0    C        ADD      400          1   -1.196e-16            1
    3 chr3snp224          0    C        PRS      400          1   -5.885e-18            1
    3 chr3snp224          0    C    ADDxPRS      400          1    2.329e-17            1
@@ -782,6 +863,9 @@
    3 chr3snp226          0    C        ADD      400          1    4.222e-17            1
    3 chr3snp226          0    C        PRS      400          1    6.245e-17            1
    3 chr3snp226          0    C    ADDxPRS      400          1   -5.153e-17            1
+   3 chr3snp227          0    A        ADD      400          1    8.721e-17            1
+   3 chr3snp227          0    A        PRS      400          1    2.432e-17            1
+   3 chr3snp227          0    A    ADDxPRS      400          1   -5.521e-17            1
    3 chr3snp228          0    A        ADD      400          1    5.853e-17            1
    3 chr3snp228          0    A        PRS      400          1    3.042e-17            1
    3 chr3snp228          0    A    ADDxPRS      400          1    1.284e-16            1
@@ -812,6 +896,9 @@
    3 chr3snp258          0    T        ADD      400          1   -3.391e-17            1
    3 chr3snp258          0    T        PRS      400          1    1.028e-16            1
    3 chr3snp258          0    T    ADDxPRS      400          1    6.263e-17            1
+   3 chr3snp260          0    G        ADD      400          1   -2.196e-17            1
+   3 chr3snp260          0    G        PRS      400          1    1.731e-17            1
+   3 chr3snp260          0    G    ADDxPRS      400          1     9.67e-17            1
    3 chr3snp266          0    T        ADD      400          1   -4.457e-17            1
    3 chr3snp266          0    T        PRS      400          1   -1.807e-16            1
    3 chr3snp266          0    T    ADDxPRS      400          1    7.694e-17            1
