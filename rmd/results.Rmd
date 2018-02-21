@@ -46,4 +46,12 @@ It turns out that the GWAS signal goes away if limiting to loci which occur in W
 
 ## Insulin-like growth factor
 
+
+
 ## White blood cell count
+
+1. Comparison of $\beta$ [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/UKBB_wbc__wtccc_crohn__wtccc_ctrl/prs_report.html)
+2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_report.html)
+3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html)
+
+Interestingly, when adding a sparse prior on the effect size, two SNPs ([*rs4379550*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4379550) and [*rs11145756*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11145756) are both located in the intronic region of SEC16A.
