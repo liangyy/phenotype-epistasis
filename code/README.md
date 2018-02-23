@@ -122,12 +122,14 @@ $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --r
 
 ## Code:
 
-1. finish the scripts to extract PRS (computed by LDpred) and original beta (derived from pval and sample size). note that the nt1 is alt and nt2 is ref (so beta is flipped in the coord_genotypes.py) and direction may be flipped comparing to summary statistic file since the correction is done based on genotype data.
-2. write report rules to plot the PRS against original values.
+1. finish the scripts to extract PRS (computed by LDpred) and original beta (derived from pval and sample size). note that the nt1 is alt and nt2 is ref (so beta is flipped in the coord_genotypes.py) and direction may be flipped comparing to summary statistic file since the correction is done based on genotype data. (FINISHED)
+2. write report rules to plot the PRS against original values. 
 3. modify direction module accordingly to make use of PRS instead of original SS(may be refactorize the direction to make all direction is relative to genotype)
 4. add PRS or original beta into the plot (maybe the latter since it has SE)
+5. add a plot to show under which causal fraction the correlation between trait and intermediate trait is most significant
 
 ## Analysis:
 
-1. do Crohn's disease w/ wbc and crp
-2. finish analysis on cad
+1. do Crohn's disease w/ wbc and crp (FINISHED)
+2. finish analysis on cad (FINISHED)
+3. select and do some literature research on the most promising variants for each Y-I pair
