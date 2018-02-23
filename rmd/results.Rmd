@@ -32,11 +32,48 @@ Every subsection presents the following information.
 2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
 3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
 
-## Serum concentration
+[*rs4970834*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4970834) locates in the intronic region of CELSR2. Its protective effect is masked by high LDL level. Furthermore, the association of CELSR2 to Cholesterol level and CAD has been identified ([paper](https://www.ncbi.nlm.nih.gov/pubmed/18649068)). 
+
+```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
+\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes, arrows, calc, positioning}
+\begin{tikzpicture}[auto]
+  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
+  \tikzstyle{arrow}=[draw, ->]
+  \node [node] (y) {$Y$};
+  \node [node, below left of=y] (g) {$G$};
+  \node [node, below right of=y] (i) {$I$};
+  \path [arrow] (g) -- node [above,midway] {-} (y);
+  \path [arrow] (g) -- node [above,midway] {-} (i);
+  \path [arrow] (i) -- node [above,midway] {+} (y);
+\end{tikzpicture}
+```
+
+
+## Serum triglycerides concentration
 
 1. Comparison of $\beta$ [here]([here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html))
 2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html)
 3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
+
+[*rs4541125*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4541125) shows most significant interaction (positive: i.e. as $I$ increases, the effect size of $G$ increases). In other word, the protective effect of $G$ goes away when $I$ is high. It locates in the intronic region of PITPNM3, which is reported to be under-presented in the proteomics of Acute Ischemic Strokes patients ([table 3 of the paper](https://pubs.acs.org/doi/full/10.1021/pr501324n?src=recsys)).
+
+```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
+\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes, arrows, calc, positioning}
+\begin{tikzpicture}[auto]
+  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
+  \tikzstyle{arrow}=[draw, ->]
+  \node [node] (y) {$Y$};
+  \node [node, below left of=y] (g) {$G$};
+  \node [node, below right of=y] (i) {$I$};
+  \path [arrow] (g) -- node [above,midway] {-} (y);
+  \path [arrow] (g) -- node [above,midway] {-} (i);
+  \path [arrow] (i) -- node [above,midway] {+} (y);
+\end{tikzpicture}
+```
 
 # Crohn's disease
 
@@ -46,4 +83,28 @@ It turns out that the GWAS signal goes away if limiting to loci which occur in W
 
 ## Insulin-like growth factor
 
+
+
 ## White blood cell count
+
+1. Comparison of $\beta$ [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/UKBB_wbc__wtccc_crohn__wtccc_ctrl/prs_report.html)
+2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_report.html)
+3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html)
+
+Interestingly, when adding a sparse prior on the effect size, two SNPs ([*rs4379550*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4379550) and [*rs11145756*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11145756) are both located in the intronic region of SEC16A. And their interaction terms is negative, indicating that the SNP and intermediate trait act in redundant manner.
+
+```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
+\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes, arrows, calc, positioning}
+\begin{tikzpicture}[auto]
+  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
+  \tikzstyle{arrow}=[draw, ->]
+  \node [node] (y) {$Y$};
+  \node [node, below left of=y] (g) {$G$};
+  \node [node, below right of=y] (i) {$I$};
+  \path [arrow] (g) -- node [above,midway] {+} (y);
+  \path [arrow] (g) -- node [above,midway] {+} (i);
+  \path [arrow] (i) -- node [above,midway] {+} (y);
+\end{tikzpicture}
+```
