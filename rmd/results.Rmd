@@ -22,6 +22,10 @@ Every subsection presents the following information.
 
 ## HDL
 
+```{r, echo=FALSE}
+
+```
+
 1. Comparison of $\beta$ [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/prs_report.html)
 2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
 3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
@@ -32,7 +36,7 @@ Every subsection presents the following information.
 2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html)
 3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html)
 
-[*rs4970834*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4970834) locates in the intronic region of CELSR2. Its protective effect is masked by high LDL level. Furthermore, the association of CELSR2 to Cholesterol level and CAD has been identified ([paper](https://www.ncbi.nlm.nih.gov/pubmed/18649068)). 
+[*rs4970834*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4970834) locates in the intronic region of CELSR2. Its protective effect is masked by high LDL level. Furthermore, the association of CELSR2 to Cholesterol level and CAD has been identified ([paper](https://www.ncbi.nlm.nih.gov/pubmed/18649068)).
 
 ```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
 \usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
@@ -49,7 +53,6 @@ Every subsection presents the following information.
   \path [arrow] (i) -- node [above,midway] {+} (y);
 \end{tikzpicture}
 ```
-
 
 ## Serum triglycerides concentration
 
@@ -82,6 +85,10 @@ Every subsection presents the following information.
 It turns out that the GWAS signal goes away if limiting to loci which occur in WTCCC genotype data.
 
 ## Insulin-like growth factor
+
+1. Comparison of $\beta$ [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/Prins_igf1__wtccc_crohn__wtccc_ctrl/prs_report.html)
+2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_report.html)
+3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/Prins_igf1__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html)
 
 
 
