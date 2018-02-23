@@ -30,7 +30,7 @@ def get_yi(config):
     return out
 def get_plot(config):
     out = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_report.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
-    out = [out, 'output-run_step2/{intermediate}__{geno1}__{geno2}/direction_yi.png'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
+    out = [out, 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_yi.png'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
 ]
     return out
 rule all_XTYI:
@@ -179,8 +179,8 @@ rule plot_trait_inter_trait:
     input:
         'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     params:
-        config['ldpred']['causal-fraction'].split(',')
+        config['ldpred']['causal-fraction']
     output:
-        'output-run_step2/{intermediate}__{geno1}__{geno2}/direction_yi.png'
+        'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/direction_yi.png'
     shell:
         'Rscript scripts/plot_direction_yi.R --input {input[0]} --output {output[0]} --hypers {params[0]}'
