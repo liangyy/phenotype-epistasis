@@ -12,3 +12,4 @@ Prins_hscrp:
   meta: 1
   sep: ' '
   cat: 'zcat'
+  cleaner: " |sed 's/ $//g' "

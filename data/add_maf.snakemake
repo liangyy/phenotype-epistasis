@@ -42,10 +42,11 @@ rule merge:
     params:
         meta = lambda wildcards: config[wildcards.name]['meta'],
         sep = lambda wildcards: config[wildcards.name]['sep'],
-        cat = lambda wildcards: config[wildcards.name]['cat']
+        cat = lambda wildcards: config[wildcards.name]['cat'],
+        cleaner = lambda wildcards: config[wildcards.name]['cleaner']
     output:
         'add-maf/{name}.with-maf.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[${params.meta}]=$0;next}}{{print a[$8]$2;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.maf}) | gzip > {output[0]}
+        awk 'NR==FNR{{a[${params.meta}]=$0;next}}{{print a[$8],$2;next}}' FS="{params.sep}" <({params.cat} {input.inp} {params.cleaner}) OFS="{params.sep}" FS="\\t" <(cat < {input.maf}) | gzip > {output[0]}
         '''

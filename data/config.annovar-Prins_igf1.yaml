@@ -12,3 +12,4 @@ Prins_igf1:
   meta: 1
   sep: ' '
   cat: 'zcat'
+  cleaner: " |sed 's/ $//g' "

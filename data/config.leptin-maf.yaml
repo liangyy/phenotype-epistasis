@@ -3,7 +3,7 @@ dbtype: '1000g2015aug_eur'
 dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
 buildver: 'hg19'
 suffix: 'hg19_EUR.sites.2015_08_dropped'
-Prins_hscrp:
+LeptinBMI:
   name: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/add-coordinate/LeptinBMI.with-coordinate.gz'
   chr: 8
   pos: 9
@@ -12,3 +12,4 @@ Prins_hscrp:
   meta: 1
   sep: '\\t'
   cat: 'zcat'
+  cleaner: ''
