@@ -21,7 +21,7 @@ wtccc_ctrl:
     case-control: 1
 LeptinBMI:
   prepare_betaI:
-    beta-ss: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/add-coordinate/LeptinBMI.with-coordinate.gz'
+    beta-ss: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/add-maf/LeptinBMI.with-maf.gz'
     header: 0  # no header = 0, with header = 1
     chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '8,9,7,6,-10,3,1,4,2,5'  # add '-' before reffrq is the column is referring to altfrq
     sep: '"\t"'
