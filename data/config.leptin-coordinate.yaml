@@ -1,0 +1,9 @@
+filename: 'LeptinBMI'
+dbname: 'hg19_snp138.txt'
+dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
+LeptinBMI:
+  name: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/Leptin_Adjusted_for_BMI.txt'
+  rsid: 1
+  sep: '\\t'
+  cat: 'cat'
+  header: ' | tail -n +2'  # remove header; if no header, set it to ''
