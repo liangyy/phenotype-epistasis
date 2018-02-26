@@ -1,0 +1,14 @@
+filename: 'Prins_hscrp'
+dbtype: '1000g2015aug_eur'
+dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
+buildver: 'hg19'
+suffix: 'hg19_EUR.sites.2015_08_dropped'
+Prins_hscrp:
+  name: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/Prins_28887542_hscrp.gz'
+  chr: 2
+  pos: 3
+  ref: 4
+  alt: 5
+  meta: 1
+  sep: ' '
+  cat: 'zcat'
