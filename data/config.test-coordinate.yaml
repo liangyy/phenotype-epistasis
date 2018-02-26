@@ -1,0 +1,9 @@
+filename: 'test'
+dbname: 'hg19_snp138.txt'
+dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
+test:
+  name: 'test.txt'
+  rsid: 1
+  sep: '\\t'
+  cat: 'zcat'
+  header: ' | tail -n +2'  # remove header; if no header, set it to ''

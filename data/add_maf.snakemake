@@ -16,7 +16,7 @@ rule prepare_input:
         sep = lambda wildcards: config[wildcards.name]['sep'],
         cat = lambda wildcards: config[wildcards.name]['cat']
     output:
-        temp('add-maf/{name}.avinput')
+        'add-maf/{name}.avinput'
     shell:
         '''
         awk 'NR==FNR{{a[${params.meta}]=length(${params.ref});next}}${params.meta}!=""{{print ${params.chr},${params.pos},${params.pos}-1+a[${params.meta}],${params.ref},${params.alt},${params.meta};next}}' OFS='\\t' FS="{params.sep}" <({params.cat} < {input[0]}) OFS='\\t' FS="{params.sep}" <({params.cat} < {input[0]}) > {output[0]}
@@ -24,7 +24,7 @@ rule prepare_input:
 
 rule annovar:
     input:
-        'add-maf/{name}.avinput'
+        temp('add-maf/{name}.avinput')
     output:
         'add-maf/{{name}}.{suffix}'.format(suffix = config['suffix'])
     params:

@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -307,7 +309,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Results</h1>
-<h4 class="date"><em>23 February, 2018</em></h4>
+<h4 class="date"><em>26 February, 2018</em></h4>
 
 </div>
 
@@ -334,7 +336,7 @@ div.tocify {
 <h2><span class="header-section-number">2.1</span> HDL</h2>
 <pre class="r"><code>config.hdl &lt;- &#39;../code/step2/config.wtccc-cad-hdl.yaml&#39;
 doAll(config.hdl)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="/Users/yanyu_liang/Documents/learnATcmu/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="../code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
@@ -345,26 +347,29 @@ doAll(config.hdl)</code></pre>
 <h2><span class="header-section-number">2.2</span> LDL</h2>
 <pre class="r"><code>config.ldl &lt;- &#39;../code/step2/config.wtccc-cad-ldl.yaml&#39;
 doAll(config.ldl)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="/Users/yanyu_liang/Documents/learnATcmu/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 <li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
-<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4970834"><em>rs4970834</em></a> locates in the intronic region of CELSR2. Its protective effect is masked by high LDL level. Furthermore, the association of CELSR2 to Cholesterol level and CAD has been identified (<a href="https://www.ncbi.nlm.nih.gov/pubmed/18649068">paper</a>).</p>
+<p>This <a href="http://circres.ahajournals.org/content/118/1/83">paper</a> shows the strong genetic correlation between coronary heart disease and LDL and conditional FDR (on LDL; namely incorporating LDL p-value into FDR calculation) of CHD help to identify more signal out of GWAS follow-up study. Also, LDL has been shown to be causal factor of CHD, <a href="http://www.nejm.org.proxy.uchicago.edu/doi/full/10.1056/NEJMoa054013">paper</a>.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=13465"><em>rs13465</em></a> locates in the intronic region of ILF3. Its protective effect is masked by high LDL level.</p>
 <embed src="results_files/figure-html/unnamed-chunk-4-1.pdf" width="150" height="300" style="display: block; margin: auto;" type="application/pdf" />
+<p>Interestingly, this <a href="https://www.spandidos-publications.com/mmr/4/3/511">paper</a> reported that ILF3 (<em>rs2569512</em> was used to tag the gene) affects myocardial infarction risk only when LDL level is low (when LDL level is high, there is no association signal).</p>
 </div>
 <div id="serum-triglycerides-concentration" class="section level2">
 <h2><span class="header-section-number">2.3</span> Serum triglycerides concentration</h2>
 <pre class="r"><code>config.tg &lt;- &#39;../code/step2/config.wtccc-cad-tg.yaml&#39;
 doAll(config.tg)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="/Users/yanyu_liang/Documents/learnATcmu/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 <li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
-<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4541125"><em>rs4541125</em></a> shows most significant interaction (positive: i.e. as <span class="math inline">\(I\)</span> increases, the effect size of <span class="math inline">\(G\)</span> increases). In other word, the protective effect of <span class="math inline">\(G\)</span> goes away when <span class="math inline">\(I\)</span> is high. It locates in the intronic region of PITPNM3, which is reported to be under-presented in the proteomics of Acute Ischemic Strokes patients (<a href="https://pubs.acs.org/doi/full/10.1021/pr501324n?src=recsys">table 3 of the paper</a>).</p>
+<p>This paper proposed that triglycerides level is also a causal factor of CHD, <a href="https://www-nature-com.proxy.uchicago.edu/articles/ng.2795">paper</a>.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4541125"><em>rs4541125</em></a> shows most significant interaction (positive: i.e. as <span class="math inline">\(I\)</span> increases, the effect size of <span class="math inline">\(G\)</span> increases). In other word, the protective effect of <span class="math inline">\(G\)</span> goes away when <span class="math inline">\(I\)</span> is high. It locates in the intronic region of PITPNM3, which is reported to be under-presented in the proteomics of Acute Ischemic Strokes patients (<a href="https://pubs.acs.org/doi/full/10.1021/pr501324n?src=recsys">table 3 of the paper</a>). Note that the triglycerides level is high in cases versus controls.</p>
 <embed src="results_files/figure-html/unnamed-chunk-6-1.pdf" width="150" height="300" style="display: block; margin: auto;" type="application/pdf" />
 </div>
 </div>
@@ -378,7 +383,7 @@ doAll(config.tg)</code></pre>
 <h2><span class="header-section-number">3.2</span> Insulin-like growth factor</h2>
 <pre class="r"><code>config.igf1 &lt;- &#39;../code/step2/config.wtccc-crohn-igf1.yaml&#39;
 doAll(config.igf1)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="/Users/yanyu_liang/Documents/learnATcmu/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/Prins_igf1__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
@@ -389,7 +394,7 @@ doAll(config.igf1)</code></pre>
 <h2><span class="header-section-number">3.3</span> White blood cell count</h2>
 <pre class="r"><code>config.wbc &lt;- &#39;../code/step2/config.wtccc-crohn-wbc.yaml&#39;
 doAll(config.wbc)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="/Users/yanyu_liang/Documents/learnATcmu/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="../code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/UKBB_wbc__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
