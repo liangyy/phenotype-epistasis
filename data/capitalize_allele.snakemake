@@ -17,12 +17,12 @@ rule capitalize:
         'capitalize-allele/{name}.capitalize-allele.gz'
     shell:
         '''
-        {params.cat} {input[0]} {params.header} | awk -F"{params.sep}" ''{{ for(i = 1; i <= NF; i++) {{
+        {params.cat} {input[0]} {params.header} | awk -F"{params.sep}" '{{e=$1; for(i = 2; i <= NF; i++) {{            
             if(i=={params.a1})
-                print toupper($i);
+                e=e FS toupper($i);
             else if(i=={params.a2})
-                print toupper($i);
+                e=e FS toupper($i);
             else
-                print $i;
-        }}' > {output[0]}
+                e=e FS $i;
+        }}print e;}}' | gzip > {output[0]}
         '''
