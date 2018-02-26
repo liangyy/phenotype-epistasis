@@ -106,6 +106,24 @@ pander(data.inter.igf1)
 
 There are many other phenotypes, health-related biomarkers, that the paper has collected, see [here](http://europepmc.org/articles/PMC5591265/table/Tab1/) for a complement list. And heritability is listed [here](http://europepmc.org/articles/PMC5591265/table/Tab2/)
 
+## Circulating leptin
+
+```{r, echo=FALSE}
+data.inter.leptin <- genDataLine(id = c(id.counter), phenotype = c('circulating leptin'), num.of.traits = c(1), sample.size = c(32161), num.of.variants = c(2.5e6), heritability.mean = c('30-50%'), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.leptin)
+```
+
+* [Data](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/Kilpel%C3%A4inenTO_26833098_GCST003368)
+* [Paper](https://www.nature.com/articles/ncomms10494)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.metabolite)
+```
+
+Note that the summary statistic used has been adjusted for BMI. See more details in the paper.
+
 
 ## Summary
 
