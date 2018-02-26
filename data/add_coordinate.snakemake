@@ -44,5 +44,5 @@ rule merge:
         'add-coordinate/{name}.with-coordinate.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[${params.rsid}]=$0;next}}{{print a[$8]$1,$2,$3;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.pos}) | gzip > {output[0]}
+        awk 'NR==FNR{{a[${params.rsid}]=$0;next}}{{print a[$6]$1,$2,$3;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.pos}) | gzip > {output[0]}
         '''
