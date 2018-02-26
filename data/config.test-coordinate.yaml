@@ -5,5 +5,5 @@ test:
   name: 'test.txt'
   rsid: 1
   sep: '\\t'
-  cat: 'zcat'
+  cat: 'cat'
   header: ' | tail -n +2'  # remove header; if no header, set it to ''

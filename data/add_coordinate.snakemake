@@ -39,10 +39,11 @@ rule merge:
     params:
         rsid = lambda wildcards: config[wildcards.name]['rsid'],
         cat = lambda wildcards: config[wildcards.name]['cat'],
-        sep = lambda wildcards: config[wildcards.name]['sep']
+        sep = lambda wildcards: config[wildcards.name]['sep'],
+        header = lambda wildcards: config[wildcards.name]['header']
     output:
         'add-coordinate/{name}.with-coordinate.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[${params.rsid}]=$0;next}}{{print a[$6]$1,$2,$3;next}}' FS="{params.sep}" <({params.cat} < {input.inp}) OFS="{params.sep}" FS="\\t" <(cat < {input.pos}) | gzip > {output[0]}
+        awk 'NR==FNR{{a[${params.rsid}]=$0;next}}{{print a[$6],$1,$2;next}}' FS="{params.sep}" <({params.cat} {input.inp} {params.header} | tr -d '\r') OFS="{params.sep}" FS="\t" <(cat < {input.pos} | tr -d '\r') | gzip > {output[0]}
         '''
