@@ -119,11 +119,33 @@ data.inter <- rbind(data.inter, data.inter.leptin)
 * Meta-data
 
 ```{r, echo=FALSE}
-pander(data.inter.metabolite)
+pander(data.inter.leptin)
 ```
 
 Note that the summary statistic used has been adjusted for BMI. See more details in the paper.
 
+## Fast glucose and fast insulin
+
+```{r, echo=FALSE}
+data.inter.fastGlu <- genDataLine(id = c(id.counter), phenotype = c('fast glucose'), num.of.traits = c(1), sample.size = c(58074), num.of.variants = c(NA), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.fastGlu)
+data.inter.fastInsulin <- genDataLine(id = c(id.counter), phenotype = c('fast insulin'), num.of.traits = c(1), sample.size = c(51750), num.of.variants = c(NA), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.fastInsulin)
+```
+
+* [Data fast glucose](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/ManningAK_22581228_GCST005186)
+* [Data fast insulin](ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/ManningAK_22581228_GCST005185)
+* [Paper](https://www.nature.com/articles/ng.2274)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.fastGlu)
+pander(data.inter.fastInsulin)
+```
+
+Note that the paper also discussed the interaction between body mass index (BMI) and these two intermediate traits. Also, the summary statistics adjusted by BMI are available.
 
 ## Summary
 

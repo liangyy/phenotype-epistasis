@@ -1,0 +1,21 @@
+# this module capitalize allele
+
+rule all:
+    input:
+        'capitalize-allele/{name}.capitalize-allele.gz'.format(name = config['filename'])
+
+rule capitalize:
+    input:
+        lambda wildcards: config[wildcards.name]['name']
+    params:
+        a1 = lambda wildcards: config[wildcards.name]['a1'],
+        a2 = lambda wildcards: config[wildcards.name]['a2'],
+        cat = lambda wildcards: config[wildcards.name]['cat'],
+        sep = lambda wildcards: config[wildcards.name]['sep'],
+        header = lambda wildcards: config[wildcards.name]['header']
+    output:
+        'capitalize-allele/{name}.capitalize-allele.gz'
+    shell:
+        '''
+        {params.cat} {input[0]} {params.header} | awk -F"{params.sep}" ''{{ for(i = 1; i <= NF; i++) {{i  ifprint $i; }} }}'
+        '''
