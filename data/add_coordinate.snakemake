@@ -2,7 +2,7 @@
 
 rule all:
     input:
-        ''
+        'add-coordinate/{name}.with-coordinate.gz'.format(name = config['filename'])
 
 rule rs_list:
     input:
