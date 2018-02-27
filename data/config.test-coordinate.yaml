@@ -2,10 +2,10 @@ filename: 'test'
 dbname: 'hg19_snp138.txt'
 dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
 test:
-  name: 'test.txt'
+  name: 'capitalize-allele/test.capitalize-allele.gz'
   rsid: 1
   ref: 3
   alt: 2
   sep: '\\t'
-  cat: 'cat'
-  header: ' | tail -n +2'  # remove header; if no header, set it to ''
+  cat: 'zcat'
+  header: ''  # remove header; if no header, set it to ''

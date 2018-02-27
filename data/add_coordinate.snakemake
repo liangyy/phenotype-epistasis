@@ -47,11 +47,21 @@ rule merge:
         'add-coordinate/{name}.with-coordinate.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[$6"-"$4"-"$5]=$0;next}}{{
-            if(a[${params.rsid}"-"${params.ref}"-"{params.alt}]!="")
-                print a[${params.rsid}"-"],$1,$2;
-                next;
-            else
-                next;
+        awk 'NR==FNR{{a[$6"-"$4"-"$5]=$1;b[$6"-"$4"-"$5]=$2;next}}{{
+            dic['A']='T';dic['T']='A';dic['G']='C';dic['C']='G';
+            if(a[${params.rsid}"-"${params.ref}"-"${params.alt}]!="")
+                print $0,a[${params.rsid}"-"${params.ref}"-"${params.alt}],b[${params.rsid}"-"${params.ref}"-"${params.alt}];  # ,${params.rsid}"-"${params.ref}"-"{params.alt};
+            #     next;
+            else if(a[${params.rsid}"-"${params.alt}"-"${params.ref}]!="")
+                print $0,a[${params.rsid}"-"${params.alt}"-"${params.ref}],b[${params.rsid}"-"${params.alt}"-"${params.ref}];  # ,${params.rsid}"-"${params.ref}"-"{params.alt};
+            #     next;
+            else if(a[${params.rsid}"-"dic[${params.alt}]"-"dic[${params.ref}]]!="")
+                print $0,a[${params.rsid}"-"dic[${params.alt}]"-"dic[${params.ref}]],b[${params.rsid}"-"dic[${params.alt}]"-"dic[${params.ref}]];  # ,${params.rsid}"-"${params.ref}"-"{params.alt};
+            #     next;
+            else if(a[${params.rsid}"-"dic[${params.ref}]"-"dic[${params.alt}]]!="")
+                print $0,a[${params.rsid}"-"dic[${params.ref}]"-"dic[${params.alt}]],b[${params.rsid}"-"dic[${params.ref}]"-"dic[${params.alt}]];  # ,${params.rsid}"-"${params.ref}"-"{params.alt};
+            #     next;
+            # else
+            #     next;
         }}' FS="\t" <(cat < {input.pos} | tr -d '\r') FS="{params.sep}" OFS="{params.sep}" <({params.cat} {input.inp} {params.header} | tr -d '\r') | gzip > {output[0]}
         '''
