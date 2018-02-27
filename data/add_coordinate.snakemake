@@ -40,10 +40,18 @@ rule merge:
         rsid = lambda wildcards: config[wildcards.name]['rsid'],
         cat = lambda wildcards: config[wildcards.name]['cat'],
         sep = lambda wildcards: config[wildcards.name]['sep'],
-        header = lambda wildcards: config[wildcards.name]['header']
+        header = lambda wildcards: config[wildcards.name]['header'],
+        ref = lambda wildcards: config[wildcards.name]['ref'],
+        alt = lambda wildcards: config[wildcards.name]['alt']
     output:
         'add-coordinate/{name}.with-coordinate.gz'
     shell:
         '''
-        awk 'NR==FNR{{a[${params.rsid}]=$0;next}}{{print a[$6],$1,$2;next}}' FS="{params.sep}" <({params.cat} {input.inp} {params.header} | tr -d '\r') OFS="{params.sep}" FS="\t" <(cat < {input.pos} | tr -d '\r') | gzip > {output[0]}
+        awk 'NR==FNR{{a[$6"-"$4"-"$5]=$0;next}}{{
+            if(a[${params.rsid}"-"${params.ref}"-"{params.alt}]!="")
+                print a[${params.rsid}"-"],$1,$2;
+                next;
+            else
+                next;
+        }}' FS="\t" <(cat < {input.pos} | tr -d '\r') FS="{params.sep}" OFS="{params.sep}" <({params.cat} {input.inp} {params.header} | tr -d '\r') | gzip > {output[0]}
         '''

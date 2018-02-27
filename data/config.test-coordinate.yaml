@@ -4,6 +4,8 @@ dbdir: '/mnt/gluster/home/yanyul/softwares/annovar/humandb/'
 test:
   name: 'test.txt'
   rsid: 1
+  ref: 3
+  alt: 2
   sep: '\\t'
   cat: 'cat'
   header: ' | tail -n +2'  # remove header; if no header, set it to ''
