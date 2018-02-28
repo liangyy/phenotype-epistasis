@@ -26,6 +26,41 @@ doAll <- function(filename) {
   plotImage(meta)
   listReports(meta)
 }
+drawGraph <- function(gy, gi, yi, inter, filename='test'){
+  tempfilepref <- 'temp-results-plot'
+  sink(paste0(tempfilepref, '.tex'))
+  t <- cat(paste0('\\', 'documentclass[preview]{standalone}
+  \\', 'usepackage{tikz}
+  \\', 'begin{document}
+  \\', 'usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
+  \\', 'usetikzlibrary{positioning}
+  \\', 'usetikzlibrary{shapes, arrows, calc, positioning}
+  \\', 'begin{tikzpicture}[auto]
+  \\', 'tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
+  \\', 'tikzstyle{inter}=[draw, circle,fill=black,inner sep=0pt,minimum size=3pt]
+  \\', 'tikzstyle{arrow}=[draw, ->]
+  \\', 'node [node] (y) {$Y$};
+  \\', 'node [inter, below of=y] (inter) {};
+  \\', 'node [node, below left of=inter] (g) {$G$};
+  \\', 'node [node, below right of=inter] (i) {$I$};
+  \\', 'path [arrow] (g) -- node [above,midway] {', gy, '} (y);
+  \\', 'path [arrow] (g) -- node [above,midway] {', gi, '} (i);
+  \\', 'path [arrow] (i) -- node [above,midway] {', yi, '} (y);
+  \\', 'path [arrow] (g) -- (inter);
+  \\', 'path [arrow] (i) -- (inter);
+  \\', 'path [arrow] (inter) -- node [left,midway,xshift=1ex] {', inter, '} (y);
+  \\', 'end{tikzpicture}
+  \\', 'end{document} \n'))
+  sink()
+  cmd <- paste0('pdflatex ', tempfilepref, '.tex')
+  system(cmd)
+  cmd <- paste0('convert -density 300 ', tempfilepref, '.pdf -quality 90 ', 'intergraph.', filename, '.png')
+  system(cmd)
+  cat(paste0('![](', 'intergraph.', filename, '.png', ')'))
+  cmd <- paste0('rm ../rmd/', tempfilepref, '.*')
+  system(cmd)
+  cat('\n')
+}
 ```
 
 # Summary
@@ -62,20 +97,8 @@ This [paper](http://circres.ahajournals.org/content/118/1/83) shows the strong g
 
 [*rs13465*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=13465) locates in the intronic region of ILF3. Its protective effect is masked by high LDL level.
 
-```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
-\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
-\usetikzlibrary{positioning}
-\usetikzlibrary{shapes, arrows, calc, positioning}
-\begin{tikzpicture}[auto]
-  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
-  \tikzstyle{arrow}=[draw, ->]
-  \node [node] (y) {$Y$};
-  \node [node, below left of=y] (g) {$G$};
-  \node [node, below right of=y] (i) {$I$};
-  \path [arrow] (g) -- node [above,midway] {-} (y);
-  \path [arrow] (g) -- node [above,midway] {-} (i);
-  \path [arrow] (i) -- node [above,midway] {+} (y);
-\end{tikzpicture}
+```{r, results='asis'}
+drawGraph('-', '-', '+', '+', 'cad-ldl') #
 ```
 
 Interestingly, this [paper](https://www.spandidos-publications.com/mmr/4/3/511) reported that ILF3 (*rs2569512* was used to tag the gene) affects myocardial infarction risk only when LDL level is low (when LDL level is high, there is no association signal).
@@ -91,20 +114,8 @@ This paper proposed that triglycerides level is also a causal factor of CHD, [pa
 
 [*rs4541125*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4541125) shows most significant interaction (positive: i.e. as $I$ increases, the effect size of $G$ increases). In other word, the protective effect of $G$ goes away when $I$ is high. It locates in the intronic region of PITPNM3, which is reported to be under-presented in the proteomics of Acute Ischemic Strokes patients ([table 3 of the paper](https://pubs.acs.org/doi/full/10.1021/pr501324n?src=recsys)). Note that the triglycerides level is high in cases versus controls.
 
-```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
-\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
-\usetikzlibrary{positioning}
-\usetikzlibrary{shapes, arrows, calc, positioning}
-\begin{tikzpicture}[auto]
-  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
-  \tikzstyle{arrow}=[draw, ->]
-  \node [node] (y) {$Y$};
-  \node [node, below left of=y] (g) {$G$};
-  \node [node, below right of=y] (i) {$I$};
-  \path [arrow] (g) -- node [above,midway] {-} (y);
-  \path [arrow] (g) -- node [above,midway] {-} (i);
-  \path [arrow] (i) -- node [above,midway] {+} (y);
-\end{tikzpicture}
+```{r, results='asis'}
+drawGraph('-', '-', '+', '+', 'cad-tg')  # gy, gi, yi
 ```
 
 # Crohn's disease
@@ -129,18 +140,7 @@ doAll(config.wbc)
 
 Interestingly, when adding a sparse prior on the effect size, two SNPs ([*rs4379550*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4379550) and [*rs11145756*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11145756) are both located in the intronic region of SEC16A. And their interaction terms is negative, indicating that the SNP and intermediate trait act in redundant manner.
 
-```{r, echo=FALSE, engine="tikz", fig.ext='pdf', fig.align='center', out.width=150, out.height=300}
-\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
-\usetikzlibrary{positioning}
-\usetikzlibrary{shapes, arrows, calc, positioning}
-\begin{tikzpicture}[auto]
-  \tikzstyle{node}=[draw, rectangle, text centered, node distance=5em]
-  \tikzstyle{arrow}=[draw, ->]
-  \node [node] (y) {$Y$};
-  \node [node, below left of=y] (g) {$G$};
-  \node [node, below right of=y] (i) {$I$};
-  \path [arrow] (g) -- node [above,midway] {+} (y);
-  \path [arrow] (g) -- node [above,midway] {+} (i);
-  \path [arrow] (i) -- node [above,midway] {+} (y);
-\end{tikzpicture}
+
+```{r, results='asis'}
+drawGraph('+', '+', '+', '-', 'crohn-wbc')  # gy, gi, yi
 ```
