@@ -92,7 +92,8 @@ output:
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 library(ggplot2)
 library(pander)
-knitr::opts_knit$set(root.dir = '../../')
+root.dir <- '../../'
+# knitr::opts_knit$set(root.dir = '../../')
 panderOptions('knitr.auto.asis', FALSE)
 panderOptions('table.split.table', Inf)
 subchunkify <- function(g, fig_asp = 1) {{
@@ -100,14 +101,11 @@ subchunkify <- function(g, fig_asp = 1) {{
     function() {{g}}
   ), collapse = '')
 
-  sub_chunk <- paste0("
-  `","``{{r, ", fig.asp=",
-   fig_asp, echo=FALSE}}",
-  "\n(", 
+  sub_chunk <- paste0("`","``{{r sub_chunk_", floor(runif(1) * 10000), ", fig.asp=", fig_asp, ", echo=FALSE}}",
+  "\\n(", 
     g_deparsed
     , ")()",
-  "\n`","``
-  ")
+  "\\n`","``")
 
   cat(knitr::knit(text = knitr::knit_expand(text = sub_chunk), quiet = TRUE))
 }}
@@ -116,8 +114,8 @@ subchunkify <- function(g, fig_asp = 1) {{
 # Read data
 
 ```{{r}}
-source('scripts/myRLib.R')
-funcset <- readLines('{funcset}')
+source(paste0(root.dir, 'scripts/myRLib.R'))
+funcset <- readLines(paste0(root.dir, '{funcset}'))
 funcset <- parseFuncSet(funcset)
 funcset.names <- names(funcset)
 xtyi.files <- strsplit('{xtyifiles}', ':')[[1]]
@@ -136,17 +134,17 @@ for(i in 1 : length(xtyi.files)) {{
   snp.subset <- funcset[[funcset.names[i]]]
 
   # read I ~ SNP
-  prs <- read.table(prs.files[i], header = T)
+  prs <- read.table(paste0(root.dir, prs.files[i]), header = T)
   prs$sid <- as.character(prs$sid)
   prs.sub <- prs[prs$sid %in% snp.subset, ]
 
   # read others
-  xtyi <- read.table(xtyi.files[i], header = T)
+  xtyi <- read.table(paste0(root.dir, xtyi.files[i]), header = T)
   xtyi$SNP <- as.character(xtyi$SNP)
   yt.xtyi <- xtyi[(xtyi$SNP %in% snp.subset) & (xtyi$SNP %in% prs.sub$sid), ]
   yt.xtyi.xt <- yt.xtyi[yt.xtyi$TEST == 'ADD', ]
   yt.xtyi.yi <- yt.xtyi[yt.xtyi$TEST == 'PRS', ]
-  inter <- read.table(inter.files[i], header = T)
+  inter <- read.table(paste0(root.dir, inter.files[i]), header = T)
   inter$SNP <- as.character(inter$SNP)
   inter <- inter[inter$TEST == 'ADDxPRS', ]
   yt.inter <- inter[(inter$SNP %in% snp.subset) & (inter$SNP %in% prs.sub$sid), ]
@@ -175,8 +173,8 @@ for(i in 1 : length(xtyi.files)) {{
   df <- rbind(yt.xtyi.xt.mean.std, yt.xtyi.yi.mean.std, prs.sub.mean.std, yt.inter.mean.std)
   ratio <- max(1, nrow(yt.inter) / 30)
   cat
-  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + facet_grid(. ~ Type, scales = 'free_x') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + theme(aspect.ratio = ratio)  # + coord_fixed(ratio = ratio)
-  p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value') + theme(aspect.ratio = ratio) # + coord_fixed(ratio = ratio)
+  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + facet_grid(. ~ Type, scales = 'free_x') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) 
+  p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value')
   subchunkify(p, ratio)
   subchunkify(p2, ratio)
   cat('\n')
