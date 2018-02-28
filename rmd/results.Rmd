@@ -11,7 +11,7 @@ reportThre <- function(meta) {
   cat('The threhold used for extracting functionally consistent variant is', threshold, '\n')
 }
 plotImage <- function(meta) {
-  name <- paste0('../code/step2/output-direction_XT_YI/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/direction_yi.png')
+  name <- paste0('https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/direction_yi.png')
   cat(paste0('![](', name, ')'), '\n')
   cat('\n')
 }
