@@ -33,7 +33,7 @@ Methods available:
 
 * P+T
 * LDpred
-  
+
 ## Testing interaction
 
 Hypothesis testing under linear model.
@@ -75,5 +75,14 @@ Let
 
 ## Obtaining $\hat{Y}_I$
 
-Current available $f: (\beta_I, X_T) \rightarrow \hat{Y}_I$ are `PRSice` and `LDpred` (see [here](computation.html#1_computing_intermediate_phenotype)). 
+Current available $f: (\beta_I, X_T) \rightarrow \hat{Y}_I$ are `PRSice` and `LDpred` (see [here](computation.html#1_computing_intermediate_phenotype)).
 
+# Results
+
+Traits that have been tested in WTCCC data:
+
+1. Coronary heart disease
+2. Crohn's disease
+3. Type II diabetes
+
+Go to [results](results.html) for detail.

@@ -147,6 +147,22 @@ pander(data.inter.fastInsulin)
 
 Note that the paper also discussed the interaction between body mass index (BMI) and these two intermediate traits. Also, the summary statistics adjusted by BMI are available.
 
+## Body mass index
+
+```{r, echo=FALSE}
+data.inter.bmi <- genDataLine(id = c(id.counter), phenotype = c('body mass index'), num.of.traits = c(1), sample.size = c(123865), num.of.variants = c(NA), heritability.mean = c(NA), ancestry = c('european'))
+id.counter <- id.counter + 1
+data.inter <- rbind(data.inter, data.inter.bmi)
+```
+
+* [Data GIANT Consortium 2010 GWAS Metadata ](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files#2018_GIANT_BMI_Project_Files_for_Public_Release)
+* [Paper](https://www.nature.com/articles/ng.686)
+* Meta-data
+
+```{r, echo=FALSE}
+pander(data.inter.bmi)
+```
+
 ## Summary
 
 ```{r, echo=FALSE}

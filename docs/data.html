@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -1776,8 +1778,49 @@ Flow cytometry gates
 </table>
 <p>Note that the paper also discussed the interaction between body mass index (BMI) and these two intermediate traits. Also, the summary statistics adjusted by BMI are available.</p>
 </div>
+<div id="body-mass-index" class="section level2">
+<h2><span class="header-section-number">1.7</span> Body mass index</h2>
+<ul>
+<li><a href="https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files#2018_GIANT_BMI_Project_Files_for_Public_Release">Data GIANT Consortium 2010 GWAS Metadata</a></li>
+<li><a href="https://www.nature.com/articles/ng.686">Paper</a></li>
+<li>Meta-data</li>
+</ul>
+<table style="width:100%;">
+<colgroup>
+<col width="4%" />
+<col width="17%" />
+<col width="15%" />
+<col width="13%" />
+<col width="17%" />
+<col width="19%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">id</th>
+<th align="center">phenotype</th>
+<th align="center">num.of.traits</th>
+<th align="center">sample.size</th>
+<th align="center">num.of.variants</th>
+<th align="center">heritability.mean</th>
+<th align="center">ancestry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">body mass index</td>
+<td align="center">1</td>
+<td align="center">123865</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">european</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="summary" class="section level2">
-<h2><span class="header-section-number">1.7</span> Summary</h2>
+<h2><span class="header-section-number">1.8</span> Summary</h2>
 <table>
 <colgroup>
 <col width="4%" />
@@ -1868,6 +1911,15 @@ Flow cytometry gates
 <td align="center">fast insulin</td>
 <td align="center">1</td>
 <td align="center">51750</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">european</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">body mass index</td>
+<td align="center">1</td>
+<td align="center">123865</td>
 <td align="center">NA</td>
 <td align="center">NA</td>
 <td align="center">european</td>

@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -334,7 +336,7 @@ div.tocify {
 <h2><span class="header-section-number">2.1</span> HDL</h2>
 <pre class="r"><code>config.hdl &lt;- &#39;../code/step2/config.wtccc-cad-hdl.yaml&#39;
 doAll(config.hdl)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="/home/yanyul/Documents/research/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="../code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
@@ -345,7 +347,7 @@ doAll(config.hdl)</code></pre>
 <h2><span class="header-section-number">2.2</span> LDL</h2>
 <pre class="r"><code>config.ldl &lt;- &#39;../code/step2/config.wtccc-cad-ldl.yaml&#39;
 doAll(config.ldl)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="/home/yanyul/Documents/research/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
@@ -364,7 +366,7 @@ doAll(config.ldl)</code></pre>
 <h2><span class="header-section-number">2.3</span> Serum triglycerides concentration</h2>
 <pre class="r"><code>config.tg &lt;- &#39;../code/step2/config.wtccc-cad-tg.yaml&#39;
 doAll(config.tg)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="/home/yanyul/Documents/research/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
@@ -378,6 +380,17 @@ doAll(config.tg)</code></pre>
 
 </div>
 </div>
+<div id="leptin" class="section level2">
+<h2><span class="header-section-number">2.4</span> Leptin</h2>
+<pre class="r"><code>config.leptin &lt;- &#39;../code/step2/config.wtccc-cad-leptin.yaml&#39;
+doAll(config.leptin)</code></pre>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/LeptinBMI__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
+<ol style="list-style-type: decimal">
+<li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/LeptinBMI__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
+<li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/LeptinBMI__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
+<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/LeptinBMI__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
+</ol>
+</div>
 </div>
 <div id="crohns-disease" class="section level1">
 <h1><span class="header-section-number">3</span> Crohn’s disease</h1>
@@ -389,7 +402,7 @@ doAll(config.tg)</code></pre>
 <h2><span class="header-section-number">3.2</span> Insulin-like growth factor</h2>
 <pre class="r"><code>config.igf1 &lt;- &#39;../code/step2/config.wtccc-crohn-igf1.yaml&#39;
 doAll(config.igf1)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="/home/yanyul/Documents/research/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/Prins_igf1__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
@@ -400,16 +413,70 @@ doAll(config.igf1)</code></pre>
 <h2><span class="header-section-number">3.3</span> White blood cell count</h2>
 <pre class="r"><code>config.wbc &lt;- &#39;../code/step2/config.wtccc-crohn-wbc.yaml&#39;
 doAll(config.wbc)</code></pre>
-<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="/home/yanyul/Documents/research/repo/phenotype-epistasis/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
+<p>The threhold used for extracting functionally consistent variant is 0.001 <img src="../code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/UKBB_wbc__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
 <li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7775228"><em>rs7775228</em></a> is a tag SNP for HLA DQ2.2 haplotype <a href="https://www.snpedia.com/index.php/Rs7775228">link</a>.</p>
 <p>Interestingly, when adding a sparse prior on the effect size, two SNPs (<a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4379550"><em>rs4379550</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11145756"><em>rs11145756</em></a> are both located in the intronic region of SEC16A. And their interaction terms is negative, indicating that the SNP and intermediate trait act in redundant manner.</p>
 <pre class="r"><code>drawGraph(&#39;+&#39;, &#39;+&#39;, &#39;+&#39;, &#39;-&#39;, &#39;crohn-wbc&#39;)  # gy, gi, yi</code></pre>
 <div class="figure">
 <img src="intergraph.crohn-wbc.png" />
+
+</div>
+</div>
+</div>
+<div id="type-ii-diabetes" class="section level1">
+<h1><span class="header-section-number">4</span> Type II diabetes</h1>
+<div id="fast-glucose" class="section level2">
+<h2><span class="header-section-number">4.1</span> Fast glucose</h2>
+<pre class="r"><code>config.fastglu &lt;- &#39;../code/step2/config.wtccc-t2d-fastglu.yaml&#39;
+doAll(config.fastglu)</code></pre>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/fastGlu__wtccc_t2d__wtccc_ctrl/direction_yi.png" /></p>
+<ol style="list-style-type: decimal">
+<li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/fastGlu__wtccc_t2d__wtccc_ctrl/prs_report.html">here</a></li>
+<li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastGlu__wtccc_t2d__wtccc_ctrl/direction_report.html">here</a></li>
+<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastGlu__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
+</ol>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10509645"><em>rs10509645</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P14735">IDE</a>.</p>
+<p><a href="https://www.snpedia.com/index.php/Rs5015480"><em>rs5015480</em></a> (gene: <a href="http://www.uniprot.org/uniprot/Q03014">HHEX</a>).</p>
+<p>For <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=275775"><em>rs1243150</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=275774"><em>rs1243149</em></a>, the gene is unknown.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7923866"><em>rs7923866</em></a> is also in the vicinity of the HHEX (homeobox, hematopoietically expressed) and IDE (insulin-degrading enzyme) <a href="https://www.nature.com/articles/nature05911">link</a>.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=760233"><em>rs760233</em></a> locates in the intronic region of <a href="https://www.uniprot.org/uniprot/Q6EMB2">TTLL5</a>, which is related to retinal development and has not been reported to be associated with T2D.</p>
+<!--
+
+[*10811661*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10811661) is strongly associated with T2D [link](https://www.snpedia.com/index.php/Rs10811661) which is located at upstream of CDKN2A/B. [This paper](http://diabetes.diabetesjournals.org/content/early/2018/02/05/db17-1055) proposed that *CDKN2A/B locus SNPs may impact T2D risk by modulating islet gene expression and beta
+cell proliferation*.
+
+[*rs2383208*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2383208)  also locates near CDKN2A/2B [link](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0026953). -->
+<p>Overall, all the SNPs mentioned above have the same direction. Namely the protective effect is masked if the fast glucose background level is high.</p>
+<pre class="r"><code>drawGraph(&#39;-&#39;, &#39;-&#39;, &#39;+&#39;, &#39;+&#39;, &#39;t2d-fastglu&#39;)  # gy, gi, yi</code></pre>
+<div class="figure">
+<img src="intergraph.t2d-fastglu.png" />
+
+</div>
+</div>
+<div id="fast-insulin" class="section level2">
+<h2><span class="header-section-number">4.2</span> Fast insulin</h2>
+<pre class="r"><code>config.fastinsulin &lt;- &#39;../code/step2/config.wtccc-t2d-fastinsulin.yaml&#39;
+doAll(config.fastinsulin)</code></pre>
+<p>The threhold used for extracting functionally consistent variant is 0.01 <img src="../code/step2/output-direction_XT_YI/fastInsulin__wtccc_t2d__wtccc_ctrl/direction_yi.png" /></p>
+<ol style="list-style-type: decimal">
+<li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/fastInsulin__wtccc_t2d__wtccc_ctrl/prs_report.html">here</a></li>
+<li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastInsulin__wtccc_t2d__wtccc_ctrl/direction_report.html">here</a></li>
+<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
+</ol>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2155105"><em>rs2155105</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P57729">RAB38</a>. It is associated with albuminuria in T2D.</p>
+<p>rs1996913, rs17606320, rs7544694, rs7543693, rs12173920, rs16895362,rs2049316, rs6864348 have almost no signal in <span class="math inline">\(I \sim G\)</span>.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=3734262"><em>rs3734262</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/Q96T88">UHRF1</a> binding protein 1 (<a href="http://www.uniprot.org/uniprot/Q6BDS2">UHRF1BP1</a>)</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9368834"><em>rs9368834</em></a> locates in the intronic region of <a href="https://www.uniprot.org/uniprot/Q92625">ANKS1A</a>. It has been reported that this gene is associated with T2D in obese individuals.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2139980"><em>rs2139980</em></a>. It direction is not the same as others.</p>
+<p>All SNPs but rs2139980 mentioned has protective effect on T2D and when background fast insulin is high, the protective effects become smaller. For rs2139980, its protective effect becomes even stronger.</p>
+<pre class="r"><code>drawGraph(&#39;-&#39;, &#39;-&#39;, &#39;+&#39;, &#39;+&#39;, &#39;t2d-fastinsulin&#39;)  # gy, gi, yi</code></pre>
+<div class="figure">
+<img src="intergraph.t2d-fastinsulin.png" />
 
 </div>
 </div>
