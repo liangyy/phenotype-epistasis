@@ -93,6 +93,7 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 library(ggplot2)
 library(pander)
 knitr::opts_knit$set(root.dir = '../../')
+panderOptions('knitr.auto.asis', FALSE)
 panderOptions('table.split.table', Inf)
 ```
 
