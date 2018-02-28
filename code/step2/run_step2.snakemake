@@ -91,7 +91,9 @@ output:
 ```{{r setup, echo=FALSE}}
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 library(ggplot2)
+library(pander)
 knitr::opts_knit$set(root.dir = '../../')
+panderOptions('table.split.table', Inf)
 ```
 
 # Read data
@@ -158,6 +160,7 @@ for(i in 1 : length(xtyi.files)) {{
   p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value')
   print(p)
   print(p2)
+  pander(yt.inter)
   cat('\n')
   cat('\n')
 }}
