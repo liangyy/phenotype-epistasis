@@ -161,7 +161,8 @@ for(i in 1 : length(xtyi.files)) {{
   p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value')
   print(p)
   print(p2)
-  pander(yt.inter)
+  cat('\n')
+  pander(yt.inter[order(yt$P, decreasing = F), ])
   cat('\n')
   cat('\n')
 }}
