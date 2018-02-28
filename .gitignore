@@ -1,3 +1,5 @@
 .Rhistory
 debug-mean2dist*
 .snakemake
+.log
+rmd/*png
