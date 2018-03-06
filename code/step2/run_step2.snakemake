@@ -10,18 +10,27 @@
 include: 'direction_XT_YI.snakemake'
 
 # for debug
-def get_functest(config):
-    out = get_ldpred_outputs_ext('output-run_step2/{yt}/interaction.{subset}'.format(yt = config['y'] + '__' + config['x1'] + '__' + config['x2'], subset = 'func_subset'), config['ldpred']['causal-fraction'], '.assoc.logistic')
+def get_subsettest(config, subset):
+    out = get_ldpred_outputs_ext('output-run_step2/{yt}/interaction.{subset}'.format(yt = config['y'] + '__' + config['x1'] + '__' + config['x2'], subset = subset), config['ldpred']['causal-fraction'], '.assoc.logistic')
+    return out
+def plot_subsettest(config, subset):
+    out = 'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'], subset = subset)
     return out
 rule all_funcset:
     input:
         'output-run_step2/{intermediate}__{geno1}__{geno2}/func_subset.set'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'])
 rule all_functest:
     input:
-        get_functest(config)
+        get_subsettest(config, 'func_subset')
+rule all_sigtest:
+    input:
+        get_subsettest(config, 'sig_subset')
 rule all_funcplot:
     input:
-        'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'], subset = 'func_subset')
+        plot_subsettest(config, 'func_subset')
+rule all_sigplot:
+    input:
+        plot_subsettest(config, 'sig_subset')
 # end debug
 
 rule functional_subsetting:
@@ -39,6 +48,23 @@ rule functional_subsetting:
             --ytyi {input.ytyi} \
             --ytxt {input.ytxt} \
             --yixt {input.yixt} \
+            --pval_theshold {params.threshold} \
+            --pattern {params.pattern} \
+            --out {output[0]}'
+
+rule significance_subsetting:
+    input:
+        ytyi = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
+        ytxt = 'output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/xt.assoc.logistic'
+    params:
+        threshold = config['sigificance-subsetting']['pval-theshold'],
+        pattern = config['yi-pattern']
+    output:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/sig_subset.set'
+    shell:
+        'Rscript scripts/significance_subsetting.R \
+            --ytyi {input.ytyi} \
+            --ytxt {input.ytxt} \
             --pval_theshold {params.threshold} \
             --pattern {params.pattern} \
             --out {output[0]}'
@@ -102,7 +128,7 @@ subchunkify <- function(g, fig_asp = 1) {{
   ), collapse = '')
 
   sub_chunk <- paste0("`","``{{r sub_chunk_", floor(runif(1) * 10000), ", fig.asp=", fig_asp, ", echo=FALSE}}",
-  "\\n(", 
+  "\\n(",
     g_deparsed
     , ")()",
   "\\n`","``")
@@ -171,14 +197,16 @@ for(i in 1 : length(xtyi.files)) {{
 
   # create data frame for plot
   df <- rbind(yt.xtyi.xt.mean.std, yt.xtyi.yi.mean.std, prs.sub.mean.std, yt.inter.mean.std)
-  ratio <- max(1, nrow(yt.inter) / 30)
+  ratio <- max(1, nrow(yt.inter) / 40)
   cat
-  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + facet_grid(. ~ Type, scales = 'free_x') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) 
+  p <- ggplot(df) + geom_point(aes(x = SNP, y = Mean)) + geom_errorbar(aes(x = SNP, ymin = Mean - 1.96 * Std, ymax = Mean + 1.96 * Std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + facet_grid(. ~ Type, scales = 'free_x') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1))
   p2 <- ggplot(yt.inter) + geom_bar(aes(x = SNP, y = -log10(P)), stat = 'identity') + coord_flip() + ggtitle('Interaction P-value')
   subchunkify(p, ratio)
   subchunkify(p2, ratio)
   cat('\n')
-  pander(yt.inter[order(yt.inter$P, decreasing = F), ])
+  inter.plus.gwas.pval <- cbind(yt.inter, yt.xtyi.xt$P)
+  colnames(inter.plus.gwas.pval) <- c(colnames(yt.inter), 'GWAS.P')
+  pander(inter.plus.gwas.pval[order(inter.plus.gwas.pval$P, decreasing = F), ])
   cat('\n')
   cat('\n')
 }}

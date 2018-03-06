@@ -16,7 +16,7 @@ option_list = list(
   make_option(c('-a', '--pattern'), type='character',
               help='the pattern used to exact file name identifier from ytyi input 1st column (example: [first_part_to_remove]:[second_part_to_remove])', metavar='character'),
   make_option(c('-o', '--out'), type='character',
-              help='the prefix of output file. Filename = --prefix_[extract-identifier].set', metavar='character')
+              help='the name of output file', metavar='character')
 );
 
 opt_parser = OptionParser(option_list=option_list, usage=help_text);

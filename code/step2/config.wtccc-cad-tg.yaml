@@ -14,3 +14,5 @@ ldpred:
 yi-pattern: 'covar_LDpred_:.txt'
 functional-subsetting:
   pval-theshold: 0.01
+sigificance-subsetting:
+  pval-theshold: 5e-5
