@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,12 +34,10 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
 }
 </script>
 
@@ -309,7 +307,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Results</h1>
-<h4 class="date"><em>28 February, 2018</em></h4>
+<h4 class="date"><em>06 March, 2018</em></h4>
 
 </div>
 
@@ -319,7 +317,7 @@ div.tocify {
 <p>This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait.</p>
 <p>Every subsection presents the following information.</p>
 <ul>
-<li>Comparison between raw <span class="math inline">\(\beta\)</span> and posterior mean of <span class="math inline">\(\beta\)</span> for computing PRS</li>
+<li>Comparison between raw <span class="math inline">\(\beta\)</span> and posterior mean of <span class="math inline">\(\beta\)</span> for computing PRS (This is not available now)</li>
 <li>Marginal association:
 <ul>
 <li><span class="math inline">\(Y \sim I\)</span></li>
@@ -327,7 +325,9 @@ div.tocify {
 <li><span class="math inline">\(Y \sim I + G_i\)</span></li>
 </ul></li>
 <li>Interaction test results based on functional subsetting</li>
-<li>Follow up comment on the results if any</li>
+<li>Follow up comment on the results (functional subsetting) if any</li>
+<li>Interaction test results based on significance subsetting (if run)</li>
+<li>Follow up comment on the results (significance subsetting) if any</li>
 </ul>
 </div>
 <div id="coronary-heart-disease" class="section level1">
@@ -340,8 +340,17 @@ doAll(config.hdl)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.hdl, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
+<pre class="r"><code>listSubset(config.hdl, &#39;sig_subset&#39;)</code></pre>
+</div>
+<div id="sig_subset" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> sig_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
+</div>
 </div>
 <div id="ldl" class="section level2">
 <h2><span class="header-section-number">2.2</span> LDL</h2>
@@ -351,8 +360,11 @@ doAll(config.ldl)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.ldl, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p>This <a href="http://circres.ahajournals.org/content/118/1/83">paper</a> shows the strong genetic correlation between coronary heart disease and LDL and conditional FDR (on LDL; namely incorporating LDL p-value into FDR calculation) of CHD help to identify more signal out of GWAS follow-up study. Also, LDL has been shown to be causal factor of CHD, <a href="http://www.nejm.org.proxy.uchicago.edu/doi/full/10.1056/NEJMoa054013">paper</a>.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=13465"><em>rs13465</em></a> locates in the intronic region of ILF3. Its protective effect is masked by high LDL level.</p>
 <pre class="r"><code>drawGraph(&#39;-&#39;, &#39;-&#39;, &#39;+&#39;, &#39;+&#39;, &#39;cad-ldl&#39;) #</code></pre>
@@ -361,6 +373,12 @@ doAll(config.ldl)</code></pre>
 
 </div>
 <p>Interestingly, this <a href="https://www.spandidos-publications.com/mmr/4/3/511">paper</a> reported that ILF3 (<em>rs2569512</em> was used to tag the gene) affects myocardial infarction risk only when LDL level is low (when LDL level is high, there is no association signal).</p>
+<pre class="r"><code>listSubset(config.ldl, &#39;sig_subset&#39;)</code></pre>
+</div>
+<div id="sig_subset-1" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> sig_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
+</div>
 </div>
 <div id="serum-triglycerides-concentration" class="section level2">
 <h2><span class="header-section-number">2.3</span> Serum triglycerides concentration</h2>
@@ -370,14 +388,23 @@ doAll(config.tg)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.tg, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-2" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p>This paper proposed that triglycerides level is also a causal factor of CHD, <a href="https://www-nature-com.proxy.uchicago.edu/articles/ng.2795">paper</a>.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4541125"><em>rs4541125</em></a> shows most significant interaction (positive: i.e. as <span class="math inline">\(I\)</span> increases, the effect size of <span class="math inline">\(G\)</span> increases). In other word, the protective effect of <span class="math inline">\(G\)</span> goes away when <span class="math inline">\(I\)</span> is high. It locates in the intronic region of PITPNM3, which is reported to be under-presented in the proteomics of Acute Ischemic Strokes patients (<a href="https://pubs.acs.org/doi/full/10.1021/pr501324n?src=recsys">table 3 of the paper</a>). Note that the triglycerides level is high in cases versus controls.</p>
 <pre class="r"><code>drawGraph(&#39;-&#39;, &#39;-&#39;, &#39;+&#39;, &#39;+&#39;, &#39;cad-tg&#39;)  # gy, gi, yi</code></pre>
 <div class="figure">
 <img src="intergraph.cad-tg.png" />
 
+</div>
+<pre class="r"><code>listSubset(config.tg, &#39;sig_subset&#39;)</code></pre>
+</div>
+<div id="sig_subset-2" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> sig_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 </div>
 </div>
 <div id="leptin" class="section level2">
@@ -388,8 +415,12 @@ doAll(config.leptin)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/LeptinBMI__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/LeptinBMI__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/LeptinBMI__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.leptin, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-3" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/LeptinBMI__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
+</div>
 </div>
 </div>
 <div id="crohns-disease" class="section level1">
@@ -406,8 +437,12 @@ doAll(config.igf1)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/Prins_igf1__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/Prins_igf1__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.igf1, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-4" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/Prins_igf1__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
+</div>
 </div>
 <div id="white-blood-cell-count" class="section level2">
 <h2><span class="header-section-number">3.3</span> White blood cell count</h2>
@@ -417,14 +452,23 @@ doAll(config.wbc)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/UKBB_wbc__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.wbc, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-5" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7775228"><em>rs7775228</em></a> is a tag SNP for HLA DQ2.2 haplotype <a href="https://www.snpedia.com/index.php/Rs7775228">link</a>.</p>
 <p>Interestingly, when adding a sparse prior on the effect size, two SNPs (<a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4379550"><em>rs4379550</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11145756"><em>rs11145756</em></a> are both located in the intronic region of SEC16A. And their interaction terms is negative, indicating that the SNP and intermediate trait act in redundant manner.</p>
 <pre class="r"><code>drawGraph(&#39;+&#39;, &#39;+&#39;, &#39;+&#39;, &#39;-&#39;, &#39;crohn-wbc&#39;)  # gy, gi, yi</code></pre>
 <div class="figure">
 <img src="intergraph.crohn-wbc.png" />
 
+</div>
+<pre class="r"><code>listSubset(config.wbc, &#39;sig_subset&#39;)</code></pre>
+</div>
+<div id="sig_subset-3" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> sig_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 </div>
 </div>
 </div>
@@ -438,8 +482,11 @@ doAll(config.fastglu)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/fastGlu__wtccc_t2d__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastGlu__wtccc_t2d__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastGlu__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.fastglu, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-6" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastGlu__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10509645"><em>rs10509645</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P14735">IDE</a>.</p>
 <p><a href="https://www.snpedia.com/index.php/Rs5015480"><em>rs5015480</em></a> (gene: <a href="http://www.uniprot.org/uniprot/Q03014">HHEX</a>).</p>
 <p>For <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=275775"><em>rs1243150</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=275774"><em>rs1243149</em></a>, the gene is unknown.</p>
@@ -457,6 +504,12 @@ cell proliferation*.
 <img src="intergraph.t2d-fastglu.png" />
 
 </div>
+<pre class="r"><code>listSubset(config.fastglu, &#39;sig_subset&#39;)</code></pre>
+</div>
+<div id="sig_subset-4" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> sig_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastGlu__wtccc_t2d__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
+</div>
 </div>
 <div id="fast-insulin" class="section level2">
 <h2><span class="header-section-number">4.2</span> Fast insulin</h2>
@@ -466,8 +519,11 @@ doAll(config.fastinsulin)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/fastInsulin__wtccc_t2d__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastInsulin__wtccc_t2d__wtccc_ctrl/direction_report.html">here</a></li>
-<li>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></li>
 </ol>
+<pre class="r"><code>listSubset(config.fastinsulin, &#39;func_subset&#39;)</code></pre>
+<div id="func_subset-7" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> func_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2155105"><em>rs2155105</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P57729">RAB38</a>. It is associated with albuminuria in T2D.</p>
 <p>rs1996913, rs17606320, rs7544694, rs7543693, rs12173920, rs16895362,rs2049316, rs6864348 have almost no signal in <span class="math inline">\(I \sim G\)</span>.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=3734262"><em>rs3734262</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/Q96T88">UHRF1</a> binding protein 1 (<a href="http://www.uniprot.org/uniprot/Q6BDS2">UHRF1BP1</a>)</p>
@@ -478,6 +534,12 @@ doAll(config.fastinsulin)</code></pre>
 <div class="figure">
 <img src="intergraph.t2d-fastinsulin.png" />
 
+</div>
+<pre class="r"><code>listSubset(config.fastinsulin, &#39;sig_subset&#39;)</code></pre>
+</div>
+<div id="sig_subset-5" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> sig_subset</h3>
+<p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 </div>
 </div>
 </div>

@@ -18,7 +18,11 @@ plotImage <- function(meta) {
 listReports <- function(meta) {
   cat(paste0('1. Comparison of Beta [here](', 'https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/prs_report.html', ')'), '\n')
   cat(paste0('2. Marginal directions [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/direction_report.html)'), '\n')
-  cat(paste0('3. Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/inter_report.func_subset.html)'), '\n')
+}
+listSubset <- function(filename, subset) {
+  meta <- yaml.load_file(filename)
+  cat('###', subset, '\n', '\n')
+  cat(paste0('Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/inter_report.', subset, '.html)'), '\n')
 }
 doAll <- function(filename) {
   meta <- yaml.load_file(filename)
@@ -69,13 +73,15 @@ This page presents the results of analysis that have been done. Every section is
 
 Every subsection presents the following information.
 
-* Comparison between raw $\beta$ and posterior mean of $\beta$ for computing PRS
+* Comparison between raw $\beta$ and posterior mean of $\beta$ for computing PRS (This is not available now)
 * Marginal association:
     - $Y \sim I$
     - $Y \sim G_i$
     - $Y \sim I + G_i$
 * Interaction test results based on functional subsetting
-* Follow up comment on the results if any
+* Follow up comment on the results (functional subsetting) if any
+* Interaction test results based on significance subsetting (if run)
+* Follow up comment on the results (significance subsetting) if any
 
 # Coronary heart disease
 
@@ -84,6 +90,11 @@ Every subsection presents the following information.
 ```{r, results='asis'}
 config.hdl <- '../code/step2/config.wtccc-cad-hdl.yaml'
 doAll(config.hdl)
+listSubset(config.hdl, 'func_subset')
+```
+
+```{r, results='asis'}
+listSubset(config.hdl, 'sig_subset')
 ```
 
 ## LDL
@@ -91,6 +102,7 @@ doAll(config.hdl)
 ```{r, results='asis'}
 config.ldl <- '../code/step2/config.wtccc-cad-ldl.yaml'
 doAll(config.ldl)
+listSubset(config.ldl, 'func_subset')
 ```
 
 This [paper](http://circres.ahajournals.org/content/118/1/83) shows the strong genetic correlation between coronary heart disease and LDL and conditional FDR (on LDL; namely incorporating LDL p-value into FDR calculation) of CHD help to identify more signal out of GWAS follow-up study. Also, LDL has been shown to be causal factor of CHD, [paper](http://www.nejm.org.proxy.uchicago.edu/doi/full/10.1056/NEJMoa054013).
@@ -103,11 +115,31 @@ drawGraph('-', '-', '+', '+', 'cad-ldl') #
 
 Interestingly, this [paper](https://www.spandidos-publications.com/mmr/4/3/511) reported that ILF3 (*rs2569512* was used to tag the gene) affects myocardial infarction risk only when LDL level is low (when LDL level is high, there is no association signal).
 
+```{r, results='asis'}
+listSubset(config.ldl, 'sig_subset')
+```
+
+Here, I list SNPs that have genome-wide significant p-value in GWAS and interaction p-value < 0.1
+
+[*rs564398*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=564398) locates in the intronic region of CDKN2B-AS1 (CDKN2B antisense RNA 1). It is a known CHD locus [link](https://www.ncbi.nlm.nih.gov/gene/100048912). It protective effect goes away when LDL is high but there is no strong correlation between the locus and LDL level.
+
+[*rs7865618*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7865618) also locates in CDKN2B-AS1 (intronic region). It works in the same direction of *rs564398*.
+
+[*rs7049105*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7049105) also locates in CDKN2B-AS1 (intronic region). Its risk goes away when LDL level is high. This direction is also consistent with the previous two loci.
+
+[*rs10965215*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10965215) also locates in CDKN2B-AS1 (intronic region). The direction is the same as *rs7049105*.
+
+[*rs10965219*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7049105) also locates in CDKN2B-AS1 (intronic region). Same direction.
+
+It seems that the effect of CDKN2B-AS1 on CHD is masked by high LDL in general. But no evidence support the interaction between CDKN2B-AS1 and LDL on CHD risk.
+
+
 ## Serum triglycerides concentration
 
 ```{r, results='asis'}
 config.tg <- '../code/step2/config.wtccc-cad-tg.yaml'
 doAll(config.tg)
+listSubset(config.tg, 'func_subset')
 ```
 
 This paper proposed that triglycerides level is also a causal factor of CHD, [paper](https://www-nature-com.proxy.uchicago.edu/articles/ng.2795).
@@ -118,11 +150,16 @@ This paper proposed that triglycerides level is also a causal factor of CHD, [pa
 drawGraph('-', '-', '+', '+', 'cad-tg')  # gy, gi, yi
 ```
 
+```{r, results='asis'}
+listSubset(config.tg, 'sig_subset')
+```
+
 ## Leptin
 
 ```{r, results='asis'}
 config.leptin <- '../code/step2/config.wtccc-cad-leptin.yaml'
 doAll(config.leptin)
+listSubset(config.leptin, 'func_subset')
 ```
 
 # Crohn's disease
@@ -136,6 +173,7 @@ It turns out that the GWAS signal goes away if limiting to loci which occur in W
 ```{r, results='asis'}
 config.igf1 <- '../code/step2/config.wtccc-crohn-igf1.yaml'
 doAll(config.igf1)
+listSubset(config.igf1, 'func_subset')
 ```
 
 ## White blood cell count
@@ -143,6 +181,7 @@ doAll(config.igf1)
 ```{r, results='asis'}
 config.wbc <- '../code/step2/config.wtccc-crohn-wbc.yaml'
 doAll(config.wbc)
+listSubset(config.wbc, 'func_subset')
 ```
 
 [*rs7775228*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7775228) is a tag SNP for HLA DQ2.2 haplotype [link](https://www.snpedia.com/index.php/Rs7775228).
@@ -153,6 +192,10 @@ Interestingly, when adding a sparse prior on the effect size, two SNPs ([*rs4379
 drawGraph('+', '+', '+', '-', 'crohn-wbc')  # gy, gi, yi
 ```
 
+```{r, results='asis'}
+listSubset(config.wbc, 'sig_subset')
+```
+
 # Type II diabetes
 
 ## Fast glucose
@@ -160,6 +203,7 @@ drawGraph('+', '+', '+', '-', 'crohn-wbc')  # gy, gi, yi
 ```{r, results='asis'}
 config.fastglu <- '../code/step2/config.wtccc-t2d-fastglu.yaml'
 doAll(config.fastglu)
+listSubset(config.fastglu, 'func_subset')
 ```
 
 [*rs10509645*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10509645) locates in the intronic region of [IDE](http://www.uniprot.org/uniprot/P14735).
@@ -185,11 +229,16 @@ Overall, all the SNPs mentioned above have the same direction. Namely the protec
 drawGraph('-', '-', '+', '+', 't2d-fastglu')  # gy, gi, yi
 ```
 
+```{r, results='asis'}
+listSubset(config.fastglu, 'sig_subset')
+```
+
 ## Fast insulin
 
 ```{r, results='asis'}
 config.fastinsulin <- '../code/step2/config.wtccc-t2d-fastinsulin.yaml'
 doAll(config.fastinsulin)
+listSubset(config.fastinsulin, 'func_subset')
 ```
 
 [*rs2155105*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2155105) locates in the intronic region of [RAB38](http://www.uniprot.org/uniprot/P57729). It is associated with albuminuria in T2D.
@@ -206,4 +255,8 @@ All SNPs but rs2139980 mentioned has protective effect on T2D and when backgroun
 
 ```{r, results='asis'}
 drawGraph('-', '-', '+', '+', 't2d-fastinsulin')  # gy, gi, yi
+```
+
+```{r, results='asis'}
+listSubset(config.fastinsulin, 'sig_subset')
 ```
