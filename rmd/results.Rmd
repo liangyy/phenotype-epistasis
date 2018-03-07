@@ -6,6 +6,8 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 
 ```{r, echo=FALSE}
 library(yaml)
+library(data.table)
+library(ggplot2)
 reportThre <- function(meta) {
   threshold <- meta$`functional-subsetting`$`pval-theshold`
   cat('The threhold used for extracting functionally consistent variant is', threshold, '\n')
@@ -29,6 +31,26 @@ doAll <- function(filename) {
   reportThre(meta)
   plotImage(meta)
   listReports(meta)
+}
+getR2 <- function(x, ld) {
+  o <- unlist(ld[ld$SNP_A == x[1] & ld$SNP_B == x[2], 'R2'])
+  if(length(o) == 0) return(NA)
+  return(o)
+}
+drawLD <- function(rs.list, filename) {
+  nsnp <- length(rs.list)
+  meta <- yaml.load_file(filename)
+  ld.filename <- paste0('../code/step2/output-run_step2/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/sig_subset.ld')
+  ld <- fread(ld.filename)
+  snp1 <- rep(rs.list, each = nsnp)
+  snp2 <- rep(rs.list, nsnp)
+  ld.df <- data.frame(snp1 = snp1, snp2 = snp2, r2 = -1)
+  temp <- apply(ld.df, 1, getR2, ld = ld)
+  ld.df$r2 <- temp
+  ld.df$snp1 <- factor(ld.df$snp1, levels = rs.list)
+  ld.df$snp2 <- factor(ld.df$snp2, levels = rs.list)
+  p <- ggplot(ld.df) + geom_raster(aes(x = snp1, y = snp2, fill = r2)) + scale_fill_gradient(limits = c(0, 1), low = 'red', high = 'black' ) + ggtitle('LD R2 between selected SNPs') + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  print(p)
 }
 drawGraph <- function(gy, gi, yi, inter, filename='test'){
   tempfilepref <- 'temp-results-plot'
@@ -145,6 +167,10 @@ Here, I list the rest of SNPs that pass interaction p-value < 0.1
 
 [*rs523096*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=523096) is another SNP in the intronic region of CDKN2B-AS1. Direction is the same.
 
+```{r}
+drawLD(c('rs564398', 'rs7865618', 'rs7049105', 'rs10965215', 'rs10965219', 'rs523096', 'rs2398486', 'rs2167512'), config.ldl)
+```
+
 In brief, all directions are (except one with fliped sign)
 
 ```{r, results='asis'}
@@ -247,6 +273,10 @@ This SNP high slightly modest interaction (p-value = 0.1111). [*rs4807569*](http
 
 In summary, both masking and enhancing interactions exist.
 
+```{r}
+drawLD(c('rs2076756', 'rs2066843', 'rs3816769', 'rs1026916', 'rs7211777'), config.wbc)
+```
+
 # Type II diabetes
 
 ## Fast glucose
@@ -294,6 +324,10 @@ drawGraph('-', '-', '+', '-', 't2d-fastglu2')  # gy, gi, yi
 Interestingly, the direction is not the same as before. Namely the protective effect is stronger if fast glucose level is high.
 
 [*rs2930291*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2930291) locates in the intronic region of [CCDC33](http://www.uniprot.org/uniprot/Q8N5R6). Not sure about its function. The protective effect is stronger when fast glucose level is high, which is the same as *rs11075123* but the opposite of the others.
+
+```{r}
+drawLD(c('rs5015480', 'rs7923866'), config.fastglu)
+```
 
 ## Fast insulin
 

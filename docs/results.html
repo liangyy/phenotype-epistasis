@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -307,7 +309,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Results</h1>
-<h4 class="date"><em>06 March, 2018</em></h4>
+<h4 class="date"><em>07 March, 2018</em></h4>
 
 </div>
 
@@ -391,6 +393,8 @@ doAll(config.ldl)</code></pre>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512"><em>rs2167512</em></a> also locates in the intronic region of TMEM132D. Direction is the same.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2838756"><em>rs2838756</em></a> locates in intergenic region. The direction is still the same.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=523096"><em>rs523096</em></a> is another SNP in the intronic region of CDKN2B-AS1. Direction is the same.</p>
+<pre class="r"><code>drawLD(c(&#39;rs564398&#39;, &#39;rs7865618&#39;, &#39;rs7049105&#39;, &#39;rs10965215&#39;, &#39;rs10965219&#39;, &#39;rs523096&#39;, &#39;rs2398486&#39;, &#39;rs2167512&#39;), config.ldl)</code></pre>
+<p><img src="results_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>In brief, all directions are (except one with fliped sign)</p>
 <pre class="r"><code>drawGraph(&#39;-&#39;, &#39;no&#39;, &#39;+&#39;, &#39;+&#39;, &#39;cad-ldl2&#39;)  # gy, gi, yi</code></pre>
 <div class="figure">
@@ -425,7 +429,7 @@ doAll(config.tg)</code></pre>
 <h3><span class="header-section-number">2.3.2</span> sig_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 <p>No genome-wide significant SNP get interaction p-value smaller than 0.1. Here I list the ones with interaction p-value less than 0.1</p>
-<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512"><em>rs2167512</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2398486"><em>rs2398486</em></a> is the same as what we find in LDL. Same direstion as before and here this SNP has a weak posterior effect on triglyceride level (negative). The direction is also the same. Namely, the protective effect (possibly through triglyceride level) is masked by high TG.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512"><em>rs2167512</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2398486"><em>rs2398486</em></a> is the same as what we find in LDL. Same direction as before and here this SNP has a weak posterior effect on triglyceride level (negative). The direction is also the same. Namely, the protective effect (possibly through triglyceride level) is masked by high TG.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512"><em>rs7250581</em></a> is also found in LDL. Same direction.</p>
 <pre class="r"><code>drawGraph(&#39;-&#39;, &#39;no(-)&#39;, &#39;+&#39;, &#39;+&#39;, &#39;cad-tg2&#39;)  # gy, gi, yi</code></pre>
 <div class="figure">
@@ -496,6 +500,20 @@ doAll(config.wbc)</code></pre>
 <div id="sig_subset-3" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> sig_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
+<p>There are four SNPs that hit genome-wide significance with interaction p-value &lt; 0.102. I list them first.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2076756"><em>rs2076756</em></a> locates in the intronic region of <a href="https://en.wikipedia.org/wiki/NOD2">NOD2</a> which is an IBD gene. Its risk effect goes away when the WBC is high. It has slightly positive effect on WBC, which indicate that its effect on CD does not through WBC.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=16869934"><em>rs16869934</em></a> locates in intergenic region. The corresponding gene is unclear. The protective effect goes away when the WBC is high.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10512734"><em>rs10512734</em></a> is in intergenic region. The corresponding gene is unknown. Its protective effect goes away when WBC is high.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2066843"><em>rs2066843</em></a> locates in NOD2 (synonymous). It acts the same way as <em>rs2076756</em>.</p>
+<p>The following list the rest of SNPs with interaction p-value &lt; 0.1</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=3816769"><em>rs3816769</em></a> locates in the intronic region of <a href="https://www.uniprot.org/uniprot/P40763">STAT3</a> is <em>signal transducer and transcription activator that mediates cellular responses to interleukins, KITLG/SCF, LEP and other growth factors</em>. Interestingly, its protective effect becomes stronger when WBC is high.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=1026916"><em>rs1026916</em></a>, <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7211777"><em>rs7211777</em></a> also locate in intronic region of STAT3. And they act the same direction as <em>rs3816769</em>.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=8111071"><em>rs8111071</em></a> locates in the intronic region of <a href="https://www.ncbi.nlm.nih.gov/gene/81492">RSPH6A</a>. Its risk is enhanced when WBC is high.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9469615"><em>rs9469615</em></a> locates in intergenic region. The gene is unclear. The interaction enhance the effect.</p>
+<p>This SNP high slightly modest interaction (p-value = 0.1111). <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4807569"><em>rs4807569</em></a> locates in intronic region of SBNO2. Its effect is also got enhanced. Note that it also has a strong positive effect on WBC.</p>
+<p>In summary, both masking and enhancing interactions exist.</p>
+<pre class="r"><code>drawLD(c(&#39;rs2076756&#39;, &#39;rs2066843&#39;, &#39;rs3816769&#39;, &#39;rs1026916&#39;, &#39;rs7211777&#39;), config.wbc)</code></pre>
+<p><img src="results_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 </div>
 </div>
@@ -545,6 +563,8 @@ cell proliferation*.
 </div>
 <p>Interestingly, the direction is not the same as before. Namely the protective effect is stronger if fast glucose level is high.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2930291"><em>rs2930291</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/Q8N5R6">CCDC33</a>. Not sure about its function. The protective effect is stronger when fast glucose level is high, which is the same as <em>rs11075123</em> but the opposite of the others.</p>
+<pre class="r"><code>drawLD(c(&#39;rs5015480&#39;, &#39;rs7923866&#39;), config.fastglu)</code></pre>
+<p><img src="results_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 </div>
 <div id="fast-insulin" class="section level2">
