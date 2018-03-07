@@ -133,6 +133,23 @@ Here, I list SNPs that have genome-wide significant p-value in GWAS and interact
 
 It seems that the effect of CDKN2B-AS1 on CHD is masked by high LDL in general. But no evidence support the interaction between CDKN2B-AS1 and LDL on CHD risk.
 
+Here, I list the rest of SNPs that pass interaction p-value < 0.1
+
+[*rs7250581*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7250581) is in intergenic region but it has been confirmed in many studies across multiple populations. Also, the protective effect of the loci goes away when LDL is high.
+
+[*rs2398486*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2398486) locates in the intronic region of [TMEM132D](http://www.uniprot.org/uniprot/Q14C87). It may not be the target gene. The direction is also the same.
+
+[*rs2167512*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512) also locates in the intronic region of TMEM132D. Direction is the same.
+
+[*rs2838756*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2838756) locates in intergenic region. The direction is still the same.
+
+[*rs523096*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=523096) is another SNP in the intronic region of CDKN2B-AS1. Direction is the same.
+
+In brief, all directions are (except one with fliped sign)
+
+```{r, results='asis'}
+drawGraph('-', 'no', '+', '+', 'cad-ldl2')  # gy, gi, yi
+```
 
 ## Serum triglycerides concentration
 
@@ -152,6 +169,16 @@ drawGraph('-', '-', '+', '+', 'cad-tg')  # gy, gi, yi
 
 ```{r, results='asis'}
 listSubset(config.tg, 'sig_subset')
+```
+
+No genome-wide significant SNP get interaction p-value smaller than 0.1. Here I list the ones with interaction p-value less than 0.1
+
+[*rs2167512*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512) and [*rs2398486*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2398486) is the same as what we find in LDL. Same direction as before and here this SNP has a weak posterior effect on triglyceride level (negative). The direction is also the same. Namely, the protective effect (possibly through triglyceride level) is masked by high TG.
+
+[*rs7250581*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512) is also found in LDL. Same direction.
+
+```{r, results='asis'}
+drawGraph('-', 'no(-)', '+', '+', 'cad-tg2')  # gy, gi, yi
 ```
 
 ## Leptin
@@ -196,6 +223,30 @@ drawGraph('+', '+', '+', '-', 'crohn-wbc')  # gy, gi, yi
 listSubset(config.wbc, 'sig_subset')
 ```
 
+There are four SNPs that hit genome-wide significance with interaction p-value < 0.102. I list them first.
+
+[*rs2076756*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2076756) locates in the intronic region of [NOD2](https://en.wikipedia.org/wiki/NOD2) which is an IBD gene. Its risk effect goes away when the WBC is high. It has slightly positive effect on WBC, which indicate that its effect on CD does not through WBC.
+
+[*rs16869934*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=16869934) locates in intergenic region. The corresponding gene is unclear. The protective effect goes away when the WBC is high.
+
+[*rs10512734*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10512734) is in intergenic region. The corresponding gene is unknown. Its protective effect goes away when WBC is high.
+
+[*rs2066843*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2066843) locates in NOD2 (synonymous). It acts the same way as *rs2076756*.
+
+The following list the rest of SNPs with interaction p-value < 0.1
+
+[*rs3816769*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=3816769) locates in the intronic region of [STAT3](https://www.uniprot.org/uniprot/P40763) is *signal transducer and transcription activator that mediates cellular responses to interleukins, KITLG/SCF, LEP and other growth factors*. Interestingly, its protective effect becomes stronger when WBC is high.
+
+[*rs1026916*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=1026916), [*rs7211777*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7211777) also locate in intronic region of STAT3. And they act the same direction as *rs3816769*.
+
+[*rs8111071*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=8111071) locates in the intronic region of [RSPH6A](https://www.ncbi.nlm.nih.gov/gene/81492). Its risk is enhanced when WBC is high.
+
+[*rs9469615*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9469615) locates in intergenic region. The gene is unclear. The interaction enhance the effect.
+
+This SNP high slightly modest interaction (p-value = 0.1111). [*rs4807569*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4807569) locates in intronic region of SBNO2. Its effect is also got enhanced. Note that it also has a strong positive effect on  WBC.
+
+In summary, both masking and enhancing interactions exist.
+
 # Type II diabetes
 
 ## Fast glucose
@@ -233,6 +284,17 @@ drawGraph('-', '-', '+', '+', 't2d-fastglu')  # gy, gi, yi
 listSubset(config.fastglu, 'sig_subset')
 ```
 
+*rs5015480* and *rs7923866* have been shown in `func_subset` analysis and they locate in intergenic region. They are near HHEX and IDE. This region has been confirmed by multiple studies.
+
+[*rs11075123*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=11075123) locates in intergenic region. The directions are
+```{r, results='asis'}
+drawGraph('-', '-', '+', '-', 't2d-fastglu2')  # gy, gi, yi
+```
+
+Interestingly, the direction is not the same as before. Namely the protective effect is stronger if fast glucose level is high.
+
+[*rs2930291*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2930291) locates in the intronic region of [CCDC33](http://www.uniprot.org/uniprot/Q8N5R6). Not sure about its function. The protective effect is stronger when fast glucose level is high, which is the same as *rs11075123* but the opposite of the others.
+
 ## Fast insulin
 
 ```{r, results='asis'}
@@ -259,4 +321,20 @@ drawGraph('-', '-', '+', '+', 't2d-fastinsulin')  # gy, gi, yi
 
 ```{r, results='asis'}
 listSubset(config.fastinsulin, 'sig_subset')
+```
+
+No genomve-wide significant hits.
+
+[*rs8012854*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=8012854) locates in LOC105370657 upstream 2kb. Unsure function. Its protective effect goes away when fast insulin is high.
+
+[*rs440646*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=440646) locates in the intronic region of [HRH1](https://www.uniprot.org/uniprot/P35367). *Chemical genetic identification of the histamine H1 receptor as a stimulator of insulin-induced adipogenesis.* [link](https://www.wikigenes.org/e/ref/e/15271349.html). Its risk goes up when fast insulin is high.
+
+*rs11075123* also shows up in `sig_subset` analysis. Here its protective effect becomes stronger when fast insulin is high, which is the same as previous result.
+
+[*rs7961581*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7961581) is in intergenic region. Nearest genes are [TSPAN8](http://www.uniprot.org/uniprot/P19075), [LGR5](http://www.uniprot.org/uniprot/O75473). The risk is higher when the fast insulin is high.
+
+Overall, the effect is always boosted when fast insulin is high but *rs8012854* does not follow it (its effect is masked by high fast insulin).
+
+```{r, results='asis'}
+drawGraph('-/+', 'no', '+', '-/+', 't2d-fastinsulin2')  # gy, gi, yi
 ```
