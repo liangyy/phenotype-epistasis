@@ -41,4 +41,4 @@ for(i in 1 : nrow(ytyi)) {
   cat(paste0(c(yi.name, ytxt[sig.ind, 'SNP'], 'END\n\n'), collapse = '\n'), file=opt$out, append = TRUE)
   snps <- c(snps, ytxt[sig.ind, 'SNP'])
 }
-cat(paste0(unique(snps), '\n'), collapse = '\n'), file=opt$out_combined, append = TRUE)
+cat(paste0(c(unique(snps), '\n'), collapse = '\n'), file=opt$out_combined, append = TRUE)
