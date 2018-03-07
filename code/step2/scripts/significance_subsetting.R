@@ -26,6 +26,7 @@ source('scripts/myRLib.R')
 # read input
 ytxt <- read.table(opt$ytxt, header = T)
 ytyi <- read.table(opt$ytyi, header = T)
+ytxt$SNP <- as.character(ytxt$SNP)
 sig.ind <- ytxt$P <= opt$pval_theshold
 
 # get all yi's
