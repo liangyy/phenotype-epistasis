@@ -27,14 +27,14 @@ rule all_functest:
         get_subsettest(config, 'func_subset')
 rule all_sigtest:
     input:
-        get_subsettest(config, 'sig_subset'),
-        get_subsetld(config.'sig_subset')
+        get_subsettest(config, 'sig_subset')
 rule all_funcplot:
     input:
         plot_subsettest(config, 'func_subset')
 rule all_sigplot:
     input:
-        plot_subsettest(config, 'sig_subset')
+        plot_subsettest(config, 'sig_subset'),
+        get_subsetld(config.'sig_subset')
 # end debug
 
 rule functional_subsetting:
