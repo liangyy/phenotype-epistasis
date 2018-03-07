@@ -13,6 +13,9 @@ include: 'direction_XT_YI.snakemake'
 def get_subsettest(config, subset):
     out = get_ldpred_outputs_ext('output-run_step2/{yt}/interaction.{subset}'.format(yt = config['y'] + '__' + config['x1'] + '__' + config['x2'], subset = subset), config['ldpred']['causal-fraction'], '.assoc.logistic')
     return out
+def get_subsetld(config, subset):
+    out = get_ldpred_outputs_ext('output-run_step2/{yt}/{subset}.ld'.format(yt = config['y'] + '__' + config['x1'] + '__' + config['x2'], subset = subset), config['ldpred']['causal-fraction'], '.assoc.logistic')
+    return out
 def plot_subsettest(config, subset):
     out = 'output-run_step2/{intermediate}__{geno1}__{geno2}/inter_report.{subset}.html'.format(intermediate = config['y'], geno1 = config['x1'], geno2 = config['x2'], subset = subset)
     return out
@@ -24,7 +27,8 @@ rule all_functest:
         get_subsettest(config, 'func_subset')
 rule all_sigtest:
     input:
-        get_subsettest(config, 'sig_subset')
+        get_subsettest(config, 'sig_subset'),
+        get_subsetld(config.'sig_subset')
 rule all_funcplot:
     input:
         plot_subsettest(config, 'func_subset')
