@@ -60,14 +60,16 @@ rule significance_subsetting:
         threshold = config['sigificance-subsetting']['pval-theshold'],
         pattern = config['yi-pattern']
     output:
-        'output-run_step2/{intermediate}__{geno1}__{geno2}/sig_subset.set'
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/sig_subset.set',
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/sig_subset.set_combined'
     shell:
         'Rscript scripts/significance_subsetting.R \
             --ytyi {input.ytyi} \
             --ytxt {input.ytxt} \
             --pval_theshold {params.threshold} \
             --pattern {params.pattern} \
-            --out {output[0]}'
+            --out {output[0]} \
+            --out_combined {output[1]}'
 
 rule test_interaction_by_set:
     input:
@@ -225,3 +227,17 @@ rule report_top_interaction_html:
         '''
         R -e "rmarkdown::render('{input[0]}')"
         '''
+
+rule compute_ld:
+    input:
+        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bed',
+        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
+        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.fam',
+        snps = 'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}.set'
+    output:
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}.ld'
+    params:
+        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config),
+        'output-run_step2/{intermediate}__{geno1}__{geno2}/{subset}'
+    shell:
+        'plink --noweb --bfile {params[0]} --r2 --ld-snp-list {input.snps} --out {params[1]}'

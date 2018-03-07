@@ -14,7 +14,9 @@ option_list = list(
   make_option(c('-a', '--pattern'), type='character',
               help='the pattern used to exact file name identifier from ytyi input 1st column (example: [first_part_to_remove]:[second_part_to_remove])', metavar='character'),
   make_option(c('-o', '--out'), type='character',
-              help='the name of output file', metavar='character')
+              help='the name of output file', metavar='character'),
+  make_option(c('-c', '--out_combined'), type='character',
+              help='the name of output file (combining all SNPs)', metavar='character')
 );
 
 opt_parser = OptionParser(option_list=option_list, usage=help_text);
@@ -30,10 +32,12 @@ sig.ind <- ytxt$P <= opt$pval_theshold
 
 # get all yi's
 yi <- trimString(ytyi[, 1], opt$pattern)
-
+snps <- c()
 for(i in 1 : nrow(ytyi)) {
   # set name
   yi.name <- yi[i]
   # write to file
   cat(paste0(c(yi.name, ytxt[sig.ind, 'SNP'], 'END\n\n'), collapse = '\n'), file=opt$out, append = TRUE)
+  snps <- c(snps, ytxt[sig.ind, 'SNP'])
 }
+cat(paste0(unique(snps), '\n'), collapse = '\n'), file=opt$out_combined, append = TRUE)
