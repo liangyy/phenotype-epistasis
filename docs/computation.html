@@ -309,13 +309,13 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Computation</h1>
-<h4 class="date"><em>07 March, 2018</em></h4>
+<h4 class="date"><em>12 March, 2018</em></h4>
 
 </div>
 
 
 <p><span class="math display">\[
-\newcommand\logit{\text{logit}}  
+\newcommand\logit{\text{logit}}
 \]</span></p>
 <div id="computing-intermediate-phenotype" class="section level1">
 <h1><span class="header-section-number">1</span> Computing intermediate phenotype</h1>
@@ -340,7 +340,7 @@ div.tocify {
 <h2><span class="header-section-number">2.1</span> Rationale</h2>
 The epistasis between genetic background and the given locus is defined as the situation where the contribution of genotype (<span class="math inline">\(G_i\)</span>) to liability depends not only on the genotype itself but also on the genetic background which is measured by the genetic component of the selected intermediate phenotype (<span class="math inline">\(I\)</span>). In particular, the following model is used
 <span class="math display">\[\begin{align*}
-  \logit(\Pr(Y = 1|G_i, I, \alpha, \beta, \gamma)) &amp;= \alpha + \mathbf{p}(I)^T \cdot G_i + \gamma I 
+  \logit(\Pr(Y = 1|G_i, I, \alpha, \beta, \gamma)) &amp;= \alpha + \mathbf{p}(I)^T \cdot G_i + \gamma I
 \end{align*}\]</span>
 <p>, where <span class="math inline">\(\mathbf{p}: I \rightarrow \beta\)</span> which takes <span class="math inline">\(I\)</span> and maps to the effect size in terms of the contribution to log odds ratio. Note that the representation of <span class="math inline">\(G_i\)</span> can be vector or loading depends on how the genetics is specified (see <a href="#scenarios">here</a>). <span class="math inline">\(\gamma\)</span> is the contribution of <span class="math inline">\(I\)</span> to liability which should be universal across all genotypes and all loci. <span class="math inline">\(\alpha\)</span> is the baseline liability of the trait which should also be share across loci.</p>
 </div>
@@ -353,7 +353,7 @@ The epistasis between genetic background and the given locus is defined as the s
 G_i &amp;= \begin{cases}
   0 &amp; \text{, if genotype is AA} \\
   1 &amp; \text{, if genotype is Aa} \\
-  2 &amp; \text{, if genotype is aa} 
+  2 &amp; \text{, if genotype is aa}
 \end{cases}
   \end{align*}\]</span>
 , and the contribution of liability is <span class="math inline">\(p(I) G_i\)</span>, specifically <span class="math inline">\(p(I)\)</span> is the baseline contribution function (the non-risk allele contribution).</li>
@@ -386,7 +386,7 @@ G_i &amp;= \begin{cases}
 <h2><span class="header-section-number">2.3</span> Interpretation under linear model</h2>
 We focus on the following model
 <span class="math display">\[\begin{align*}
-  \logit(\Pr(Y = 1 | G_i, I)) &amp;= \alpha + \beta_1 G_i + \beta_2 I + \gamma I G_i 
+  \logit(\Pr(Y = 1 | G_i, I)) &amp;= \alpha + \beta_1 G_i + \beta_2 I + \gamma I G_i
 \end{align*}\]</span>
 <p>Then, <span class="math inline">\(p(I) = \beta_1 + \gamma I\)</span> in this case.</p>
 </div>
@@ -437,6 +437,20 @@ We focus on the following model
 </table>
 <p>The hypothesis is that if <span class="math inline">\(G_i\)</span> acts on <span class="math inline">\(Y\)</span> via <span class="math inline">\(I\)</span>, there might be epistatic effect between <span class="math inline">\(I\)</span> and <span class="math inline">\(G_i\)</span>. Namely, the effect of <span class="math inline">\(G_i\)</span> depends on the background level of <span class="math inline">\(I\)</span>.</p>
 </div>
+<div id="top-gwas-hits" class="section level2">
+<h2><span class="header-section-number">2.5</span> Top GWAS hits</h2>
+<p>To see whether top GWAS hits effect is modified by intermediate trait</p>
+</div>
+</div>
+<div id="gene-based-analysis" class="section level1">
+<h1><span class="header-section-number">3</span> Gene-based analysis</h1>
+<p>From the interaction test performed above, we obtain a set of SNPs that interact with intermediate trait. Some of the SNPs locate in risk gene so that it is likely that the target gene is the nearest risk gene. So, the idea of this section is to test whether the gene risk interacts with intermediate trait. Conceptually, gene expression level is also an intermediate trait but its genetic architecture is kind of specially comparing to complex trait.</p>
+<p>In brief, we want to test <span class="math inline">\(Y \sim I + E + I \times E\)</span>. Intuitively, it aggregates signal across many cis-eQTLs of the gene and potentially contains the one we identified in <span class="math inline">\(G\)</span>-<span class="math inline">\(I\)</span> interaction in previous section. So, the test is to see if the locus and nearby ones interacts to <span class="math inline">\(I\)</span> in consistent direction. Note that the negative result may imply</p>
+<ol style="list-style-type: decimal">
+<li>Wrong target gene</li>
+<li>Not act through gene expression</li>
+<li>Etc</li>
+</ol>
 </div>
 
 

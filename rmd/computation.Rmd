@@ -5,18 +5,18 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
 $$
-\newcommand\logit{\text{logit}}  
+\newcommand\logit{\text{logit}}
 $$
 
 # Computing intermediate phenotype
 
-The predicted complex trait risk by GWAS summary statistic is used as intermediate genetic trait. LD pruning + p-value thresholding (P+T) is widely used but suffer from lack of effective SNPs. 
+The predicted complex trait risk by GWAS summary statistic is used as intermediate genetic trait. LD pruning + p-value thresholding (P+T) is widely used but suffer from lack of effective SNPs.
 
 ## P+T
 
 LD pruning ($r^2$ < 0.2) followed by p-value thresholding with various threholds optimized by validation prediction accurarcy ($R^2$). One implementation can be found at [PRSice](http://prsice.info/)
 
-## LDpred 
+## LDpred
 
 Consider LD effect in each block ($\sim M / 3000$) with various prior fraction of causal variants optimized by validation accuracy. One implementation can be found at [here](https://github.com/bvilhjal/ldpred) (also see [paper](http://linkinghub.elsevier.com/retrieve/pii/S0002-9297(15)00365-1))
 
@@ -32,7 +32,7 @@ The difficulty is that we don't have validation data sets to determine the hyper
 
 The epistasis between genetic background and the given locus is defined as the situation where the contribution of genotype ($G_i$) to liability depends not only on the genotype itself but also on the genetic background which is measured by the genetic component of the selected intermediate phenotype ($I$). In particular, the following model is used
 \begin{align*}
-  \logit(\Pr(Y = 1|G_i, I, \alpha, \beta, \gamma)) &= \alpha + \mathbf{p}(I)^T \cdot G_i + \gamma I 
+  \logit(\Pr(Y = 1|G_i, I, \alpha, \beta, \gamma)) &= \alpha + \mathbf{p}(I)^T \cdot G_i + \gamma I
 \end{align*}
 , where $\mathbf{p}: I \rightarrow \beta$ which takes $I$ and maps to the effect size in terms of the contribution to log odds ratio. Note that the representation of $G_i$ can be vector or loading depends on how the genetics is specified (see [here](#scenarios)). $\gamma$ is the contribution of $I$ to liability which should be universal across all genotypes and all loci. $\alpha$ is the baseline liability of the trait which should also be share across loci.
 
@@ -40,16 +40,16 @@ The epistasis between genetic background and the given locus is defined as the s
 
 The following four scenarios are considered (suppose a is risk allele):
 
-1. additive effect: 
+1. additive effect:
   \begin{align*}
     G_i &= \begin{cases}
       0 & \text{, if genotype is AA} \\
       1 & \text{, if genotype is Aa} \\
-      2 & \text{, if genotype is aa} 
+      2 & \text{, if genotype is aa}
     \end{cases}
   \end{align*}
   , and the contribution of liability is $p(I) G_i$, specifically $p(I)$ is the baseline contribution function (the non-risk allele contribution).
-2. dominant(recessive) effect: 
+2. dominant(recessive) effect:
   \begin{align*}
     G_i &= \begin{cases}
       1 & \text{, if genotype is aa or Aa (aa)} \\
@@ -80,9 +80,9 @@ Note that the effect size is respective to the reference allele (non-risk allele
 
 We focus on the following model
 \begin{align*}
-  \logit(\Pr(Y = 1 | G_i, I)) &= \alpha + \beta_1 G_i + \beta_2 I + \gamma I G_i 
+  \logit(\Pr(Y = 1 | G_i, I)) &= \alpha + \beta_1 G_i + \beta_2 I + \gamma I G_i
 \end{align*}
-Then, $p(I) = \beta_1 + \gamma I$ in this case. 
+Then, $p(I) = \beta_1 + \gamma I$ in this case.
 
 ## Functionally consistent SNP set
 
@@ -99,4 +99,20 @@ row.names(scenarios) <- paste0('case', 1 : 4, sep = ' ')
 pander(scenarios)
 ```
 
-The hypothesis is that if $G_i$ acts on $Y$ via $I$, there might be epistatic effect between $I$ and $G_i$. Namely, the effect of $G_i$ depends on the background level of $I$.  
+The hypothesis is that if $G_i$ acts on $Y$ via $I$, there might be epistatic effect between $I$ and $G_i$. Namely, the effect of $G_i$ depends on the background level of $I$.
+
+## Top GWAS hits
+
+To see whether top GWAS hits effect is modified by intermediate trait
+
+# Gene-based analysis
+
+From the interaction test performed above, we obtain a set of SNPs that interact with intermediate trait. Some of the SNPs locate in risk gene so that it is likely that the target gene is the nearest risk gene. So, the idea of this section is to test whether the gene risk interacts with intermediate trait. Conceptually, gene expression level is also an intermediate trait but its genetic architecture is kind of specially comparing to complex trait.
+
+In brief, we want to test $Y \sim I + E + I \times E$. Intuitively, it aggregates signal across many cis-eQTLs of the gene and potentially contains the one we identified in $G$-$I$ interaction in previous section. So, the test is to see if the locus and nearby ones interacts to $I$ in consistent direction. Note that the negative result may imply
+
+1. Wrong target gene
+2. Not act through gene expression
+3. Etc
+
+ 

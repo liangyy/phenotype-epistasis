@@ -38,6 +38,10 @@ Methods available:
 
 Hypothesis testing under linear model.
 
+## Gene-based analysis
+
+The idea is the test whether predicted intermediate trait interacts with predicted gene expression level.
+
 # Implementation
 
 Go to [implementation](implementation.html) for details.
