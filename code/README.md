@@ -118,3 +118,13 @@ $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --r
 ```
 
 ## Step 3: Gene-based analysis
+
+```
+# prepare genotype file for predixcan
+
+## convert plink format into dosage
+$ plink --bfile plink.[chr] --recordA --out recordA.[chr]
+
+## filter out ambiguous loci and format it into predixcan input
+$ python
+```
