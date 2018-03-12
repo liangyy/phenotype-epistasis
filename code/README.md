@@ -119,12 +119,45 @@ $ plink --bfile merged_data_QC --logistic --covar [ldpred.prs] --interaction --r
 
 ## Step 3: Gene-based analysis
 
+### Prepare PrediXcan input and make the prediction
+
 ```
+# prepare gene list
+# convert human readable gene name to ENSGXXX used in GENCODE and predixcan
+$ python convert_gene_to_ensg.py --genes GENE1,GENE2 --gencode [provide_a_gencode_to_do_the_mapping] --output [name.genelist]
+
 # prepare genotype file for predixcan
+# note that the proper merge_QC file should be used (determined by which disease will be tested on)
+## calculate MAF
+$ plink --bfile merge_QC --freq --out predixcan_freq
 
 ## convert plink format into dosage
-$ plink --bfile plink.[chr] --recordA --out recordA.[chr]
+$ plink --bfile merge_QC --recordA --out predixcan_recodeA
 
 ## filter out ambiguous loci and format it into predixcan input
-$ python
+$ python prepare_predixcan_input.py \
+--input_raw predixcan_recodeA.raw \
+--input_freq predixcan_freq.frq \
+--output_prefix [dosage_dir]/chr \
+--output_sample samples.txt
+
+## run predixcan
+python /project2/hgen47100/Lab6_materials/softwares/PrediXcan/Software/PrediXcan.py \
+--predict \
+--dosages [dosage_dir]/ \
+--dosages_prefix chr \
+--samples samples.txt \
+--weights [weight_file.db]  # downloaded from predixcan website, for example gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db \
+--genelist
+--output_prefix [out_dir]/[name.predixcan]
+```
+
+### Perform test on given gene-intermediate trait pair
+
+```
+# construct the rmarkdown file for a given E-I pair on disease Y
+$ snakemake [some_module] [e_i.Rmd]
+
+# compile the rmarkdown
+$ R -e "rmarkdown::render('[e_i.Rmd]')"
 ```

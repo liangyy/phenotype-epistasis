@@ -1,0 +1,19 @@
+# this module convert gene name to ENSGXXXX for PrediXcan
+
+# for test
+rule all_test:
+    input:
+        'output-prepare_gene_id/{gene}.genelist'.format(gene = config['g'])
+# end test
+
+rule convert_gene_to_ensg:
+    input:
+        config['gencode_annotation']
+    params:
+        lambda wildcards: config[wildcards.gene]
+    output:
+        'output-prepare_gene_id/{gene}.genelist'
+    shell:
+        'python scripts/convert_gene_to_ensg.py \
+            --genes {params[0]} \
+            --gencode {input[0]} > --output {output[0]}'

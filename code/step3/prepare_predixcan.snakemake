@@ -1,0 +1,76 @@
+# this module prepare the input file for PrediXcan
+
+## for debug
+rule all_test:
+    input:
+        get_all_chr_predixcan(config).format(genotype = config['x1'] + '__' + config['x2'])
+
+def get_format(replace_str, config):
+    string = config[replace_str]['name-format'].format(replace = replace_str)
+    return string
+
+def get_all_chr_predixcan(config):
+    out = []
+    nchr_info = config['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        out.append('output-prepare_predixcan/{{genotype}}/{chr}.{ext}'.format(chr = nchr_name + str(i), ext = 'dosage.txt.gz'))
+    return out
+
+rule obtain_maf:
+    input:
+        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bed',
+        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
+        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.fam'
+    params:
+        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config),
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq'
+    output:
+        temp('output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq.temp')
+    shell:
+        'plink --noweb --bfile {params[0]} --freq --out {params[1]}'
+
+rule post_process_maf:
+    input:
+        frq = 'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq.temp',
+        bim = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim'
+    output:
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq'
+    shell:
+        '''
+        awk 'FNR==NR{a[$2]=$3;next}{a["SNP"]="POS"}{ print $0, a[$2]}' {input.bim} {input.frq} > {output[0]}
+        '''
+
+rule recode_plink:
+    input:
+        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bed',
+        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
+        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.fam'
+    params:
+        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config),
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_recodeA'
+    output:
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_recodeA.raw'
+    shell:
+        'plink --noweb --bfile {params[0]} --recodeA --out {params[1]}'
+
+rule prepare_predixcan_input:
+    input:
+        raw = 'output-prepare_predixcan/{genotype}/predixcan_recodeA.raw',
+        freq = 'output-prepare_predixcan/{genotype}/predixcan_freq.frq'
+    params:
+        out_prefix = 'output-prepare_predixcan/{genotype}/chr',
+        out_suffix = 'dosage.txt.gz'
+    output:
+        dosages = get_all_chr_predixcan(config),
+        sample = 'output-prepare_predixcan/{genotype}/samples.txt'
+    shell:
+        'python scripts/prepare_predixcan_input.py \
+        --input_raw {input.raw} \
+        --input_freq {input.freq} \
+        --output_prefix {params.out_prefix} \
+        --output_suffix {params.out_suffix} \
+        --output_sample {output.sample}'

@@ -1,0 +1,17 @@
+x1: 'geno1_case'
+x2: 'geno2_ctrl'
+y: 'intermediate1'
+g: 'gene1'
+tissue-type: 'tissue1'
+
+geno1_case__geno2_ctrl:
+  name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
+intermediate1__geno1_case__geno2_ctrl:
+  name-format: '../step1/output-run_step1/{replace}/ldpred.{chr}_LDpred_p'
+gene1: 'STAT3,NOD2'
+tissue1:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Artery_Coronary/gtex_v7_Artery_Coronary_imputed_europeans_tw_0.5_signif.db'
+
+# other parameters
+gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v12.annotation.gtf.gz'
+chr-list: 'chr,1:22'

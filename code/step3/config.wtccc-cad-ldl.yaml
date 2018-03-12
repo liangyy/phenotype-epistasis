@@ -1,0 +1,18 @@
+x1: 'wtccc_cad'
+x2: 'wtccc_ctrl'
+y: 'MAGNETIC_LDL.C'
+g: 'CHD-LDL_FuncSig'
+tissue-type: 'Artery_Coronary'
+
+## data parameters
+wtccc_cad__wtccc_ctrl:
+  name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
+MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl:
+  name-format: '../step1/output-run_step1/{replace}/ldpred_LDpred_p'
+CHD-LDL_FuncSig: 'ILF3,CDKN2B-AS1,TMEM132D'
+Artery_Coronary:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Artery_Coronary/gtex_v7_Artery_Coronary_imputed_europeans_tw_0.5_signif.db'
+
+## other parameters
+gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v12.annotation.gtf.gz'
+chr-list: 'chr,1:22'
