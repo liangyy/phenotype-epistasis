@@ -12,8 +12,19 @@ def get_all_chr_split(config):
     nchr_from = int(nchr_info[0])
     nchr_to = int(nchr_info[1])
     for i in range(nchr_from, nchr_to + 1):
-        for ext in ['fam', 'bed', 'bim']
+        for ext in ['fam', 'bed', 'bim']:
             out.append('output-prepare_predixcan/{{geno1}}__{{geno2}}/split.{chr}.{ext}'.format(chr = nchr_name + str(i), ext = ext))
+    return out
+
+def get_all_chr_predixcan(config):
+    out = []
+    nchr_info = config['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        out.append('output-prepare_predixcan/{{genotype}}/{chr}.dosage.txt.gz'.format(chr = nchr_name + str(i)))
     return out
 
 ## for debug
@@ -33,7 +44,7 @@ rule split_chr:
         'output-prepare_predixcan/{geno1}__{geno2}/split.chr',
         lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config)
     shell:
-        'perl scripts/plink-split-up-bedfile-by-chromosome.pl {params[0]} {params[1]}'
+        'perl scripts/plink-split-up-bedfile-by-chromosome.pl {params[1]} {params[0]}'
 
 rule obtain_maf:
     input:
@@ -78,12 +89,12 @@ rule prepare_predixcan_input:
         freq = 'output-prepare_predixcan/{genotype}/predixcan_freq.{chr}.frq'
     output:
         dosages = 'output-prepare_predixcan/{genotype}/{chr}.dosage.txt.gz',
-        sample = 'output-prepare_predixcan/{genotype}/samples.txt'
+        sample = 'output-prepare_predixcan/{genotype}/samples.{chr}.txt'
     log:
-        'output-prepare_predixcan/{genotype}/prepare_predixcan_input.log'
+        'output-prepare_predixcan/{genotype}/prepare_predixcan_input.{chr}.log'
     shell:
         'python scripts/prepare_predixcan_input.py \
         --input_raw {input.raw} \
         --input_freq {input.freq} \
-        --output {output.dosage} \
+        --output {output.dosages} \
         --output_sample {output.sample} > {log}'
