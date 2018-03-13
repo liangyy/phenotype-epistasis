@@ -1,10 +1,5 @@
 # this module prepare the input file for PrediXcan
 
-## for debug
-rule all_test:
-    input:
-        get_all_chr_predixcan(config).format(genotype = config['x1'] + '__' + config['x2'])
-
 def get_format(replace_str, config):
     string = config[replace_str]['name-format'].format(replace = replace_str)
     return string
@@ -19,6 +14,12 @@ def get_all_chr_predixcan(config):
     for i in range(nchr_from, nchr_to + 1):
         out.append('output-prepare_predixcan/{{genotype}}/{chr}.{ext}'.format(chr = nchr_name + str(i), ext = 'dosage.txt.gz'))
     return out
+
+## for debug
+rule all_test:
+    input:
+        [ i.format(genotype = config['x1'] + '__' + config['x2']) for i in get_all_chr_predixcan(config) ]
+## end debug
 
 rule obtain_maf:
     input:
@@ -41,7 +42,7 @@ rule post_process_maf:
         'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq'
     shell:
         '''
-        awk 'FNR==NR{a[$2]=$3;next}{a["SNP"]="POS"}{ print $0, a[$2]}' {input.bim} {input.frq} > {output[0]}
+        awk 'FNR==NR{{a[$2]=$3;next}}{{a["SNP"]="POS"}}{{ print $0, a[$2]}}' {input.bim} {input.frq} > {output[0]}
         '''
 
 rule recode_plink:
