@@ -12,7 +12,7 @@ import subprocess
 
 genes = args.genes.split(',')
 for g in genes:
-    cmd = "zcat {gencode} |grep {gene}|sed -n 's/.*gene_id \"\(ENSG[0-9.]*\)\";.*$/\1/p' | sort | uniq ".format(
+    cmd = "zcat {gencode} |grep {gene}|sed -n 's/.*gene_id \"\\(ENSG[0-9.]*\\)\";.*$/\\1/p' | sort | uniq ".format(
         gencode = args.gencode,
         gene = g)
     ensg = subprocess.check_output([cmd], shell=True).decode().strip().split('\n')
@@ -21,4 +21,4 @@ for g in genes:
     else:
         ensgid = ensg
     for i in ensgid:
-        print('{gene}\t{i}'.format(gene = g, ensgid = i))
+        print('{gene}\t{i}'.format(gene = g, i = i))

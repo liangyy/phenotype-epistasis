@@ -68,10 +68,12 @@ rule prepare_predixcan_input:
     output:
         dosages = get_all_chr_predixcan(config),
         sample = 'output-prepare_predixcan/{genotype}/samples.txt'
+    log: 
+        'output-prepare_predixcan/{genotype}/prepare_predixcan_input.log'
     shell:
         'python scripts/prepare_predixcan_input.py \
         --input_raw {input.raw} \
         --input_freq {input.freq} \
         --output_prefix {params.out_prefix} \
         --output_suffix {params.out_suffix} \
-        --output_sample {output.sample}'
+        --output_sample {output.sample} > {log}'

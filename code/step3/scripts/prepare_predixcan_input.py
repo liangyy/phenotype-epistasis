@@ -12,7 +12,8 @@ parser.add_argument('--output_suffix', help = 'suffix of output dosage files')
 parser.add_argument('--output_sample', help = 'the FID and IID of individuals')
 args = parser.parse_args()
 
-import pandas pd
+import pandas as pd
+import gzip
 
 def if_valid(x):
     complement = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
@@ -25,10 +26,18 @@ def if_valid(x):
 def join_id_and_a1(x):
     return '_'.join(x)
 
+def write_row(row, handle):
+    handle.write('\t'.join([ str(i) for i in row ] + '\n'))
+
+print('start to read raw file')
 raw = pd.read_table(args.input_raw, sep = ' ', header = 0)
+print('start to read frequency file')
 frq = pd.read_table(args.input_freq, sep = '\s+', header = 0)
+print('read files finished')
+
 chrms = set(frq['CHR'])
 for chrm in chrms:
+    print('working with chromosome ' + str(chrm))
     subset_frq = frq.loc[frq.CHR == chrm]
     valid_ind = frq[['A1', 'A2']].apply(if_valid, axis = 1)
     valid_subset_frq = subset_frq.loc[valid_ind]
@@ -46,4 +55,8 @@ for chrm in chrms:
     col_order = ['chromosome', 'rsid', 'position', 'allele1', 'allele2', 'MAF'] + idv_col
     new = new[col_order]
     output_name = '{pre}{chrm}.{suf}'.format(pre = args.output_prefix, chrm = chrm, suf = args.output_suffix)
-    new.to_csv(output_name, sep = '\t', compression = 'gzip', header = False, index = False)
+    o_handle = gzip.open(output_name, 'w')
+    print('start to write result on chromosome ' + str(chrm))
+    new.apply(lambda x: write_row(x, o_handle), axis=1)
+    o_handle.close() 
+    # new.to_csv(output_name, sep = '\t', compression = 'gzip', header = False, index = False)
