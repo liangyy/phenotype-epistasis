@@ -32,7 +32,7 @@ rule obtain_maf:
     output:
         temp('output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq.temp')
     shell:
-        'plink --noweb --bfile {params[0]} --freq --out {params[1]}'
+        'plink --noweb --bfile {params[0]} --freq --out {params[1]}; mv {params[1]}.frq {output[0]}'
 
 rule post_process_maf:
     input:
