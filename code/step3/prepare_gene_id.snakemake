@@ -16,4 +16,4 @@ rule convert_gene_to_ensg:
     shell:
         'python scripts/convert_gene_to_ensg.py \
             --genes {params[0]} \
-            --gencode {input[0]} > --output {output[0]}'
+            --gencode {input[0]} > {output[0]}'

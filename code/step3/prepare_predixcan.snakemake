@@ -1,13 +1,20 @@
 # this module prepare the input file for PrediXcan
 
-## for debug
-rule all_test:
-    input:
-        get_all_chr_predixcan(config).format(genotype = config['x1'] + '__' + config['x2'])
-
 def get_format(replace_str, config):
     string = config[replace_str]['name-format'].format(replace = replace_str)
     return string
+
+def get_all_chr_split(config):
+    out = []
+    nchr_info = config['chr-list'].split(',')
+    nchr_name = nchr_info[0]
+    nchr_info = nchr_info[1].split(':')
+    nchr_from = int(nchr_info[0])
+    nchr_to = int(nchr_info[1])
+    for i in range(nchr_from, nchr_to + 1):
+        for ext in ['fam', 'bed', 'bim']:
+            out.append('output-prepare_predixcan/{{geno1}}__{{geno2}}/split.{chr}.{ext}'.format(chr = nchr_name + str(i), ext = ext))
+    return out
 
 def get_all_chr_predixcan(config):
     out = []
@@ -17,60 +24,77 @@ def get_all_chr_predixcan(config):
     nchr_from = int(nchr_info[0])
     nchr_to = int(nchr_info[1])
     for i in range(nchr_from, nchr_to + 1):
-        out.append('output-prepare_predixcan/{{genotype}}/{chr}.{ext}'.format(chr = nchr_name + str(i), ext = 'dosage.txt.gz'))
+        out.append('output-prepare_predixcan/{{genotype}}/{chr}.dosage.txt.gz'.format(chr = nchr_name + str(i)))
     return out
 
-rule obtain_maf:
+## for debug
+rule all_test:
+    input:
+        [ i.format(genotype = config['x1'] + '__' + config['x2']) for i in get_all_chr_predixcan(config) ]
+## end debug
+
+rule split_chr:
     input:
         e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bed',
         i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
         f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.fam'
-    params:
-        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config),
-        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq'
     output:
-        temp('output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq.temp')
+        get_all_chr_split(config)
+    params:
+        'output-prepare_predixcan/{geno1}__{geno2}/split.chr',
+        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config)
     shell:
-        'plink --noweb --bfile {params[0]} --freq --out {params[1]}'
+        'perl scripts/plink-split-up-bedfile-by-chromosome.pl {params[1]} {params[0]}'
+
+rule obtain_maf:
+    input:
+        e = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.bed',
+        i = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.bim',
+        f = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.fam'
+    params:
+        'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}',
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.{chr}'
+    output:
+        temp('output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.{chr}.frq.temp')
+    shell:
+        'plink --noweb --bfile {params[0]} --freq --out {params[1]}; mv {params[1]}.frq {output[0]}'
 
 rule post_process_maf:
     input:
-        frq = 'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq.temp',
-        bim = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim'
+        frq = 'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.{chr}.frq.temp',
+        bim = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.bim'
     output:
-        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.frq'
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_freq.{chr}.frq'
     shell:
         '''
-        awk 'FNR==NR{a[$2]=$3;next}{a["SNP"]="POS"}{ print $0, a[$2]}' {input.bim} {input.frq} > {output[0]}
+        awk 'FNR==NR{{a[$2]=$3;next}}{{a["SNP"]="POS"}}{{ print $0, a[$2]}}' {input.bim} {input.frq} > {output[0]}
         '''
 
 rule recode_plink:
     input:
-        e = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bed',
-        i = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
-        f = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.fam'
+        e = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.bed',
+        i = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.bim',
+        f = 'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}' + '.fam'
     params:
-        lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config),
-        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_recodeA'
+        'output-prepare_predixcan/{geno1}__{geno2}/split.{chr}',
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_recodeA.{chr}'
     output:
-        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_recodeA.raw'
+        'output-prepare_predixcan/{geno1}__{geno2}/predixcan_recodeA.{chr}.raw'
     shell:
         'plink --noweb --bfile {params[0]} --recodeA --out {params[1]}'
 
 rule prepare_predixcan_input:
     input:
-        raw = 'output-prepare_predixcan/{genotype}/predixcan_recodeA.raw',
-        freq = 'output-prepare_predixcan/{genotype}/predixcan_freq.frq'
-    params:
-        out_prefix = 'output-prepare_predixcan/{genotype}/chr',
-        out_suffix = 'dosage.txt.gz'
+        raw = 'output-prepare_predixcan/{genotype}/predixcan_recodeA.{chr}.raw',
+        freq = 'output-prepare_predixcan/{genotype}/predixcan_freq.{chr}.frq'
     output:
-        dosages = get_all_chr_predixcan(config),
-        sample = 'output-prepare_predixcan/{genotype}/samples.txt'
+        dosages = 'output-prepare_predixcan/{genotype}/{chr}.dosage.txt.gz',
+        sample = 'output-prepare_predixcan/{genotype}/samples.{chr}.txt'
+    log:
+        'output-prepare_predixcan/{genotype}/prepare_predixcan_input.{chr}.log'
     shell:
         'python scripts/prepare_predixcan_input.py \
         --input_raw {input.raw} \
         --input_freq {input.freq} \
-        --output_prefix {params.out_prefix} \
-        --output_suffix {params.out_suffix} \
-        --output_sample {output.sample}'
+        --output {output.dosages} \
+        --output_sample {output.sample} > {log}'
