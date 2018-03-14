@@ -1,16 +1,16 @@
 # this module convert gene name to ENSGXXXX for PrediXcan
 
 # for test
-rule all_test:
-    input:
-        'output-prepare_gene_id/{gene}.genelist'.format(gene = config[config['y']  + '__' +  config['x1'] + '__' + config['x2']]['gene-set'])
+# rule all_test:
+#     input:
+#         'output-prepare_gene_id/{gene}.genelist'.format(gene = config[config['y']  + '__' +  config['x1'] + '__' + config['x2']]['gene-set'])
 # end test
 
 rule convert_gene_to_ensg:
     input:
         config['gencode_annotation']
     params:
-        lambda wildcards: config[wildcards.gene]
+        lambda wildcards: config[wildcards.gene]['gene-set']
     output:
         'output-prepare_gene_id/{gene}.genelist'
     shell:

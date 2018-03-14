@@ -16,5 +16,6 @@ Artery_Coronary:
 gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v12.annotation.gtf.gz'
 chr-list: 'chr,1:22'
 predixcan-dir: '/mnt/gluster/home/yanyul/repo/PrediXcan/Software/'
+python2.7-dir: '/opt/anaconda/anaconda2/bin/'
 ldpred:
   causal-fraction: '0.1,0.03,0.01'

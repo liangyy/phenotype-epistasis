@@ -16,7 +16,7 @@ def get_all_chr_split(config):
             out.append('output-prepare_predixcan/{{geno1}}__{{geno2}}/split.{chr}.{ext}'.format(chr = nchr_name + str(i), ext = ext))
     return out
 
-def get_all_chr_predixcan(config):
+def get_all_chr_predixcan(config, wildcard_str):
     out = []
     nchr_info = config['chr-list'].split(',')
     nchr_name = nchr_info[0]
@@ -24,13 +24,14 @@ def get_all_chr_predixcan(config):
     nchr_from = int(nchr_info[0])
     nchr_to = int(nchr_info[1])
     for i in range(nchr_from, nchr_to + 1):
-        out.append('output-prepare_predixcan/{{genotype}}/{chr}.dosage.txt.gz'.format(chr = nchr_name + str(i)))
+        out.append('output-prepare_predixcan/' + wildcard_str + '/{chr}.dosage.txt.gz'.format(chr = nchr_name + str(i)))
+    # print(out)
     return out
 
 ## for debug
 rule all_test:
     input:
-        [ i.format(genotype = config['x1'] + '__' + config['x2']) for i in get_all_chr_predixcan(config) ]
+        [ i.format(genotype = config['x1'] + '__' + config['x2']) for i in get_all_chr_predixcan(config, '{genotype}') ]
 ## end debug
 
 rule split_chr:

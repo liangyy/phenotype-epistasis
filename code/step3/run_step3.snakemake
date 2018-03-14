@@ -5,6 +5,7 @@ include: 'prepare_predixcan.snakemake'
 include: 'prepare_gene_id.snakemake'
 
 predixcan_dir = config['predixcan-dir']
+py27_dir = config['python2.7-dir']
 
 rule all_dplot:
     input:
@@ -32,35 +33,35 @@ def get_ldpred_outputs_ext(prefix, fs, ext):
 
 rule predixcan:
     input:
-        dosages = get_all_chr_predixcan(config),
-        sample_list = lambda wildcards: get_format(wildcards.genotype, config) + '.bim',
+        dosages = get_all_chr_predixcan(config, '{geno1}__{geno2}'),
+        sample_list = lambda wildcards: get_format(wildcards.geno1 + '__' + wildcards.geno2, config) + '.bim',
         db = lambda wildcards: config[wildcards.gene_expression_tissue]['db'],
-        gene_list = 'output-prepare_gene_id/{intermediate}__{genotype}.genelist'
+        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist'
     params:
-        dosages_dir = 'output-prepare_predixcan/{genotype}/',
+        dosages_dir = 'output-prepare_predixcan/{geno1}__{geno2}/',
         dosage_prefix = 'chr',
-        output_prefix = 'output-run_step3/{genotype}/{gene_expression_tissue}'
+        output_prefix = 'output-run_step3/{intermediate}__{geno1}__{geno2}/{gene_expression_tissue}'
     output:
-        'output-run_step3/{intermediate}__{genotype}/{gene_expression_tissue}_predicted_expression.txt'
+        'output-run_step3/{intermediate}__{geno1}__{geno2}/{gene_expression_tissue}_predicted_expression.txt'
     shell:
-        '/bin/python2.7 {predixcan_dir}/PrediXcan.py \
+        '{py27_dir}/python2.7 {predixcan_dir}/PrediXcan.py \
             --predict \
             --genelist <(cut -f2 {input.gene_list}) \
             --dosages {params.dosages_dir} \
-            --dosages_prefix {params.dosages_prefix} \
+            --dosages_prefix {params.dosage_prefix} \
             --samples {input.sample_list} \
             --weights {input.db} \
             --output_prefix {params.output_prefix}'
 
 rule gi_marginal_rmd:
     input:
-        expression = get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config)
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar_LDpred_p', config['ldpred']['causal-fraction'], '.txt'),
+        expression = get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar', config['ldpred']['causal-fraction'], '.txt'),
         gene_list = 'output-prepare_gene_id/{intermediate}__{genotype}.genelist',
         yi = '../step2/output-direction_XT_YI/{intermediate}__{genotype}/yi.logistic.assoc'
     params:
         fractions = config['ldpred']['causal-fraction'],
-        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar_LDpred_p', config['ldpred']['causal-fraction'], '.txt')),
+        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar', config['ldpred']['causal-fraction'], '.txt')),
         tissues = config['tissue-type'],
         expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config))
     output:
