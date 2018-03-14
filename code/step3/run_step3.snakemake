@@ -1,0 +1,224 @@
+# this module predict gene expression using PrediXcan
+# and perform gene-intermediate trait interaction test
+
+include: 'prepare_predixcan.snakemake'
+include: 'prepare_gene_id.snakemake'
+
+predixcan_dir = config['predixcan-dir']
+
+def get_all_tissues(prefix, suffix, config):
+    out = []
+    tissues = config['tissue-type'].split(',')
+    for t in tissues:
+        out.append(prefix + t + suffix)
+    return out
+
+def get_ldpred_outputs_ext(prefix, fs, ext):
+    fs = fs.split(',')
+    try:
+        fs = [ float(f) for f in fs ]
+        out = []
+        for f in fs:
+            out.append('%s_LDpred_p%0.4e%s' % (prefix, f, ext))
+    except ValueError:
+        out = '%s_LDpred_p%s%s' % (prefix, fs[0], ext)
+        # print(out)
+    return out
+
+rule predixcan:
+    input:
+        dosages = get_all_chr_predixcan(config),
+        sample_list = lambda wildcards: get_format(wildcards.genotype, config) + '.bim',
+        db = lambda wildcards: config[wildcards.gene_expression_tissue]['db'],
+        gene_list = 'output-prepare_gene_id/{intermediate}__{genotype}.genelist'
+    params:
+        dosages_dir = 'output-prepare_predixcan/{genotype}/',
+        dosage_prefix = 'chr',
+        output_prefix = 'output-run_step3/{genotype}/{gene_expression_tissue}'
+    output:
+        'output-run_step3/{intermediate}__{genotype}/{gene_expression_tissue}_predicted_expression.txt'
+    shell:
+        '/bin/python2.7 {predixcan_dir}/PrediXcan.py \
+            --predict \
+            --genelist <(cut -f2 {input.gene_list}) \
+            --dosages {params.dosages_dir} \
+            --dosages_prefix {params.dosages_prefix} \
+            --samples {input.sample_list} \
+            --weights {input.db} \
+            --output_prefix {params.output_prefix}'
+
+rule gi_marginal_rmd:
+    input:
+        expression = get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config)
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar_LDpred_p', config['ldpred']['causal-fraction'], '.txt'),
+        gene_list = 'output-prepare_gene_id/{intermediate}__{genotype}.genelist',
+        yi = '../step2/output-direction_XT_YI/{intermediate}__{genotype}/yi.logistic.assoc'
+    params:
+        fractions = config['ldpred']['causal-fraction'],
+        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar_LDpred_p', config['ldpred']['causal-fraction'], '.txt')),
+        tissues = config['tissue-type'],
+        expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config))
+    output:
+        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.Rmd'
+    run:
+        rmd = '''---
+title: "Gene-based Direction (Marginal Effect) - Y ({y}); I ({i})"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{{r setup, echo=FALSE}}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+library(pander)
+library(dplyr)
+root.dir <- '../../'
+# knitr::opts_knit$set(root.dir = '../../')
+panderOptions('knitr.auto.asis', FALSE)
+panderOptions('table.split.table', Inf)
+```
+
+# Read data
+
+```{{r}}
+source(paste0(root.dir, 'scripts/myRLib.R'))
+intermediate.files <- strsplit('{intermediate_str}', ':')[[1]]
+ps <- strsplit('{fractions}', ',')[[1]]
+expression.files <- strsplit('{expression_str}', ':')[[1]]
+ts <- strsplit('{tissues}', ',')[[1]]
+gene <- read.table(getFile(root.dir, {gene_list}), header = F, sep = '\t')
+colnames(gene) <- c('gene.name', 'gencode.id')
+yi <- read.table({yi}, header = T)
+cols <- colnames(yi)
+yi.filenames <- apply(yi, 1, function(x) {{ return(basename(x[1]))}})
+yi.container <- c()
+expression.list <- list()
+for(i in 1 : length(ts)) {{
+    expression.list[[ts[i]]] <- read.table(getFile(root.dir, expression.files[i]), header = T, sep = '\t'))
+}}
+intermediate.list <- list()
+for(i in 1 : length(ps)) {{
+    thisfile <- basename(intermediate.files[i])
+    yi.container <- rbind(yi.container, c(ps[i], yi[yi.filenames == thisfile, 2:7]))
+    intermediate.list[[ps[i]]] <- read.table(getFile(root.dir, intermediate.files[i]), header = T, sep = ' '))
+    intermediate.list[[ps[i]]]$PHENO <- intermediate.list[[ps[i]]]$PHENO - 1
+}}
+colnames(yi.container) <- c('causal.fraction', cols[2:7])
+pander(gene, knitr.auto.asis = T)
+```
+
+# Marginal effect of gene expression on phenotype $Y \sim E$
+
+```{{r}}
+ye.container <- c()
+for(i in 1 : length(intermediate.list)) {{
+  cat('##', ps[i])
+  cat('\n')
+  cat('\n')
+  inter <- intermediate.list[[ps[i]]]
+  temp.container <- c()
+  for(t in names(expression.list)) {{
+    cat('###', t)
+    cat('\n')
+    cat('\n')
+    expre <- expression.list[[t]]
+    df <- inner_join(inter, expre, by = 'IID')
+    for(g in gene[, 2]) {{
+      data <- data.frame(y = inter$PHENO, e = expre[, g])
+      model <- glm(y ~ e, family=binomial(link='logit'), data = data)
+      stats <- summary(model)
+      ye.container <- rbind(ye.container, c(ps[i], t, g, stats$coefficients[1], stats$coefficients[3], stats$coefficients[7], stats$coefficients[2], stats$coefficients[4], stats$coefficients[8]))
+    }}
+  }}
+  colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval')
+  p <- ggplot(temp.container, aes(x = tissue, group = gene)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = prs.estmate, label = paste0('pval = ', format(round(prs.pval, 6), nsmall = 6))), vjust = -.5, hjust = -.3, size = 6) + ggtitle('Y ~ E: correlation estimate') + ylab('Correlation coefficient') + xlab('Expression Tissue')
+  print(p)
+  ye.container <- rbind(ye.container, temp.container)
+}}
+```
+
+# Marginal effect of gene expression on intermediate trait $I \sim E$
+
+```{{r}}
+ie.container <- c()
+for(i in 1 : length(intermediate.list)) {{
+  cat('##', ps[i])
+  cat('\n')
+  cat('\n')
+  inter <- intermediate.list[[ps[i]]]
+  temp.container <- c()
+  for(t in names(expression.list)) {{
+    cat('###', t)
+    cat('\n')
+    cat('\n')
+    expre <- expression.list[[t]]
+    df <- inner_join(inter, expre, by = 'IID')
+    for(g in gene[, 2]) {{
+      data <- data.frame(i = inter$PRS, e = expre[, g])
+      model <- glm(i ~ e, family=binomial(link='logit'), data = data)
+      stats <- summary(model)
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[1], stats$coefficients[3], stats$coefficients[7], stats$coefficients[2], stats$coefficients[4], stats$coefficients[8]))
+    }}
+  }}
+  colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval')
+  p <- ggplot(temp.container, aes(x = tissue, group = gene)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = prs.estmate, label = paste0('pval = ', format(round(prs.pval, 6), nsmall = 6))), vjust = -.5, hjust = -.3, size = 6) + ggtitle('I ~ E: correlation estimate') + ylab('Correlation coefficient') + xlab('Expression Tissue')
+  print(p)
+  ie.container <- rbind(ie.container, temp.container)
+}}
+```
+
+# Marginal effect of gene expression and intermediate trait on phenotype $Y \sim E + I$
+
+```{{r}}
+yei.container <- c()
+for(i in 1 : length(intermediate.list)) {{
+  cat('##', ps[i])
+  cat('\n')
+  cat('\n')
+  inter <- intermediate.list[[ps[i]]]
+  temp.container <- c()
+  for(t in names(expression.list)) {{
+    cat('###', t)
+    cat('\n')
+    cat('\n')
+    expre <- expression.list[[t]]
+    df <- inner_join(inter, expre, by = 'IID')
+    for(g in gene[, 2]) {{
+      data <- data.frame(y = inter$PHENO, i = inter$PRS, e = expre[, g])
+      model <- glm(y ~ e + i, family=binomial(link='logit'), data = data)
+      stats <- summary(model)
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[2], stats$coefficients[4], stats$coefficients[8], stats$coefficients[3], stats$coefficients[5], stats$coefficients[9]))
+    }}
+  }}
+  colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'E.estmate', 'E.std', 'E.pval', 'I.estmate', 'I.std', 'I.pval')
+  p1 <- ggplot(temp.container, aes(x = tissue, group = gene)) +  geom_point(aes(y = I.estmate)) + geom_errorbar(aes(ymin = I.estmate - 1.96 * I.std, ymax = I.estmate + 1.96 * I.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + geom_hline(yintercept = yi.container[yi.container$causal.fraction == ps[i], ], color = 'blue') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = prs.estmate, label = paste0('pval = ', format(round(prs.pval, 6), nsmall = 6))), vjust = -.5, hjust = -.3, size = 6) + ggtitle('Y ~ E + I (I): correlation estimate') + ylab('Correlation coefficient') + xlab('Expression Tissue')
+  print(p1)
+
+  temp <- ye.container[ye.container$causal.fraction == ps[i], c('tissue', 'gene', 'E.estmate', 'E.std', 'E.pval')]
+  temp$marginal <- T
+  temp2 <- temp.container[, c('tissue', 'gene', 'E.estmate', 'E.std', 'E.pval')]
+  temp2$marginal <- F
+  plot.e <- rbind(temp2, temp)
+  p2 <- ggplot(plot.e, aes(x = tissue, group = gene, color = marginal)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = prs.estmate, label = paste0('pval = ', format(round(prs.pval, 6), nsmall = 6))), vjust = -.5, hjust = -.3, size = 6) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Correlation coefficient') + xlab('Expression Tissue')
+  print(p2)
+  yei.container <- rbind(yei.container, temp.container)
+}}
+```
+'''.format(intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi)
+        o = open(output[0], 'w')
+        o.write(rmd)
+        o.close()
+
+rule gi_marginal_html:
+    input:
+        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.Rmd'
+    output:
+        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'
+    shell:
+        '''
+        R -e "rmarkdown::render('{input[0]}')"
+        '''

@@ -3,7 +3,7 @@
 # for test
 rule all_test:
     input:
-        'output-prepare_gene_id/{gene}.genelist'.format(gene = config['g'])
+        'output-prepare_gene_id/{gene}.genelist'.format(gene = config[config['y']  + '__' +  config['x1'] + '__' + config['x2']]['gene-set'])
 # end test
 
 rule convert_gene_to_ensg:

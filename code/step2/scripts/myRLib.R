@@ -74,3 +74,22 @@ lm_eqn_nointer <- function(df){
                         r2 = format(summary(m)$r.squared, digits = 3)))
   as.character(as.expression(eq));
 }
+
+# derived from internet
+subchunkify <- function(g, fig_asp = 1) {
+  g_deparsed <- paste0(deparse(
+    function() {g}
+  ), collapse = '')
+
+  sub_chunk <- paste0("`","``{r sub_chunk_", floor(runif(1) * 10000), ", fig.asp=", fig_asp, ", echo=FALSE}",
+  "\\n(",
+    g_deparsed
+    , ")()",
+  "\\n`","``")
+
+  cat(knitr::knit(text = knitr::knit_expand(text = sub_chunk), quiet = TRUE))
+}
+
+getFile <- function(root, filename) {
+  return(paste0(root, filename))
+}
