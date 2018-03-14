@@ -6,6 +6,11 @@ include: 'prepare_gene_id.snakemake'
 
 predixcan_dir = config['predixcan-dir']
 
+rule all_dplot:
+    input:
+        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'.format(genotype = config['x1'] + '__' + config['x2'], intermediate = config['y'])
+
+
 def get_all_tissues(prefix, suffix, config):
     out = []
     tissues = config['tissue-type'].split(',')
