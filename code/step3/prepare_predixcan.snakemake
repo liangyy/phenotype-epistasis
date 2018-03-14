@@ -99,3 +99,11 @@ rule prepare_predixcan_input:
         --input_freq {input.freq} \
         --output {output.dosages} > {log}'
         # --output_sample {output.sample} > {log}'
+
+rule prepare_sample_list:
+    input:
+        lambda wildcards: get_format(wildcards.genotype, config) + '.bim'
+    output:
+        'output-prepare_predixcan/{genotype}/samples.bim'
+    shell:
+        'cp {input[0]} {output[0]}'
