@@ -26,14 +26,14 @@ def join_id_and_a1(x):
     return '_'.join(x)
 
 def write_row(row, handle):
-    handle.write('\t'.join([ str(i) for i in row ] + '\n'))
+    handle.write('\t'.join([ str(i) for i in row ]) + '\n')
 
 print('start to read raw file')
 raw = pd.read_table(args.input_raw, sep = ' ', header = 0)
 print('start to read frequency file')
 frq = pd.read_table(args.input_freq, sep = '\s+', header = 0)
 print('read files finished')
-chrm = set(frq['CHR'])[0]
+chrm = list(frq['CHR'])[0]
 # chrms = set(frq['CHR'])
 # for chrm in chrms:
 print('working with chromosome ' + str(chrm))
@@ -53,9 +53,9 @@ new = new.assign(MAF = valid_subset_frq['MAF'].values)
 new = new.assign(position = valid_subset_frq['POS'].values)
 col_order = ['chromosome', 'rsid', 'position', 'allele1', 'allele2', 'MAF'] + idv_col
 new = new[col_order]
-output_name = '{pre}{chrm}.{suf}'.format(pre = args.output_prefix, chrm = chrm, suf = args.output_suffix)
-o_handle = gzip.open(output_name, 'w')
+# output_name = '{pre}{chrm}.{suf}'.format(pre = args.output_prefix, chrm = chrm, suf = args.output_suffix)
+o_handle = gzip.open(args.output, 'wt')
 print('start to write result on chromosome ' + str(chrm))
 new.apply(lambda x: write_row(x, o_handle), axis=1)
 o_handle.close()
-    # new.to_csv(output_name, sep = '\t', compression = 'gzip', header = False, index = False)
+# new.to_csv(args.output, sep = '\t', compression = 'gzip', header = False, index = False)

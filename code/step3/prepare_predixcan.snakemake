@@ -89,12 +89,12 @@ rule prepare_predixcan_input:
         freq = 'output-prepare_predixcan/{genotype}/predixcan_freq.{chr}.frq'
     output:
         dosages = 'output-prepare_predixcan/{genotype}/{chr}.dosage.txt.gz',
-        sample = 'output-prepare_predixcan/{genotype}/samples.{chr}.txt'
+        # sample = 'output-prepare_predixcan/{genotype}/samples.{chr}.txt'
     log:
         'output-prepare_predixcan/{genotype}/prepare_predixcan_input.{chr}.log'
     shell:
         'python scripts/prepare_predixcan_input.py \
         --input_raw {input.raw} \
         --input_freq {input.freq} \
-        --output {output.dosages} \
-        --output_sample {output.sample} > {log}'
+        --output {output.dosages} > {log}'
+        # --output_sample {output.sample} > {log}'
