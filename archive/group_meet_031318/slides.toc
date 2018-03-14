@@ -1,0 +1,25 @@
+\global \c@tocdepth 1\relax 
+\beamer@sectionintoc {1}{Background}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Mendelian disease and complex trait}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{GWAS and complex trait}{4}{0}{1}
+\beamer@subsectionintoc {1}{3}{Genetic background and disease}{5}{0}{1}
+\beamer@subsectionintoc {1}{4}{Epistatic effect - an example of color coating}{6}{0}{1}
+\beamer@subsectionintoc {1}{5}{Epistatic effect}{7}{0}{1}
+\beamer@sectionintoc {2}{Motivation}{8}{0}{2}
+\beamer@subsectionintoc {2}{1}{Question}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{Ideas}{9}{0}{2}
+\beamer@subsectionintoc {2}{3}{Hypothesis}{10}{0}{2}
+\beamer@sectionintoc {3}{Method}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{Method overview}{11}{0}{3}
+\beamer@subsectionintoc {3}{2}{Data overview}{12}{0}{3}
+\beamer@sectionintoc {4}{Results}{13}{0}{4}
+\beamer@subsectionintoc {4}{1}{Intermediate trait PRS is correlated with disease status}{13}{0}{4}
+\beamer@subsectionintoc {4}{2}{Test interaction on GWAS significant hits: CHD - LDL}{14}{0}{4}
+\beamer@subsectionintoc {4}{3}{Test interaction on GWAS significant hits: CD - WBC}{15}{0}{4}
+\beamer@subsectionintoc {4}{4}{Test interaction on GWAS significant hits: T2D - FastInsulin}{16}{0}{4}
+\beamer@subsectionintoc {4}{5}{Test interaction on SNPs that potentially act through the intermediate trait}{17}{0}{4}
+\beamer@subsectionintoc {4}{6}{Test interaction on consistent SNPs: CHD - LDL}{18}{0}{4}
+\beamer@subsectionintoc {4}{7}{Test interaction on consistent SNPs: T2D - FastGlu}{19}{0}{4}
+\beamer@sectionintoc {5}{Discussion}{20}{0}{5}
+\beamer@subsectionintoc {5}{1}{Summary}{20}{0}{5}
+\beamer@subsectionintoc {5}{2}{Issues and future directions}{21}{0}{5}
