@@ -1,7 +1,7 @@
 x1: 'wtccc_cad'
 x2: 'wtccc_ctrl'
 y: 'MAGNETIC_LDL.C'
-tissue-type: 'Artery_Coronary,DGN-HapMap-2015,Small_Intestine_Terminal_Ileum,Thyroid,Cells_EBV-transformed_lymphocytes,Esophagus_Muscularis,Stomach'                         Whole_Blood'  # can take multiple tissues (separate them by ',')
+tissue-type: 'Artery_Coronary,DGN-HapMap-2015,Small_Intestine_Terminal_Ileum,Thyroid,Cells_EBV-transformed_lymphocytes,Esophagus_Muscularis,Stomach,Whole_Blood'  # can take multiple tissues (separate them by ',')
 
 ## data parameters
 wtccc_cad__wtccc_ctrl:

@@ -21,7 +21,8 @@ for g in genes:
     else:
         ensgid = ensg
     for i in range(len(ensgid)):
-        gene = "zcat {gencode} |grep {gene_id}|sed -n 's/.*gene_name \"\\([A-Za-z0-9.-]*\\)\";.*$/\\1/p' | sort | uniq ".format(
+        cmd = "zcat {gencode} |grep {gene_id}|sed -n 's/.*gene_name \"\\([A-Za-z0-9.-]*\\)\";.*$/\\1/p' | sort | uniq ".format(
             gencode = args.gencode,
             gene_id = ensgid[i])
+        gene = subprocess.check_output([cmd], shell=True).decode().strip().split('\n')[0]
         print('{gene}\t{i}'.format(gene = gene, i = ensgid[i]))
