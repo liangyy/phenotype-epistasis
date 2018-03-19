@@ -69,7 +69,7 @@ rule gi_marginal_rmd:
         'output-run_step3/{intermediate}__{geno1}__{geno2}/direction_gene-based.Rmd'
     run:
         rmd = '''---
-title: "Gene-based Direction (Marginal Effect) - Y ({y}); I ({i})"
+title: "Gene-based (PrediXcan) Direction (Marginal Effect) - Y ({y}); I ({i})"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 author: Yanyu Liang
 output:

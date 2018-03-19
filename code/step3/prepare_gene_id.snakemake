@@ -12,7 +12,7 @@ rule convert_gene_to_ensg:
     params:
         lambda wildcards: config[wildcards.gene]['gene-set']
     output:
-        'output-prepare_gene_id/{gene}.genelist'
+        'output-prepare_gene_id/{gene}.genelist.ensg'
     shell:
         'python scripts/convert_gene_to_ensg.py \
             --genes {params[0]} \
