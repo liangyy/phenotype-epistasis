@@ -34,14 +34,14 @@ def get_ldpred_outputs_ext(prefix, fs, ext):
 rule predixcan:
     input:
         dosages = get_all_chr_predixcan(config, '{geno1}__{geno2}'),
-        sample_list = 'output-prepare_predixcan/{genotype}/samples.bim',
+        sample_list = 'output-prepare_predixcan/{geno1}__{geno2}/samples.fam',
         db = lambda wildcards: config[wildcards.gene_expression_tissue]['db'],
         gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist'
     params:
         dosages_dir = 'output-prepare_predixcan/{geno1}__{geno2}/',
         dosage_prefix = 'chr',
         output_prefix = 'output-run_step3/{intermediate}__{geno1}__{geno2}/{gene_expression_tissue}',
-        sample_name = 'samples.bim'
+        sample_name = 'samples.fam'
     output:
         'output-run_step3/{intermediate}__{geno1}__{geno2}/{gene_expression_tissue}_predicted_expression.txt'
     shell:

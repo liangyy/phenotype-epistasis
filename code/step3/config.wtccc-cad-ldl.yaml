@@ -13,7 +13,7 @@ Artery_Coronary:
   db: '/mnt/gluster/home/yanyul/data/predixcan/Artery_Coronary/gtex_v7_Artery_Coronary_imputed_europeans_tw_0.5_signif.db'
 
 ## other parameters
-gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v12.annotation.gtf.gz'
+gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v19.chr_patch_hapl_scaff.annotation.gtf.gz'
 chr-list: 'chr,1:22'
 predixcan-dir: '/mnt/gluster/home/yanyul/repo/PrediXcan/Software/'
 python2.7-dir: '/opt/anaconda/anaconda2/bin/'

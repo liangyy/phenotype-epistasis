@@ -20,5 +20,5 @@ for g in genes:
         ensgid = ['NA']
     else:
         ensgid = ensg
-    for i in ensgid:
-        print('{gene}\t{i}'.format(gene = g, i = i))
+    for i in range(len(ensgid)):
+        print('{gene}\t{i}'.format(gene = g + '--->' + str(i), i = ensgid[i]))

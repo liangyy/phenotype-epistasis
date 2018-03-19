@@ -102,8 +102,8 @@ rule prepare_predixcan_input:
 
 rule prepare_sample_list:
     input:
-        lambda wildcards: get_format(wildcards.genotype, config) + '.bim'
+        lambda wildcards: get_format(wildcards.genotype, config) + '.fam'
     output:
-        'output-prepare_predixcan/{genotype}/samples.bim'
+        'output-prepare_predixcan/{genotype}/samples.fam'
     shell:
         'cp {input[0]} {output[0]}'

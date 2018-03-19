@@ -26,6 +26,8 @@ def join_id_and_a1(x):
     return '_'.join(x)
 
 def write_row(row, handle):
+    row[0] = 'chr' + str(row[0])
+    row[2] = int(row[2])
     handle.write('\t'.join([ str(i) for i in row ]) + '\n')
 
 print('start to read raw file')
