@@ -56,17 +56,17 @@ rule predixcan:
 
 rule gi_marginal_rmd:
     input:
-        expression = get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config),
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar', config['ldpred']['causal-fraction'], '.txt'),
-        gene_list = 'output-prepare_gene_id/{intermediate}__{genotype}.genelist',
-        yi = '../step2/output-direction_XT_YI/{intermediate}__{genotype}/yi.logistic.assoc'
+        expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
+        yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     params:
         fractions = config['ldpred']['causal-fraction'],
-        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{genotype}/covar', config['ldpred']['causal-fraction'], '.txt')),
+        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')),
         tissues = config['tissue-type'],
-        expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{genotype}/', '_predicted_expression.txt', config))
+        expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config))
     output:
-        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.Rmd'
+        'output-run_step3/{intermediate}__{geno1}__{geno2}/direction_gene-based.Rmd'
     run:
         rmd = '''---
 title: "Gene-based Direction (Marginal Effect) - Y ({y}); I ({i})"
@@ -215,7 +215,7 @@ for(i in 1 : length(intermediate.list)) {{
   yei.container <- rbind(yei.container, temp.container)
 }}
 ```
-'''.format(intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi)
+'''.format(y = wildcards.geno1, i = wildcards.intermediat, intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi)
         o = open(output[0], 'w')
         o.write(rmd)
         o.close()
