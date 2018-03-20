@@ -1,75 +1,5 @@
-# this module predict gene expression using PrediXcan
-# and perform gene-intermediate trait interaction test
-
-include: 'prepare_predixcan.snakemake'
-include: 'prepare_gene_id.snakemake'
-
-predixcan_dir = config['predixcan-dir']
-py27_dir = config['python2.7-dir']
-
-rule all_dplot:
-    input:
-        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'.format(genotype = config['x1'] + '__' + config['x2'], intermediate = config['y'])
-
-
-def get_all_tissues(prefix, suffix, config):
-    out = []
-    tissues = config['tissue-type'].split(',')
-    for t in tissues:
-        out.append(prefix + t + suffix)
-    return out
-
-def get_ldpred_outputs_ext(prefix, fs, ext):
-    fs = fs.split(',')
-    try:
-        fs = [ float(f) for f in fs ]
-        out = []
-        for f in fs:
-            out.append('%s_LDpred_p%0.4e%s' % (prefix, f, ext))
-    except ValueError:
-        out = '%s_LDpred_p%s%s' % (prefix, fs[0], ext)
-        # print(out)
-    return out
-
-rule predixcan:
-    input:
-        dosages = get_all_chr_predixcan(config, '{geno1}__{geno2}'),
-        sample_list = 'output-prepare_predixcan/{geno1}__{geno2}/samples.fam',
-        db = lambda wildcards: config[wildcards.gene_expression_tissue]['db'],
-        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist'
-    params:
-        dosages_dir = 'output-prepare_predixcan/{geno1}__{geno2}/',
-        dosage_prefix = 'chr',
-        output_prefix = 'output-run_step3/{intermediate}__{geno1}__{geno2}/{gene_expression_tissue}',
-        sample_name = 'samples.fam'
-    output:
-        'output-run_step3/{intermediate}__{geno1}__{geno2}/{gene_expression_tissue}_predicted_expression.txt'
-    shell:
-        '{py27_dir}/python2.7 {predixcan_dir}/PrediXcan.py \
-            --predict \
-            --genelist <(cut -f2 {input.gene_list}) \
-            --dosages {params.dosages_dir} \
-            --dosages_prefix {params.dosage_prefix} \
-            --samples {params.sample_name} \
-            --weights {input.db} \
-            --output_prefix {params.output_prefix}'
-
-rule gi_marginal_rmd:
-    input:
-        expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
-        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
-        yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
-    params:
-        fractions = config['ldpred']['causal-fraction'],
-        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')),
-        tissues = config['tissue-type'],
-        expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config))
-    output:
-        'output-run_step3/{intermediate}__{geno1}__{geno2}/direction_gene-based.Rmd'
-    run:
-        rmd = '''---
-title: "Gene-based (PrediXcan) Direction (Marginal Effect) - Y ({y}); I ({i})"
+---
+title: "Gene-based (PrediXcan) Direction (Marginal Effect) - Y (wtccc_cad); I (MAGNETIC_LDL.C)"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 author: Yanyu Liang
 output:
@@ -78,7 +8,7 @@ output:
     toc_float: true
 ---
 
-```{{r setup, echo=FALSE}}
+```{r setup, echo=FALSE}
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 library(ggplot2)
 library(pander)
@@ -91,15 +21,15 @@ panderOptions('table.split.table', Inf)
 
 # Read data
 
-```{{r}}
+```{r, results='asis'}
 source(paste0(root.dir, '../step2/scripts/myRLib.R'))
-intermediate.files <- strsplit('{intermediate_str}', ':')[[1]]
-ps <- strsplit('{fractions}', ',')[[1]]
-expression.files <- strsplit('{expression_str}', ':')[[1]]
-ts <- strsplit('{tissues}', ',')[[1]]
-gene <- read.table(getFile(root.dir, '{gene_list}'), header = F, sep = '\\t')
+intermediate.files <- strsplit('../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p1.0000e-01.txt:../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p3.0000e-02.txt:../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p1.0000e-02.txt', ':')[[1]]
+ps <- strsplit('0.1,0.03,0.01', ',')[[1]]
+expression.files <- strsplit('output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Artery_Coronary_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/DGN-HapMap-2015_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Small_Intestine_Terminal_Ileum_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Thyroid_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Cells_EBV-transformed_lymphocytes_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Esophagus_Muscularis_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Stomach_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Whole_Blood_predicted_expression.txt', ':')[[1]]
+ts <- strsplit('Artery_Coronary,DGN-HapMap-2015,Small_Intestine_Terminal_Ileum,Thyroid,Cells_EBV-transformed_lymphocytes,Esophagus_Muscularis,Stomach,Whole_Blood', ',')[[1]]
+gene <- read.table(getFile(root.dir, 'output-prepare_gene_id/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl.genelist'), header = F, sep = '\t')
 colnames(gene) <- c('gene.name', 'gencode.id')
-yi <- read.table(getFile(root.dir, '{yi}'), header = T)
+yi <- read.table(getFile(root.dir, '../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/yi.logistic.assoc'), header = T)
 cols <- colnames(yi)
 yi.filenames <- apply(yi, 1, function(x) { return(basename(x[1]))})
 yi.container <- c()
@@ -121,11 +51,16 @@ pander(gene, knitr.auto.asis = T)
 
 # Marginal effect of gene expression on phenotype $Y \sim E$
 
-```{{r, results='asis'}}
+```{r, results='asis'}
 ye.container <- c()
 inter <- intermediate.list[[ps[i]]]
 temp.container <- c()
 for(t in names(expression.list)) {
+#   cat('###', t)
+#   cat('
+# ')
+#   cat('
+# ')
   expre <- expression.list[[t]]
   df <- inner_join(inter, expre, by = 'IID')
   for(g in gene[, 2]) {
@@ -151,15 +86,22 @@ ye.container <- rbind(ye.container, temp.container)
 
 # Marginal effect of gene expression on intermediate trait $I \sim E$
 
-```{{r, results='asis'}}
+```{r, results='asis'}
 ie.container <- c()
 for(i in 1 : length(intermediate.list)) {
   cat('##', ps[i])
-  cat('\\n')
-  cat('\\n')
+  cat('
+')
+  cat('
+')
   inter <- intermediate.list[[ps[i]]]
   temp.container <- c()
   for(t in names(expression.list)) {
+#     cat('###', t)
+#     cat('
+# ')
+#     cat('
+# ')
     expre <- expression.list[[t]]
     df <- inner_join(inter, expre, by = 'IID')
     for(g in gene[, 2]) {
@@ -181,21 +123,28 @@ for(i in 1 : length(intermediate.list)) {
   p <- ggplot(temp.container[!is.na(temp.container$E.pval), ], aes(x = tissue)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = .5, size = 4) + ggtitle('I ~ E: correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
   print(p)
   ie.container <- rbind(ie.container, temp.container)
-  cat('\\n\\n')
+  cat('\n\n')
 }
 ```
 
 # Marginal effect of gene expression and intermediate trait on phenotype $Y \sim E + I$
 
-```{{r, results='asis'}}
+```{r, results='asis'}
 yei.container <- c()
 for(i in 1 : length(intermediate.list)) {
   cat('##', ps[i])
-  cat('\\n')
-  cat('\\n')
+  cat('
+')
+  cat('
+')
   inter <- intermediate.list[[ps[i]]]
   temp.container <- c()
   for(t in names(expression.list)) {
+#     cat('###', t)
+#     cat('
+# ')
+#     cat('
+# ')
     expre <- expression.list[[t]]
     df <- inner_join(inter, expre, by = 'IID')
     for(g in gene[, 2]) {
@@ -222,24 +171,10 @@ for(i in 1 : length(intermediate.list)) {
   temp2 <- temp.container[, c('tissue', 'gene.name', 'E.estmate', 'E.std', 'E.pval')]
   temp2$marginal <- F
   plot.e <- rbind(temp2, temp)
-  dodge <- position_dodge(width=0.5)
-  p2 <- ggplot(plot.e[!is.na(plot.e$E.pval), ], aes(x = tissue , color = marginal)) +  geom_point(aes(y = E.estmate), position = dodge) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', format(round(E.pval, 6), nsmall = 6)), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
+  dodge <- position_dodge(width=0.5)  
+  p2 <- ggplot(plot.e[!is.na(plot.e$E.pval), ], aes(x = tissue , color = marginal)) +  geom_point(aes(y = E.estmate), position = dodge) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', format(round(E.pval, 6), nsmall = 6)), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name) 
   print(p2)
   yei.container <- rbind(yei.container, temp.container)
-  cat('\\n\\n')
+  cat('\n\n')
 }
 ```
-'''.format(y = wildcards.geno1, i = wildcards.intermediate, intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi, expression_str = params.expression_str)
-        o = open(output[0], 'w')
-        o.write(rmd)
-        o.close()
-
-rule gi_marginal_html:
-    input:
-        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.Rmd'
-    output:
-        'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'
-    shell:
-        '''
-        R -e "rmarkdown::render('{input[0]}')"
-        '''

@@ -93,3 +93,10 @@ subchunkify <- function(g, fig_asp = 1) {
 getFile <- function(root, filename) {
   return(paste0(root, filename))
 }
+
+cleanDF <- function(df, cols) {
+  for(i in cols) {
+    df[[i]] <- as.numeric(as.character(df[[i]]))
+  }
+  return(df)
+}
