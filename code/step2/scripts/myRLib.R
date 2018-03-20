@@ -82,10 +82,10 @@ subchunkify <- function(g, fig_asp = 1) {
   ), collapse = '')
 
   sub_chunk <- paste0("`","``{r sub_chunk_", floor(runif(1) * 10000), ", fig.asp=", fig_asp, ", echo=FALSE}",
-  "\\n(",
+  "\n(",
     g_deparsed
     , ")()",
-  "\\n`","``")
+  "\n`","``")
 
   cat(knitr::knit(text = knitr::knit_expand(text = sub_chunk), quiet = TRUE))
 }
