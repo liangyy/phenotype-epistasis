@@ -12,6 +12,7 @@ from os.path import expanduser
 wd = expanduser(args.work_dir)
 
 e = glob.glob(wd +  '/*')
+ts = []
 for i in e:
     if os.path.isdir(i):
         f = glob.glob(i + '/*')
@@ -19,3 +20,7 @@ for i in e:
             if d.endswith('.db'):
                 string = '{name}:\n  db: \'{path}\''.format(name = os.path.basename(i), path = d)
                 print(string)
+                ts.append(os.path.basename(i))
+
+print('---------------------------------')
+print(','.join(ts))
