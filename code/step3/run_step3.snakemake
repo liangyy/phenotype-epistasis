@@ -240,6 +240,10 @@ for(i in 1 : length(intermediate.list)) {{
 
 rule gi_marginal_html:
     input:
+        expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
+        yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
         'output-run_step3/{intermediate}__{genotype}/direction_gene-based.Rmd'
     output:
         'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'
@@ -380,7 +384,11 @@ for(i in 1 : length(intermediate.list)) {{
 
 rule gi_inter_html:
     input:
-        'output-run_step3/{intermediate}__{genotype}/inter_gene-based.Rmd'
+        'output-run_step3/{intermediate}__{genotype}/inter_gene-based.Rmd',
+        expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
+        yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     output:
         'output-run_step3/{intermediate}__{genotype}/inter_gene-based.html'
     shell:
