@@ -296,26 +296,26 @@ panderOptions('table.split.table', Inf)
 
 ```{{r, results='asis'}}
 source(paste0(root.dir, '../step2/scripts/myRLib.R'))
-intermediate.files <- strsplit('../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p1.0000e-01.txt:../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p3.0000e-02.txt:../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p1.0000e-02.txt', ':')[[1]]
-ps <- strsplit('0.1,0.03,0.01', ',')[[1]]
-expression.files <- strsplit('output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Artery_Coronary_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/DGN-HapMap-2015_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Small_Intestine_Terminal_Ileum_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Thyroid_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Cells_EBV-transformed_lymphocytes_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Esophagus_Muscularis_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Stomach_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Whole_Blood_predicted_expression.txt', ':')[[1]]
-ts <- strsplit('Artery_Coronary,DGN-HapMap-2015,Small_Intestine_Terminal_Ileum,Thyroid,Cells_EBV-transformed_lymphocytes,Esophagus_Muscularis,Stomach,Whole_Blood', ',')[[1]]
-gene <- read.table(getFile(root.dir, 'output-prepare_gene_id/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl.genelist'), header = F, sep = '\t')
+intermediate.files <- strsplit('{intermediate_str}', ':')[[1]]
+ps <- strsplit('{fractions}', ',')[[1]]
+expression.files <- strsplit('{expression_str}', ':')[[1]]
+ts <- strsplit('{tissues}', ',')[[1]]
+gene <- read.table(getFile(root.dir, '{gene_list}'), header = F, sep = '\\t')
 colnames(gene) <- c('gene.name', 'gencode.id')
-yi <- read.table(getFile(root.dir, '../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/yi.logistic.assoc'), header = T)
+yi <- read.table(getFile(root.dir, '{yi}'), header = T)
 cols <- colnames(yi)
 yi.filenames <- apply(yi, 1, function(x) {{ return(basename(x[1]))}})
 yi.container <- c()
 expression.list <- list()
 for(i in 1 : length(ts)) {{
-  expression.list[[ts[i]]] <- read.table(getFile(root.dir, expression.files[i]), header = T, sep = '\t')
+    expression.list[[ts[i]]] <- read.table(getFile(root.dir, expression.files[i]), header = T, sep = '\t')
 }}
 intermediate.list <- list()
 for(i in 1 : length(ps)) {{
-  thisfile <- basename(intermediate.files[i])
-  yi.container <- rbind(yi.container, c(ps[i], yi[yi.filenames == thisfile, 2:7]))
-  intermediate.list[[ps[i]]] <- read.table(getFile(root.dir, intermediate.files[i]), header = T, sep = ' ')
-  intermediate.list[[ps[i]]]$PHENO <- intermediate.list[[ps[i]]]$PHENO - 1
+    thisfile <- basename(intermediate.files[i])
+    yi.container <- rbind(yi.container, c(ps[i], yi[yi.filenames == thisfile, 2:7]))
+    intermediate.list[[ps[i]]] <- read.table(getFile(root.dir, intermediate.files[i]), header = T, sep = ' ')
+    intermediate.list[[ps[i]]]$PHENO <- intermediate.list[[ps[i]]]$PHENO - 1
 }}
 yi.container <- data.frame(yi.container)
 colnames(yi.container) <- c('causal.fraction', cols[2:7])
