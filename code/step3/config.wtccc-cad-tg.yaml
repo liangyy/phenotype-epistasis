@@ -1,14 +1,14 @@
 x1: 'wtccc_cad'
 x2: 'wtccc_ctrl'
-y: 'MAGNETIC_LDL.C'
+y: 'MAGNETIC_Serum.TG'
 tissue-type: 'Artery_Coronary,DGN-HapMap-2015,Whole_Blood,Cells_EBV-transformed_lymphocytes,Thyroid,Stomach,Small_Intestine_Terminal_Ileum,Esophagus_Muscularis,Spleen,Pancreas,Esophagus_Gastroesophageal_Junction,Adrenal_Gland,Adipose_Visceral_Omentum,Adipose_Subcutaneous,Pituitary,Colon_Transverse,Esophagus_Mucosa,Liver,Lung,Muscle_Skeletal,Cells_Transformed_fibroblasts'  # can take multiple tissues (separate them by ',')
 
 ## data parameters
 wtccc_cad__wtccc_ctrl:
   name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
-MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl:
+MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl:
   name-format: '../step1/output-run_step1/{replace}/ldpred_LDpred_p'
-  gene-set: 'ILF3,TMEM132D,CDKN2B'
+  gene-set: 'PITPNM3,TMEM132D'
 
 ## other parameters
 gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v19.chr_patch_hapl_scaff.annotation.gtf.gz'
@@ -18,8 +18,8 @@ python2.7-dir: '/opt/anaconda/anaconda2/bin/'
 ldpred:
   causal-fraction: '0.1,0.03,0.01'
 
-# tissues
 
+## tissues
 Artery_Coronary:
   db: '/mnt/gluster/home/yanyul/data/predixcan/Artery_Coronary/gtex_v7_Artery_Coronary_imputed_europeans_tw_0.5_signif.db'
 DGN-HapMap-2015:
