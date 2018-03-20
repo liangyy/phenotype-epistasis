@@ -17,5 +17,5 @@ for i in e:
         f = glob.glob(i + '/*')
         for d in f:
             if d.endswith('.db'):
-                string = '{name}:\n  db: {path}'.format(name = os.path.basename(i), path = d)
+                string = '{name}:\n  db: \'{path}\''.format(name = os.path.basename(i), path = d)
                 print(string)
