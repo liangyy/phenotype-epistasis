@@ -1,10 +1,10 @@
-x1: 'wtccc_cad'
+x1: 'wtccc_crohn'
 x2: 'wtccc_ctrl'
 y: 'UKBB_wbc'
 tissue-type: 'Artery_Coronary,DGN-HapMap-2015,Whole_Blood,Cells_EBV-transformed_lymphocytes,Thyroid,Stomach,Small_Intestine_Terminal_Ileum,Esophagus_Muscularis,Spleen,Pancreas,Esophagus_Gastroesophageal_Junction,Adrenal_Gland,Adipose_Visceral_Omentum,Adipose_Subcutaneous,Pituitary,Colon_Transverse,Esophagus_Mucosa,Liver,Lung,Muscle_Skeletal,Cells_Transformed_fibroblasts'  # can take multiple tissues (separate them by ',')
 
 ## data parameters
-wtccc_cad__wtccc_ctrl:
+wtccc_crohn__wtccc_ctrl:
   name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
 UKBB_wbc__wtccc_crohn__wtccc_ctrl:
   name-format: '../step1/output-run_step1/{replace}/ldpred_LDpred_p'
