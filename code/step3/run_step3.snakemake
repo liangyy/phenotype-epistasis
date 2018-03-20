@@ -11,6 +11,9 @@ rule all_dplot:
     input:
         'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'.format(genotype = config['x1'] + '__' + config['x2'], intermediate = config['y'])
 
+rule all_iplot:
+    input:
+        'output-run_step3/{intermediate}__{genotype}/inter_gene-based.html'.format(genotype = config['x1'] + '__' + config['x2'], intermediate = config['y'])
 
 def get_all_tissues(prefix, suffix, config):
     out = []
@@ -240,6 +243,146 @@ rule gi_marginal_html:
         'output-run_step3/{intermediate}__{genotype}/direction_gene-based.Rmd'
     output:
         'output-run_step3/{intermediate}__{genotype}/direction_gene-based.html'
+    shell:
+        '''
+        R -e "rmarkdown::render('{input[0]}')"
+        '''
+
+rule gi_inter_rmd:
+    input:
+        expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
+        yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
+    params:
+        fractions = config['ldpred']['causal-fraction'],
+        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')),
+        tissues = config['tissue-type'],
+        expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config))
+    output:
+        temp('output-run_step3/{intermediate}__{geno1}__{geno2}/inter_gene-based.Rmd')
+    run:
+        rmd = '''---
+title: "Gene-based (PrediXcan) Interaction Test (Logistic Regression) - Y (wtccc_cad); I (MAGNETIC_LDL.C)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Yanyu Liang
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{{r setup, echo=FALSE}}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(ggplot2)
+library(pander)
+library(dplyr)
+root.dir <- '../'
+# knitr::opts_knit$set(root.dir = '../../')
+panderOptions('knitr.auto.asis', FALSE)
+panderOptions('table.split.table', Inf)
+```
+
+# Read data
+
+```{{r, results='asis'}}
+source(paste0(root.dir, '../step2/scripts/myRLib.R'))
+intermediate.files <- strsplit('../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p1.0000e-01.txt:../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p3.0000e-02.txt:../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/covar_LDpred_p1.0000e-02.txt', ':')[[1]]
+ps <- strsplit('0.1,0.03,0.01', ',')[[1]]
+expression.files <- strsplit('output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Artery_Coronary_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/DGN-HapMap-2015_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Small_Intestine_Terminal_Ileum_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Thyroid_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Cells_EBV-transformed_lymphocytes_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Esophagus_Muscularis_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Stomach_predicted_expression.txt:output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/Whole_Blood_predicted_expression.txt', ':')[[1]]
+ts <- strsplit('Artery_Coronary,DGN-HapMap-2015,Small_Intestine_Terminal_Ileum,Thyroid,Cells_EBV-transformed_lymphocytes,Esophagus_Muscularis,Stomach,Whole_Blood', ',')[[1]]
+gene <- read.table(getFile(root.dir, 'output-prepare_gene_id/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl.genelist'), header = F, sep = '\t')
+colnames(gene) <- c('gene.name', 'gencode.id')
+yi <- read.table(getFile(root.dir, '../step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/yi.logistic.assoc'), header = T)
+cols <- colnames(yi)
+yi.filenames <- apply(yi, 1, function(x) {{ return(basename(x[1]))}})
+yi.container <- c()
+expression.list <- list()
+for(i in 1 : length(ts)) {{
+  expression.list[[ts[i]]] <- read.table(getFile(root.dir, expression.files[i]), header = T, sep = '\t')
+}}
+intermediate.list <- list()
+for(i in 1 : length(ps)) {{
+  thisfile <- basename(intermediate.files[i])
+  yi.container <- rbind(yi.container, c(ps[i], yi[yi.filenames == thisfile, 2:7]))
+  intermediate.list[[ps[i]]] <- read.table(getFile(root.dir, intermediate.files[i]), header = T, sep = ' ')
+  intermediate.list[[ps[i]]]$PHENO <- intermediate.list[[ps[i]]]$PHENO - 1
+}}
+yi.container <- data.frame(yi.container)
+colnames(yi.container) <- c('causal.fraction', cols[2:7])
+pander(gene, knitr.auto.asis = T)
+```
+
+# Logistic regression with interaction term $Y \sim E + I + I*E$
+
+```{{r, results='asis'}}
+yei.container <- c()
+for(i in 1 : length(intermediate.list)) {{
+  cat('##', ps[i])
+  cat('\\n\\n')
+
+  inter <- intermediate.list[[ps[i]]]
+  temp.container <- c()
+  for(t in names(expression.list)) {{
+    expre <- expression.list[[t]]
+    df <- inner_join(inter, expre, by = 'IID')
+    for(g in gene[, 2]) {{
+      if(sum(abs(expre[, g])) != 0) {{
+        this.expre <- scale(expre[, g])
+      }} else {{
+        this.expre <- expre[, g]
+      }}
+      data <- data.frame(y = inter$PHENO, i = inter$PRS, e = this.expre)
+      model <- glm(y ~ e + i, family=binomial(link='logit'), data = data)
+      stats <- summary(model)
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[2], stats$coefficients[5], stats$coefficients[11], 'Y ~ E + I', 'E'))
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[3], stats$coefficients[6], stats$coefficients[12], 'Y ~ E + I', 'I'))
+      model2 <- glm(y ~ e + i + e * i, family=binomial(link='logit'), data = data)
+      stats2 <- summary(model2)
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats2$coefficients[2], stats2$coefficients[6], stats2$coefficients[14], 'Y ~ E + I + E*I', 'E'))
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats2$coefficients[3], stats2$coefficients[7], stats2$coefficients[15], 'Y ~ E + I + E*I', 'I'))
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats2$coefficients[4], stats2$coefficients[8], stats2$coefficients[16], 'Y ~ E + I + E*I', 'I*E'))
+    }}
+  }}
+  temp.container <- data.frame(temp.container)
+  colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'estmate', 'std', 'pval', 'type', 'term')
+  temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
+  temp.container <- cleanDF(temp.container, c('estmate', 'std', 'pval'))
+
+  plot.e <- temp.container[temp.container$term == 'E', ]
+  dodge <- position_dodge(width=0.5)
+  p2 <- ggplot(plot.e[!is.na(plot.e$pval), ], aes(x = tissue , color = type)) +  geom_point(aes(y = estmate), position = dodge) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Marginal effect of E on Y') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
+  print(p2)
+  cat('\\n\\n')
+
+  plot.i <- temp.container[temp.container$term == 'I', ]
+  dodge <- position_dodge(width=0.5)
+  p2 <- ggplot(plot.i[!is.na(plot.i$pval), ], aes(x = tissue , color = type)) +  geom_point(aes(y = estmate), position = dodge) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Marginal effect of I on Y') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
+  print(p2)
+  cat('\\n\\n')
+
+  temp.container.nona <- temp.container[!is.na(temp.container$pval), ]
+  for(g in unique(temp.container.nona$gene.name)) {{
+    cat('###', g, '\\n', '\\n')
+    plot.model2 <- temp.container.nona[temp.container.nona$type == 'Y ~ E + I + E*I' & temp.container.nona$gene.name == g , ]
+    if(nrow(plot.model2) == 0) next
+    p2 <- ggplot(plot.model2[!is.na(plot.model2$pval), ], aes(x = tissue)) +  geom_point(aes(y = estmate)) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.7, hjust = .5), size = 3, position = dodge) + ggtitle('Logistic regression with interaction') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~term)
+    print(p2)
+    cat('\\n\\n')
+  }}
+  cat('\\n\\n')
+}}
+```
+'''.format(y = wildcards.geno1, i = wildcards.intermediate, intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi, expression_str = params.expression_str)
+        o = open(output[0], 'w')
+        o.write(rmd)
+        o.close()
+
+rule gi_inter_html:
+    input:
+        'output-run_step3/{intermediate}__{genotype}/inter_gene-based.Rmd'
+    output:
+        'output-run_step3/{intermediate}__{genotype}/inter_gene-based.html'
     shell:
         '''
         R -e "rmarkdown::render('{input[0]}')"
