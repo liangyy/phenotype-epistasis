@@ -66,8 +66,9 @@ rule gi_marginal_rmd:
         tissues = config['tissue-type'],
         expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config))
     output:
-        'output-run_step3/{intermediate}__{geno1}__{geno2}/direction_gene-based.Rmd'
+        temp('output-run_step3/{intermediate}__{geno1}__{geno2}/direction_gene-based.Rmd')
     run:
+        # test = '{y}-{i}-{intermediate_str}-{fractions}-{tissues}-{gene_list}-{yi}-{expression_str}'.format(y = wildcards.geno1, i = wildcards.intermediate, intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi, expression_str = params.expression_str)
         rmd = '''---
 title: "Gene-based (PrediXcan) Direction (Marginal Effect) - Y ({y}); I ({i})"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
@@ -101,19 +102,19 @@ gene <- read.table(getFile(root.dir, '{gene_list}'), header = F, sep = '\\t')
 colnames(gene) <- c('gene.name', 'gencode.id')
 yi <- read.table(getFile(root.dir, '{yi}'), header = T)
 cols <- colnames(yi)
-yi.filenames <- apply(yi, 1, function(x) { return(basename(x[1]))})
+yi.filenames <- apply(yi, 1, function(x) {{ return(basename(x[1]))}})
 yi.container <- c()
 expression.list <- list()
-for(i in 1 : length(ts)) {
+for(i in 1 : length(ts)) {{
     expression.list[[ts[i]]] <- read.table(getFile(root.dir, expression.files[i]), header = T, sep = '\t')
-}
+}}
 intermediate.list <- list()
-for(i in 1 : length(ps)) {
+for(i in 1 : length(ps)) {{
     thisfile <- basename(intermediate.files[i])
     yi.container <- rbind(yi.container, c(ps[i], yi[yi.filenames == thisfile, 2:7]))
     intermediate.list[[ps[i]]] <- read.table(getFile(root.dir, intermediate.files[i]), header = T, sep = ' ')
     intermediate.list[[ps[i]]]$PHENO <- intermediate.list[[ps[i]]]$PHENO - 1
-}
+}}
 yi.container <- data.frame(yi.container)
 colnames(yi.container) <- c('causal.fraction', cols[2:7])
 pander(gene, knitr.auto.asis = T)
@@ -125,21 +126,21 @@ pander(gene, knitr.auto.asis = T)
 ye.container <- c()
 inter <- intermediate.list[[ps[i]]]
 temp.container <- c()
-for(t in names(expression.list)) {
+for(t in names(expression.list)) {{
   expre <- expression.list[[t]]
   df <- inner_join(inter, expre, by = 'IID')
-  for(g in gene[, 2]) {
-    if(sum(abs(expre[, g])) != 0) {
+  for(g in gene[, 2]) {{
+    if(sum(abs(expre[, g])) != 0) {{
       this.expre <- scale(expre[, g])
-    } else {
+    }} else {{
       this.expre <- expre[, g]
-    }
+    }}
     data <- data.frame(y = inter$PHENO, e = this.expre)
     model <- glm(y ~ e, family=binomial(link='logit'), data = data)
     stats <- summary(model)
     temp.container <- rbind(temp.container, c(t, g, stats$coefficients[1], stats$coefficients[3], stats$coefficients[7], stats$coefficients[2], stats$coefficients[4], stats$coefficients[8]))
-  }
-}
+  }}
+}}
 temp.container <- data.frame(temp.container)
 colnames(temp.container) <- c('tissue', 'gene', 'intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval')
 temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
@@ -153,27 +154,27 @@ ye.container <- rbind(ye.container, temp.container)
 
 ```{{r, results='asis'}}
 ie.container <- c()
-for(i in 1 : length(intermediate.list)) {
+for(i in 1 : length(intermediate.list)) {{
   cat('##', ps[i])
   cat('\\n')
   cat('\\n')
   inter <- intermediate.list[[ps[i]]]
   temp.container <- c()
-  for(t in names(expression.list)) {
+  for(t in names(expression.list)) {{
     expre <- expression.list[[t]]
     df <- inner_join(inter, expre, by = 'IID')
-    for(g in gene[, 2]) {
-      if(sum(abs(expre[, g])) != 0) {
+    for(g in gene[, 2]) {{
+      if(sum(abs(expre[, g])) != 0) {{
         this.expre <- scale(expre[, g])
-      } else {
+      }} else {{
         this.expre <- expre[, g]
-      }
+      }}
       data <- data.frame(i = inter$PRS, e = this.expre)
       model <- lm(i ~ e, data = data)
       stats <- summary(model)
       temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[1], stats$coefficients[3], stats$coefficients[7], stats$coefficients[2], stats$coefficients[4], stats$coefficients[8]))
-    }
-  }
+    }}
+  }}
   temp.container <- data.frame(temp.container)
   colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval')
   temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
@@ -182,34 +183,34 @@ for(i in 1 : length(intermediate.list)) {
   print(p)
   ie.container <- rbind(ie.container, temp.container)
   cat('\\n\\n')
-}
+}}
 ```
 
 # Marginal effect of gene expression and intermediate trait on phenotype $Y \sim E + I$
 
 ```{{r, results='asis'}}
 yei.container <- c()
-for(i in 1 : length(intermediate.list)) {
+for(i in 1 : length(intermediate.list)) {{
   cat('##', ps[i])
   cat('\\n')
   cat('\\n')
   inter <- intermediate.list[[ps[i]]]
   temp.container <- c()
-  for(t in names(expression.list)) {
+  for(t in names(expression.list)) {{
     expre <- expression.list[[t]]
     df <- inner_join(inter, expre, by = 'IID')
-    for(g in gene[, 2]) {
-      if(sum(abs(expre[, g])) != 0) {
+    for(g in gene[, 2]) {{
+      if(sum(abs(expre[, g])) != 0) {{
         this.expre <- scale(expre[, g])
-      } else {
+      }} else {{
         this.expre <- expre[, g]
-      }
+      }}
       data <- data.frame(y = inter$PHENO, i = inter$PRS, e = this.expre)
       model <- glm(y ~ e + i, family=binomial(link='logit'), data = data)
       stats <- summary(model)
       temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[2], stats$coefficients[5], stats$coefficients[11], stats$coefficients[3], stats$coefficients[6], stats$coefficients[12]))
-    }
-  }
+    }}
+  }}
   temp.container <- data.frame(temp.container)
   colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'E.estmate', 'E.std', 'E.pval', 'I.estmate', 'I.std', 'I.pval')
   temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
@@ -223,11 +224,11 @@ for(i in 1 : length(intermediate.list)) {
   temp2$marginal <- F
   plot.e <- rbind(temp2, temp)
   dodge <- position_dodge(width=0.5)
-  p2 <- ggplot(plot.e[!is.na(plot.e$E.pval), ], aes(x = tissue , color = marginal)) +  geom_point(aes(y = E.estmate), position = dodge) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', format(round(E.pval, 6), nsmall = 6)), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
+  p2 <- ggplot(plot.e[!is.na(plot.e$E.pval), ], aes(x = tissue , color = marginal)) +  geom_point(aes(y = E.estmate), position = dodge) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = 'e', digits = 2)), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
   print(p2)
   yei.container <- rbind(yei.container, temp.container)
   cat('\\n\\n')
-}
+}}
 ```
 '''.format(y = wildcards.geno1, i = wildcards.intermediate, intermediate_str = params.intermediate_str, fractions = params.fractions, tissues = params.tissues, gene_list = input.gene_list, yi = input.yi, expression_str = params.expression_str)
         o = open(output[0], 'w')
