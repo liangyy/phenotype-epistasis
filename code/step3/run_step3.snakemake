@@ -153,8 +153,14 @@ temp.container <- data.frame(temp.container)
 colnames(temp.container) <- c('tissue', 'gene', 'intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval')
 temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
 temp.container <- cleanDF(temp.container, c('intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval'))
-p <- ggplot(temp.container[!is.na(temp.container$E.pval), ], aes(x = tissue)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = 0.5, size = 4) + ggtitle('Y ~ E: correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
-print(p)
+ncol <- length(unique(temp.container[!is.na(temp.container$E.pval), 'gene.name'])) / 3
+if(ncol == floor(ncol)) {{
+  ncol <- floor(ncol)
+}} else {{
+  ncol <- floor(ncol) + 1
+}}
+p <- ggplot(temp.container[!is.na(temp.container$E.pval), ], aes(x = tissue)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = 0.5, size = 4) + ggtitle('Y ~ E: correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name, scales='free_x', ncol = 3)
+subchunkify(p, ratio=ncol)
 ye.container <- rbind(ye.container, temp.container)
 ```
 
@@ -187,8 +193,14 @@ for(i in 1 : length(intermediate.list)) {{
   colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval')
   temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
   temp.container <- cleanDF(temp.container, c('intercept.estmate', 'intercept.std', 'intercept.pval', 'E.estmate', 'E.std', 'E.pval'))
-  p <- ggplot(temp.container[!is.na(temp.container$E.pval), ], aes(x = tissue)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = .5, size = 4) + ggtitle('I ~ E: correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
-  print(p)
+  ncol <- length(unique(temp.container[!is.na(temp.container$E.pval), 'gene.name'])) / 3
+  if(ncol == floor(ncol)) {{
+    ncol <- floor(ncol)
+  }} else {{
+    ncol <- floor(ncol) + 1
+  }}
+  p <- ggplot(temp.container[!is.na(temp.container$E.pval), ], aes(x = tissue)) +  geom_point(aes(y = E.estmate)) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = .5, size = 4) + ggtitle('I ~ E: correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name, scales='free_x', ncol = 3)
+  subchunkify(p, ratio=ncol)
   ie.container <- rbind(ie.container, temp.container)
   cat('\\n\\n')
 }}
@@ -223,17 +235,29 @@ for(i in 1 : length(intermediate.list)) {{
   colnames(temp.container) <- c('causal.fraction', 'tissue', 'gene', 'E.estmate', 'E.std', 'E.pval', 'I.estmate', 'I.std', 'I.pval')
   temp.container <- left_join(temp.container, gene, by = c('gene' = 'gencode.id'))
   temp.container <- cleanDF(temp.container, c('I.estmate', 'I.std', 'I.pval', 'E.estmate', 'E.std', 'E.pval'))
-  p1 <- ggplot(temp.container[!is.na(temp.container$I.pval), ], aes(x = tissue)) +  geom_point(aes(y = I.estmate)) + geom_errorbar(aes(ymin = I.estmate - 1.96 * I.std, ymax = I.estmate + 1.96 * I.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + geom_hline(yintercept = yi.container[yi.container$causal.fraction == ps[i], 'prs.estmate'][[1]], color = 'blue') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = I.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = .3, size = 4) + ggtitle('Y ~ E + I (I): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
-  print(p1)
+  ncol <- length(unique(temp.container[!is.na(temp.container$I.pval), 'gene.name'])) / 3
+  if(ncol == floor(ncol)) {{
+    ncol <- floor(ncol)
+  }} else {{
+    ncol <- floor(ncol) + 1
+  }}
+  p1 <- ggplot(temp.container[!is.na(temp.container$I.pval), ], aes(x = tissue)) +  geom_point(aes(y = I.estmate)) + geom_errorbar(aes(ymin = I.estmate - 1.96 * I.std, ymax = I.estmate + 1.96 * I.std), colour = "black", width = .1) + geom_hline(yintercept = 0, color = 'red') + geom_hline(yintercept = yi.container[yi.container$causal.fraction == ps[i], 'prs.estmate'][[1]], color = 'blue') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = I.estmate, label = paste0('pval = ', formatC(E.pval, format = "e", digits = 2))), vjust = -.5, hjust = .3, size = 4) + ggtitle('Y ~ E + I (I): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name, scales='free_x', ncol=3)
+  subchunkify(p1, ratio=ncol)
 
   temp <- ye.container[, c('tissue', 'gene.name', 'E.estmate', 'E.std', 'E.pval')]
   temp$marginal <- T
   temp2 <- temp.container[, c('tissue', 'gene.name', 'E.estmate', 'E.std', 'E.pval')]
   temp2$marginal <- F
   plot.e <- rbind(temp2, temp)
+  ncol <- length(unique(plot.e[!is.na(plot.e$E.pval)), 'gene.name'])) / 3
+  if(ncol == floor(ncol)) {{
+    ncol <- floor(ncol)
+  }} else {{
+    ncol <- floor(ncol) + 1
+  }}
   dodge <- position_dodge(width=0.5)
-  p2 <- ggplot(plot.e[!is.na(plot.e$E.pval), ], aes(x = tissue , color = marginal)) +  geom_point(aes(y = E.estmate), position = dodge) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = 'e', digits = 2)), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
-  print(p2)
+  p2 <- ggplot(plot.e[!is.na(plot.e$E.pval), ], aes(x = tissue , color = marginal)) +  geom_point(aes(y = E.estmate), position = dodge) + geom_errorbar(aes(ymin = E.estmate - 1.96 * E.std, ymax = E.estmate + 1.96 * E.std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = E.estmate, label = paste0('pval = ', formatC(E.pval, format = 'e', digits = 2)), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Y ~ E + I (E): correlation estimate') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name, scales='free_x', ncol=3)
+  subchunkify(p2, ratio=ncol)
   yei.container <- rbind(yei.container, temp.container)
   cat('\\n\\n')
 }}
@@ -359,15 +383,27 @@ for(i in 1 : length(intermediate.list)) {{
   temp.container <- cleanDF(temp.container, c('estmate', 'std', 'pval'))
 
   plot.e <- temp.container[temp.container$term == 'E', ]
+  ncol <- length(unique(plot.e[!is.na(plot.e$pval), 'gene.name'])) / 3
+  if(ncol == floor(ncol)) {{
+    ncol <- floor(ncol)
+  }} else {{
+    ncol <- floor(ncol) + 1
+  }}
   dodge <- position_dodge(width=0.5)
-  p2 <- ggplot(plot.e[!is.na(plot.e$pval), ], aes(x = tissue , color = type)) +  geom_point(aes(y = estmate), position = dodge) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Marginal effect of E on Y') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
-  print(p2)
+  p2 <- ggplot(plot.e[!is.na(plot.e$pval), ], aes(x = tissue , color = type)) +  geom_point(aes(y = estmate), position = dodge) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Marginal effect of E on Y') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name, scales='free_x', ncol=3)
+  subchunkify(p2, ratio=ncol)
   cat('\\n\\n')
 
   plot.i <- temp.container[temp.container$term == 'I', ]
+  ncol <- length(unique(plot.i[!is.na(plot.i$pval), 'gene.name'])) / 3
+  if(ncol == floor(ncol)) {{
+    ncol <- floor(ncol)
+  }} else {{
+    ncol <- floor(ncol) + 1
+  }}
   dodge <- position_dodge(width=0.5)
-  p2 <- ggplot(plot.i[!is.na(plot.i$pval), ], aes(x = tissue , color = type)) +  geom_point(aes(y = estmate), position = dodge) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Marginal effect of I on Y') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name)
-  print(p2)
+  p2 <- ggplot(plot.i[!is.na(plot.i$pval), ], aes(x = tissue , color = type)) +  geom_point(aes(y = estmate), position = dodge) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1, position = dodge) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.3, hjust = .3), size = 3, position = dodge) + ggtitle('Marginal effect of I on Y') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~gene.name, scales='free_x', ncol=3)
+  subchunkify(p2, ratio=ncol)
   cat('\\n\\n')
 
   temp.container.nona <- temp.container[!is.na(temp.container$pval), ]
