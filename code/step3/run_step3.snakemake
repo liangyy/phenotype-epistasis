@@ -296,7 +296,7 @@ rule gi_inter_rmd:
         temp('output-run_step3/{intermediate}__{geno1}__{geno2}/inter_gene-based.Rmd')
     run:
         rmd = '''---
-title: "Gene-based (PrediXcan) Interaction Test (Logistic Regression) - Y (wtccc_cad); I (MAGNETIC_LDL.C)"
+title: "Gene-based (PrediXcan) Interaction Test (Logistic Regression) - Y ({y}); I ({i})"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 author: Yanyu Liang
 output:
