@@ -111,8 +111,7 @@ From the interaction test performed above, we obtain a set of SNPs that interact
 
 In brief, we want to test $Y \sim I + E + I \times E$. Intuitively, it aggregates signal across many cis-eQTLs of the gene and potentially contains the one we identified in $G$-$I$ interaction in previous section. So, the test is to see if the locus and nearby ones interacts to $I$ in consistent direction. Note that the negative result may imply
 
-1. Wrong target gene
-2. Not act through gene expression
-3. Etc
-
- 
+1. Power of gene expression prediction is limited
+2. Wrong target gene or wrong tissue
+3. Not act through gene expression
+4. Etc

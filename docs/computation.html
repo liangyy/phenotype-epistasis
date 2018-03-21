@@ -309,7 +309,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Computation</h1>
-<h4 class="date"><em>12 March, 2018</em></h4>
+<h4 class="date"><em>21 March, 2018</em></h4>
 
 </div>
 
@@ -447,7 +447,8 @@ We focus on the following model
 <p>From the interaction test performed above, we obtain a set of SNPs that interact with intermediate trait. Some of the SNPs locate in risk gene so that it is likely that the target gene is the nearest risk gene. So, the idea of this section is to test whether the gene risk interacts with intermediate trait. Conceptually, gene expression level is also an intermediate trait but its genetic architecture is kind of specially comparing to complex trait.</p>
 <p>In brief, we want to test <span class="math inline">\(Y \sim I + E + I \times E\)</span>. Intuitively, it aggregates signal across many cis-eQTLs of the gene and potentially contains the one we identified in <span class="math inline">\(G\)</span>-<span class="math inline">\(I\)</span> interaction in previous section. So, the test is to see if the locus and nearby ones interacts to <span class="math inline">\(I\)</span> in consistent direction. Note that the negative result may imply</p>
 <ol style="list-style-type: decimal">
-<li>Wrong target gene</li>
+<li>Power of gene expression prediction is limited</li>
+<li>Wrong target gene or wrong tissue</li>
 <li>Not act through gene expression</li>
 <li>Etc</li>
 </ol>

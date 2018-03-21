@@ -309,7 +309,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Results</h1>
-<h4 class="date"><em>12 March, 2018</em></h4>
+<h4 class="date"><em>21 March, 2018</em></h4>
 
 </div>
 
@@ -318,13 +318,6 @@ div.tocify {
 <pre><code>##   The fastest way to learn (by data.table authors): https://www.datacamp.com/courses/data-analysis-the-data-table-way</code></pre>
 <pre><code>##   Documentation: ?data.table, example(data.table) and browseVignettes(&quot;data.table&quot;)</code></pre>
 <pre><code>##   Release notes, videos and slides: http://r-datatable.com</code></pre>
-<pre><code>## 
-## Attaching package: &#39;data.table&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     between, first, last</code></pre>
-<pre><code>## Need help? Try the ggplot2 mailing list:
-## http://groups.google.com/group/ggplot2.</code></pre>
 <div id="summary" class="section level1">
 <h1><span class="header-section-number">1</span> Summary</h1>
 <p>This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait.</p>
@@ -341,6 +334,11 @@ div.tocify {
 <li>Follow up comment on the results (functional subsetting) if any</li>
 <li>Interaction test results based on significance subsetting (if run)</li>
 <li>Follow up comment on the results (significance subsetting) if any</li>
+<li>Gene-based analysis
+<ul>
+<li>Marginal effect</li>
+<li>Interaction test</li>
+</ul></li>
 </ul>
 </div>
 <div id="coronary-heart-disease" class="section level1">
@@ -355,15 +353,9 @@ doAll(config.hdl)</code></pre>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
 <pre class="r"><code>listSubset(config.hdl, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <pre class="r"><code>listSubset(config.hdl, &#39;sig_subset&#39;)</code></pre>
-</div>
-<div id="sig_subset" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> sig_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_HDL.C__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
-</div>
 </div>
 <div id="ldl" class="section level2">
 <h2><span class="header-section-number">2.2</span> LDL</h2>
@@ -374,9 +366,9 @@ doAll(config.ldl)</code></pre>
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
+<div id="functionally-consistent-snps" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Functionally consistent SNPs</h3>
 <pre class="r"><code>listSubset(config.ldl, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-1" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p>This <a href="http://circres.ahajournals.org/content/118/1/83">paper</a> shows the strong genetic correlation between coronary heart disease and LDL and conditional FDR (on LDL; namely incorporating LDL p-value into FDR calculation) of CHD help to identify more signal out of GWAS follow-up study. Also, LDL has been shown to be causal factor of CHD, <a href="http://www.nejm.org.proxy.uchicago.edu/doi/full/10.1056/NEJMoa054013">paper</a>.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=13465"><em>rs13465</em></a> locates in the intronic region of ILF3. Its protective effect is masked by high LDL level.</p>
@@ -386,10 +378,10 @@ doAll(config.ldl)</code></pre>
 
 </div>
 <p>Interestingly, this <a href="https://www.spandidos-publications.com/mmr/4/3/511">paper</a> reported that ILF3 (<em>rs2569512</em> was used to tag the gene) affects myocardial infarction risk only when LDL level is low (when LDL level is high, there is no association signal).</p>
-<pre class="r"><code>listSubset(config.ldl, &#39;sig_subset&#39;)</code></pre>
 </div>
-<div id="sig_subset-1" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> sig_subset</h3>
+<div id="gwas-snps" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> GWAS SNPs</h3>
+<pre class="r"><code>listSubset(config.ldl, &#39;sig_subset&#39;)</code></pre>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 <p>Here, I list SNPs that have genome-wide significant p-value in GWAS and interaction p-value &lt; 0.1</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=564398"><em>rs564398</em></a> locates in the intronic region of CDKN2B-AS1 (CDKN2B antisense RNA 1). It is a known CHD locus <a href="https://www.ncbi.nlm.nih.gov/gene/100048912">link</a>. It protective effect goes away when LDL is high but there is no strong correlation between the locus and LDL level.</p>
@@ -405,13 +397,21 @@ doAll(config.ldl)</code></pre>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2838756"><em>rs2838756</em></a> locates in intergenic region. The direction is still the same.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=523096"><em>rs523096</em></a> is another SNP in the intronic region of CDKN2B-AS1. Direction is the same.</p>
 <pre class="r"><code>drawLD(c(&#39;rs564398&#39;, &#39;rs7865618&#39;, &#39;rs7049105&#39;, &#39;rs10965215&#39;, &#39;rs10965219&#39;, &#39;rs523096&#39;, &#39;rs2398486&#39;, &#39;rs2167512&#39;), config.ldl)</code></pre>
-<p><img src="results_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="results_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>In brief, all directions are (except one with fliped sign)</p>
 <pre class="r"><code>drawGraph(&#39;-&#39;, &#39;no&#39;, &#39;+&#39;, &#39;+&#39;, &#39;cad-ldl2&#39;)  # gy, gi, yi</code></pre>
 <div class="figure">
 <img src="intergraph.cad-ldl2.png" />
 
 </div>
+</div>
+<div id="gene-based-analysis" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Gene-based analysis</h3>
+<pre class="r"><code>listGeneBasedTest(config.ldl)</code></pre>
+<ol style="list-style-type: decimal">
+<li>The marginal effect of <span class="math inline">\(E\)</span> on <span class="math inline">\(Y\)</span> and <span class="math inline">\(I\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_gene-based.html">here</a></li>
+<li>The interaction test: <span class="math inline">\(Y \sim I + E + I \times E\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_gene-based.html">here</a></li>
+</ol>
 </div>
 </div>
 <div id="serum-triglycerides-concentration" class="section level2">
@@ -423,9 +423,9 @@ doAll(config.tg)</code></pre>
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
+<div id="functionally-consistent-snps-1" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Functionally consistent SNPs</h3>
 <pre class="r"><code>listSubset(config.tg, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-2" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p>This paper proposed that triglycerides level is also a causal factor of CHD, <a href="https://www-nature-com.proxy.uchicago.edu/articles/ng.2795">paper</a>.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4541125"><em>rs4541125</em></a> shows most significant interaction (positive: i.e. as <span class="math inline">\(I\)</span> increases, the effect size of <span class="math inline">\(G\)</span> increases). In other word, the protective effect of <span class="math inline">\(G\)</span> goes away when <span class="math inline">\(I\)</span> is high. It locates in the intronic region of PITPNM3, which is reported to be under-presented in the proteomics of Acute Ischemic Strokes patients (<a href="https://pubs.acs.org/doi/full/10.1021/pr501324n?src=recsys">table 3 of the paper</a>). Note that the triglycerides level is high in cases versus controls.</p>
@@ -434,10 +434,10 @@ doAll(config.tg)</code></pre>
 <img src="intergraph.cad-tg.png" />
 
 </div>
-<pre class="r"><code>listSubset(config.tg, &#39;sig_subset&#39;)</code></pre>
 </div>
-<div id="sig_subset-2" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> sig_subset</h3>
+<div id="gwas-snps-1" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> GWAS SNPs</h3>
+<pre class="r"><code>listSubset(config.tg, &#39;sig_subset&#39;)</code></pre>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 <p>No genome-wide significant SNP get interaction p-value smaller than 0.1. Here I list the ones with interaction p-value less than 0.1</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2167512"><em>rs2167512</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2398486"><em>rs2398486</em></a> is the same as what we find in LDL. Same direction as before and here this SNP has a weak posterior effect on triglyceride level (negative). The direction is also the same. Namely, the protective effect (possibly through triglyceride level) is masked by high TG.</p>
@@ -459,10 +459,7 @@ doAll(config.leptin)</code></pre>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/LeptinBMI__wtccc_cad__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
 <pre class="r"><code>listSubset(config.leptin, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-3" class="section level3">
-<h3><span class="header-section-number">2.4.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/LeptinBMI__wtccc_cad__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
-</div>
 </div>
 </div>
 <div id="crohns-disease" class="section level1">
@@ -481,10 +478,7 @@ doAll(config.igf1)</code></pre>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/Prins_igf1__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
 <pre class="r"><code>listSubset(config.igf1, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-4" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/Prins_igf1__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
-</div>
 </div>
 <div id="white-blood-cell-count" class="section level2">
 <h2><span class="header-section-number">3.3</span> White blood cell count</h2>
@@ -495,9 +489,9 @@ doAll(config.wbc)</code></pre>
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/UKBB_wbc__wtccc_crohn__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
+<div id="functionally-consistent-snps-2" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Functionally consistent SNPs</h3>
 <pre class="r"><code>listSubset(config.wbc, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-5" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=7775228"><em>rs7775228</em></a> is a tag SNP for HLA DQ2.2 haplotype <a href="https://www.snpedia.com/index.php/Rs7775228">link</a>.</p>
 <p>Interestingly, when adding a sparse prior on the effect size, two SNPs (<a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4379550"><em>rs4379550</em></a> and <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11145756"><em>rs11145756</em></a> are both located in the intronic region of SEC16A. And their interaction terms is negative, indicating that the SNP and intermediate trait act in redundant manner.</p>
@@ -506,10 +500,10 @@ doAll(config.wbc)</code></pre>
 <img src="intergraph.crohn-wbc.png" />
 
 </div>
-<pre class="r"><code>listSubset(config.wbc, &#39;sig_subset&#39;)</code></pre>
 </div>
-<div id="sig_subset-3" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> sig_subset</h3>
+<div id="gwas-snps-2" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> GWAS SNPs</h3>
+<pre class="r"><code>listSubset(config.wbc, &#39;sig_subset&#39;)</code></pre>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 <p>There are four SNPs that hit genome-wide significance with interaction p-value &lt; 0.102. I list them first.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2076756"><em>rs2076756</em></a> locates in the intronic region of <a href="https://en.wikipedia.org/wiki/NOD2">NOD2</a> which is an IBD gene. Its risk effect goes away when the WBC is high. It has slightly positive effect on WBC, which indicate that its effect on CD does not through WBC.</p>
@@ -524,7 +518,7 @@ doAll(config.wbc)</code></pre>
 <p>This SNP high slightly modest interaction (p-value = 0.1111). <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4807569"><em>rs4807569</em></a> locates in intronic region of SBNO2. Its effect is also got enhanced. Note that it also has a strong positive effect on WBC.</p>
 <p>In summary, both masking and enhancing interactions exist.</p>
 <pre class="r"><code>drawLD(c(&#39;rs2076756&#39;, &#39;rs2066843&#39;, &#39;rs3816769&#39;, &#39;rs1026916&#39;, &#39;rs7211777&#39;), config.wbc)</code></pre>
-<p><img src="results_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="results_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 </div>
 </div>
@@ -539,9 +533,9 @@ doAll(config.fastglu)</code></pre>
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/fastGlu__wtccc_t2d__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastGlu__wtccc_t2d__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
+<div id="functionally-consistent-snps-3" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Functionally consistent SNPs</h3>
 <pre class="r"><code>listSubset(config.fastglu, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-6" class="section level3">
-<h3><span class="header-section-number">4.1.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastGlu__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=10509645"><em>rs10509645</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P14735">IDE</a>.</p>
 <p><a href="https://www.snpedia.com/index.php/Rs5015480"><em>rs5015480</em></a> (gene: <a href="http://www.uniprot.org/uniprot/Q03014">HHEX</a>).</p>
@@ -560,10 +554,10 @@ cell proliferation*.
 <img src="intergraph.t2d-fastglu.png" />
 
 </div>
-<pre class="r"><code>listSubset(config.fastglu, &#39;sig_subset&#39;)</code></pre>
 </div>
-<div id="sig_subset-4" class="section level3">
-<h3><span class="header-section-number">4.1.2</span> sig_subset</h3>
+<div id="gwas-snps-3" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> GWAS SNPs</h3>
+<pre class="r"><code>listSubset(config.fastglu, &#39;sig_subset&#39;)</code></pre>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastGlu__wtccc_t2d__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 <p><em>rs5015480</em> and <em>rs7923866</em> have been shown in <code>func_subset</code> analysis and they locate in intergenic region. They are near HHEX and IDE. This region has been confirmed by multiple studies.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=11075123"><em>rs11075123</em></a> locates in intergenic region. The directions are</p>
@@ -575,7 +569,7 @@ cell proliferation*.
 <p>Interestingly, the direction is not the same as before. Namely the protective effect is stronger if fast glucose level is high.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2930291"><em>rs2930291</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/Q8N5R6">CCDC33</a>. Not sure about its function. The protective effect is stronger when fast glucose level is high, which is the same as <em>rs11075123</em> but the opposite of the others.</p>
 <pre class="r"><code>drawLD(c(&#39;rs5015480&#39;, &#39;rs7923866&#39;), config.fastglu)</code></pre>
-<p><img src="results_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="results_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 </div>
 </div>
 <div id="fast-insulin" class="section level2">
@@ -587,9 +581,9 @@ doAll(config.fastinsulin)</code></pre>
 <li>Comparison of Beta <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step1/output-run_step1/fastInsulin__wtccc_t2d__wtccc_ctrl/prs_report.html">here</a></li>
 <li>Marginal directions <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastInsulin__wtccc_t2d__wtccc_ctrl/direction_report.html">here</a></li>
 </ol>
+<div id="functionally-consistent-snps-4" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Functionally consistent SNPs</h3>
 <pre class="r"><code>listSubset(config.fastinsulin, &#39;func_subset&#39;)</code></pre>
-<div id="func_subset-7" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> func_subset</h3>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_report.func_subset.html">here</a></p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2155105"><em>rs2155105</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P57729">RAB38</a>. It is associated with albuminuria in T2D.</p>
 <p>rs1996913, rs17606320, rs7544694, rs7543693, rs12173920, rs16895362,rs2049316, rs6864348 have almost no signal in <span class="math inline">\(I \sim G\)</span>.</p>
@@ -602,10 +596,10 @@ doAll(config.fastinsulin)</code></pre>
 <img src="intergraph.t2d-fastinsulin.png" />
 
 </div>
-<pre class="r"><code>listSubset(config.fastinsulin, &#39;sig_subset&#39;)</code></pre>
 </div>
-<div id="sig_subset-5" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> sig_subset</h3>
+<div id="gwas-snps-4" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> GWAS SNPs</h3>
+<pre class="r"><code>listSubset(config.fastinsulin, &#39;sig_subset&#39;)</code></pre>
 <p>Interaction test results are <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_report.sig_subset.html">here</a></p>
 <p>No genomve-wide significant hits.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=8012854"><em>rs8012854</em></a> locates in LOC105370657 upstream 2kb. Unsure function. Its protective effect goes away when fast insulin is high.</p>

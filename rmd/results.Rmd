@@ -23,8 +23,13 @@ listReports <- function(meta) {
 }
 listSubset <- function(filename, subset) {
   meta <- yaml.load_file(filename)
-  cat('###', subset, '\n', '\n')
+  # cat('###', subset, '\n', '\n')
   cat(paste0('Interaction test results are [here](https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-run_step2/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/inter_report.', subset, '.html)'), '\n')
+}
+listGeneBasedTest <- function(filename) {
+  meta <- yaml.load_file(filename)
+  cat(paste0('1. The marginal effect of $E$ on $Y$ and $I$ is [here](', 'https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/direction_gene-based.html', ')'), '\n')
+  cat(paste0('2. The interaction test: $Y \\sim I + E + I \\times E$ is [here](', 'https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/inter_gene-based.html', ')'), '\n')
 }
 doAll <- function(filename) {
   meta <- yaml.load_file(filename)
@@ -104,6 +109,9 @@ Every subsection presents the following information.
 * Follow up comment on the results (functional subsetting) if any
 * Interaction test results based on significance subsetting (if run)
 * Follow up comment on the results (significance subsetting) if any
+* Gene-based analysis
+    * Marginal effect
+    * Interaction test
 
 # Coronary heart disease
 
@@ -124,6 +132,11 @@ listSubset(config.hdl, 'sig_subset')
 ```{r, results='asis'}
 config.ldl <- '../code/step2/config.wtccc-cad-ldl.yaml'
 doAll(config.ldl)
+```
+
+### Functionally consistent SNPs
+
+```{r, results='asis'}
 listSubset(config.ldl, 'func_subset')
 ```
 
@@ -136,6 +149,8 @@ drawGraph('-', '-', '+', '+', 'cad-ldl') #
 ```
 
 Interestingly, this [paper](https://www.spandidos-publications.com/mmr/4/3/511) reported that ILF3 (*rs2569512* was used to tag the gene) affects myocardial infarction risk only when LDL level is low (when LDL level is high, there is no association signal).
+
+### GWAS SNPs
 
 ```{r, results='asis'}
 listSubset(config.ldl, 'sig_subset')
@@ -177,11 +192,23 @@ In brief, all directions are (except one with fliped sign)
 drawGraph('-', 'no', '+', '+', 'cad-ldl2')  # gy, gi, yi
 ```
 
+### Gene-based analysis
+
+```{r, results='asis'}
+listGeneBasedTest(config.ldl)
+```
+
+
 ## Serum triglycerides concentration
 
 ```{r, results='asis'}
 config.tg <- '../code/step2/config.wtccc-cad-tg.yaml'
 doAll(config.tg)
+```
+
+### Functionally consistent SNPs
+
+```{r, results='asis'}
 listSubset(config.tg, 'func_subset')
 ```
 
@@ -192,6 +219,8 @@ This paper proposed that triglycerides level is also a causal factor of CHD, [pa
 ```{r, results='asis'}
 drawGraph('-', '-', '+', '+', 'cad-tg')  # gy, gi, yi
 ```
+
+### GWAS SNPs
 
 ```{r, results='asis'}
 listSubset(config.tg, 'sig_subset')
@@ -234,6 +263,11 @@ listSubset(config.igf1, 'func_subset')
 ```{r, results='asis'}
 config.wbc <- '../code/step2/config.wtccc-crohn-wbc.yaml'
 doAll(config.wbc)
+```
+
+### Functionally consistent SNPs
+
+```{r, results='asis'}
 listSubset(config.wbc, 'func_subset')
 ```
 
@@ -244,6 +278,8 @@ Interestingly, when adding a sparse prior on the effect size, two SNPs ([*rs4379
 ```{r, results='asis'}
 drawGraph('+', '+', '+', '-', 'crohn-wbc')  # gy, gi, yi
 ```
+
+### GWAS SNPs
 
 ```{r, results='asis'}
 listSubset(config.wbc, 'sig_subset')
@@ -284,6 +320,11 @@ drawLD(c('rs2076756', 'rs2066843', 'rs3816769', 'rs1026916', 'rs7211777'), confi
 ```{r, results='asis'}
 config.fastglu <- '../code/step2/config.wtccc-t2d-fastglu.yaml'
 doAll(config.fastglu)
+```
+
+### Functionally consistent SNPs
+
+```{r, results='asis'}
 listSubset(config.fastglu, 'func_subset')
 ```
 
@@ -310,6 +351,8 @@ Overall, all the SNPs mentioned above have the same direction. Namely the protec
 drawGraph('-', '-', '+', '+', 't2d-fastglu')  # gy, gi, yi
 ```
 
+### GWAS SNPs
+
 ```{r, results='asis'}
 listSubset(config.fastglu, 'sig_subset')
 ```
@@ -334,6 +377,11 @@ drawLD(c('rs5015480', 'rs7923866'), config.fastglu)
 ```{r, results='asis'}
 config.fastinsulin <- '../code/step2/config.wtccc-t2d-fastinsulin.yaml'
 doAll(config.fastinsulin)
+```
+
+### Functionally consistent SNPs
+
+```{r, results='asis'}
 listSubset(config.fastinsulin, 'func_subset')
 ```
 
@@ -352,6 +400,8 @@ All SNPs but rs2139980 mentioned has protective effect on T2D and when backgroun
 ```{r, results='asis'}
 drawGraph('-', '-', '+', '+', 't2d-fastinsulin')  # gy, gi, yi
 ```
+
+### GWAS SNPs
 
 ```{r, results='asis'}
 listSubset(config.fastinsulin, 'sig_subset')
