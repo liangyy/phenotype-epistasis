@@ -15,8 +15,7 @@ gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v19.chr_patch
 chr-list: 'chr,1:22'
 predixcan-dir: '/mnt/gluster/home/yanyul/repo/PrediXcan/Software/'
 python2.7-dir: '/opt/anaconda/anaconda2/bin/'
-ldpred:
-  causal-fraction: '0.1,0.03,0.01'
+causal-fraction-step3: '0.1,0.03,0.01'
 
 # tissues
 

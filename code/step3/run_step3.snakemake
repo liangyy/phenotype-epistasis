@@ -65,12 +65,12 @@ rule predixcan:
 rule gi_marginal_rmd:
     input:
         expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['causal-fraction-step3'], '.txt'),
         gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
         yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     params:
-        fractions = config['ldpred']['causal-fraction'],
-        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')),
+        fractions = config['causal-fraction-step3'],
+        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['causal-fraction-step3'], '.txt')),
         tissues = config['tissue-type'],
         expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config))
     output:
@@ -270,7 +270,7 @@ for(i in 1 : length(intermediate.list)) {{
 rule gi_marginal_html:
     input:
         expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['causal-fraction-step3'], '.txt'),
         gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
         yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc',
         i = 'output-run_step3/{intermediate}__{geno1}__{geno2}/direction_gene-based.Rmd'
@@ -284,12 +284,12 @@ rule gi_marginal_html:
 rule gi_inter_rmd:
     input:
         expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['causal-fraction-step3'], '.txt'),
         gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
         yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     params:
-        fractions = config['ldpred']['causal-fraction'],
-        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt')),
+        fractions = config['causal-fraction-step3'],
+        intermediate_str = ':'.join(get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['causal-fraction-step3'], '.txt')),
         tissues = config['tissue-type'],
         expression_str = ':'.join(get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config))
     output:
@@ -414,7 +414,7 @@ for(i in 1 : length(intermediate.list)) {{
     cat('###', g, '\\n', '\\n')
     plot.model2 <- temp.container.nona[temp.container.nona$type != 'Y ~ E + I' & temp.container.nona$gene.name == g , ]
     if(nrow(plot.model2) == 0) next
-    ratio <- length(unique(plot.model2[!is.na(plot.model2$pval), 'tissue'])) / 8
+    ratio <- length(unique(plot.model2[!is.na(plot.model2$pval), 'tissue'])) / 12
     p2 <- ggplot(plot.model2[!is.na(plot.model2$pval), ], aes(x = tissue)) +  geom_point(aes(y = estmate)) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.7, hjust = .5), size = 3, position = dodge) + ggtitle('Logistic regression with interaction') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~term, scales='free_x', ncol=4)
     subchunkify(p2, fig_asp=ratio)
     cat('\\n\\n')
@@ -431,7 +431,7 @@ rule gi_inter_html:
     input:
         i = 'output-run_step3/{intermediate}__{geno1}__{geno2}/inter_gene-based.Rmd',
         expression = get_all_tissues('output-run_step3/{intermediate}__{geno1}__{geno2}/', '_predicted_expression.txt', config),
-        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['ldpred']['causal-fraction'], '.txt'),
+        intermediate = get_ldpred_outputs_ext('../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/covar', config['causal-fraction-step3'], '.txt'),
         gene_list = 'output-prepare_gene_id/{intermediate}__{geno1}__{geno2}.genelist',
         yi = '../step2/output-direction_XT_YI/{intermediate}__{geno1}__{geno2}/yi.logistic.assoc'
     output:

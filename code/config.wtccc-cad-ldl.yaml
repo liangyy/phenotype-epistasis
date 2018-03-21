@@ -1,24 +1,69 @@
+######################### header parameters ############################
 x1: 'wtccc_cad'
 x2: 'wtccc_ctrl'
-y: 'MAGNETIC_Serum.TG'
+y: 'MAGNETIC_LDL.C'
 tissue-type: 'Artery_Coronary,DGN-HapMap-2015,Whole_Blood,Cells_EBV-transformed_lymphocytes,Thyroid,Stomach,Small_Intestine_Terminal_Ileum,Esophagus_Muscularis,Spleen,Pancreas,Esophagus_Gastroesophageal_Junction,Adrenal_Gland,Adipose_Visceral_Omentum,Adipose_Subcutaneous,Pituitary,Colon_Transverse,Esophagus_Mucosa,Liver,Lung,Muscle_Skeletal,Cells_Transformed_fibroblasts'  # can take multiple tissues (separate them by ',')
+######################### header parameters END ########################
 
-## data parameters
+########################### data parameters ############################
+#----------------------------- step 1 ---------------------------------#
+wtccc_cad:
+  prepare_XT:
+    geno-mean:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cad/cad.{chr}.mean.genotype.txt.gz'
+    snp-list:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cad/cad.wtccc.{chr}.pos'
+  combine_XT_YT:
+    case-control: 2   # 1 for unaffected; 2 for affected
+wtccc_ctrl:
+  prepare_XT:
+    geno-mean:
+      name-format: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/merge/wtccc_ctrl.{chr}.mean.genotype.txt.gz'
+    snp-list:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/birthctrl/birthctrl.wtccc.{chr}.pos'
+  combine_XT_YT:
+    case-control: 1
+MAGNETIC_LDL.C:
+  prepare_betaI:
+    beta-ss: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/Summary_statistics_MAGNETIC_LDL.C.txt.gz'
+    header: 1  # no header = 0, with header = 1
+    chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '1,2,5,4,-6,10,3,9,7,11'  # add '-' before reffrq is the column is referring to altfrq
+    sep: '" "'
+  nsamples: 21559
+#---------------------------- step 2/3 -------------------------------#
 wtccc_cad__wtccc_ctrl:
   name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
-MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl:
+MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl:
   name-format: '../step1/output-run_step1/{replace}/ldpred_LDpred_p'
-  gene-set: 'PITPNM3,TMEM132D'
+  gene-set: 'ILF3,TMEM132D,CDKN2B'
+######################## data parameters END ##########################
 
-## other parameters
-gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v19.chr_patch_hapl_scaff.annotation.gtf.gz'
+########################### other parameters ##########################
+#----------------------------- step 1 --------------------------------#
+ldpred-dir: '../../../ldpred/ldpred'
+ldpred:
+  num-SNPs-per-xMb: 1
+  causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
 chr-list: 'chr,1:22'
+quality-control:
+  hwe: 0.05  # 0.05
+  maf: 0.05  # 0.01
+  geno: 0.05  # 0.05
+#----------------------------- step 2 --------------------------------#
+yi-pattern: 'covar_LDpred_:.txt'
+functional-subsetting:
+  pval-theshold: 0.01
+sigificance-subsetting:
+  pval-theshold: 5e-5
+#----------------------------- step 3 --------------------------------#
+gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v19.chr_patch_hapl_scaff.annotation.gtf.gz'
 predixcan-dir: '/mnt/gluster/home/yanyul/repo/PrediXcan/Software/'
 python2.7-dir: '/opt/anaconda/anaconda2/bin/'
 causal-fraction-step3: '0.1,0.03,0.01'
+########################## other parameters END #########################
 
 
-## tissues
+########################### tissue parameters ###########################
 Artery_Coronary:
   db: '/mnt/gluster/home/yanyul/data/predixcan/Artery_Coronary/gtex_v7_Artery_Coronary_imputed_europeans_tw_0.5_signif.db'
 DGN-HapMap-2015:
@@ -61,3 +106,4 @@ Muscle_Skeletal:
   db: '/mnt/gluster/home/yanyul/data/predixcan/Muscle_Skeletal/gtex_v7_Muscle_Skeletal_imputed_europeans_tw_0.5_signif.db'
 Cells_Transformed_fibroblasts:
   db: '/mnt/gluster/home/yanyul/data/predixcan/Cells_Transformed_fibroblasts/gtex_v7_Cells_Transformed_fibroblasts_imputed_europeans_tw_0.5_signif.db'
+########################### tissue parameters END ######################
