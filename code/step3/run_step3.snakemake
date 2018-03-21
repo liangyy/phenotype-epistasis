@@ -414,8 +414,9 @@ for(i in 1 : length(intermediate.list)) {{
     cat('###', g, '\\n', '\\n')
     plot.model2 <- temp.container.nona[temp.container.nona$type != 'Y ~ E + I' & temp.container.nona$gene.name == g , ]
     if(nrow(plot.model2) == 0) next
+    ratio <- length(unique(plot.model2[!is.na(plot.model2$pval), 'gene.name'])) / 10
     p2 <- ggplot(plot.model2[!is.na(plot.model2$pval), ], aes(x = tissue)) +  geom_point(aes(y = estmate)) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.7, hjust = .5), size = 3, position = dodge) + ggtitle('Logistic regression with interaction') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~term, scales='free_x', ncol=4)
-    subchunkify(p2)
+    subchunkify(p2, fig_asp=ratio)
     cat('\\n\\n')
   }}
   cat('\\n\\n')
