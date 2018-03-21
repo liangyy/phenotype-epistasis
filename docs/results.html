@@ -314,10 +314,6 @@ div.tocify {
 </div>
 
 
-<pre><code>## data.table 1.10.4.3</code></pre>
-<pre><code>##   The fastest way to learn (by data.table authors): https://www.datacamp.com/courses/data-analysis-the-data-table-way</code></pre>
-<pre><code>##   Documentation: ?data.table, example(data.table) and browseVignettes(&quot;data.table&quot;)</code></pre>
-<pre><code>##   Release notes, videos and slides: http://r-datatable.com</code></pre>
 <div id="summary" class="section level1">
 <h1><span class="header-section-number">1</span> Summary</h1>
 <p>This page presents the results of analysis that have been done. Every section is one disease (phenotype of interest) and each subsection is the analysis for a particular intermediate trait.</p>
@@ -359,7 +355,7 @@ doAll(config.hdl)</code></pre>
 </div>
 <div id="ldl" class="section level2">
 <h2><span class="header-section-number">2.2</span> LDL</h2>
-<pre class="r"><code>config.ldl &lt;- &#39;../code/step2/config.wtccc-cad-ldl.yaml&#39;
+<pre class="r"><code>config.ldl &lt;- &#39;../code/config.wtccc-cad-ldl.yaml&#39;
 doAll(config.ldl)</code></pre>
 <p>The threhold used for extracting functionally consistent variant is 0.01 <img src="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
@@ -408,15 +404,18 @@ doAll(config.ldl)</code></pre>
 <div id="gene-based-analysis" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> Gene-based analysis</h3>
 <pre class="r"><code>listGeneBasedTest(config.ldl)</code></pre>
+<p>Gene wildcards used for search are ILF3,TMEM132D,CDKN2B</p>
 <ol style="list-style-type: decimal">
 <li>The marginal effect of <span class="math inline">\(E\)</span> on <span class="math inline">\(Y\)</span> and <span class="math inline">\(I\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/direction_gene-based.html">here</a></li>
 <li>The interaction test: <span class="math inline">\(Y \sim I + E + I \times E\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/MAGNETIC_LDL.C__wtccc_cad__wtccc_ctrl/inter_gene-based.html">here</a></li>
 </ol>
+<p>Only ILF3-AS1 and TMEM132D has predicted expression in the selected tissue types. Interestingly, The expression level of ILF3-AS1 does associated with phenotype in some tissue types (Esophagus, Thyroid, etc) and its effects on LDL are consistent with the effect on CHD (this is also as expected since LDL is correlated with CHD). The interaction term is not significant, but the direction are the same across all tissues. That is the interaction tends to mask the effect of ILF3-AS1 expression when LDL is high. This result is also consistent with the previous finding in functionally consistent SNPs.</p>
+<p>For TMEM132D, neither marginal nor interaction term is significant, which indicates that TMEM132D may not be the target gene of the associated SNPs.</p>
 </div>
 </div>
 <div id="serum-triglycerides-concentration" class="section level2">
 <h2><span class="header-section-number">2.3</span> Serum triglycerides concentration</h2>
-<pre class="r"><code>config.tg &lt;- &#39;../code/step2/config.wtccc-cad-tg.yaml&#39;
+<pre class="r"><code>config.tg &lt;- &#39;../code/config.wtccc-cad-tg.yaml&#39;
 doAll(config.tg)</code></pre>
 <p>The threhold used for extracting functionally consistent variant is 0.01 <img src="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
@@ -447,6 +446,16 @@ doAll(config.tg)</code></pre>
 <img src="intergraph.cad-tg2.png" />
 
 </div>
+</div>
+<div id="gene-based-analysis-1" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Gene-based analysis</h3>
+<pre class="r"><code>listGeneBasedTest(config.tg)</code></pre>
+<p>Gene wildcards used for search are PITPNM3,TMEM132D</p>
+<ol style="list-style-type: decimal">
+<li>The marginal effect of <span class="math inline">\(E\)</span> on <span class="math inline">\(Y\)</span> and <span class="math inline">\(I\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/direction_gene-based.html">here</a></li>
+<li>The interaction test: <span class="math inline">\(Y \sim I + E + I \times E\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/MAGNETIC_Serum.TG__wtccc_cad__wtccc_ctrl/inter_gene-based.html">here</a></li>
+</ol>
+<p>Still TMEM132D is not significant. <a href="http://www.uniprot.org/uniprot/Q9BZ71">PITPNM3</a> has been associated with Mendelian disease on visual transduction defect. But the gene is also highly expressed in spleen with unknown functional implication. The gene-based interaction analysis shows that PITPNM3 in esophagus, pancreas, muscle skeletal, and adrenal gland has decent marginal effect on CHD and the interaction term is consistently masking the effect. This is consistent with the previous finding based on functionally consistent SNPs.</p>
 </div>
 </div>
 <div id="leptin" class="section level2">
@@ -482,7 +491,7 @@ doAll(config.igf1)</code></pre>
 </div>
 <div id="white-blood-cell-count" class="section level2">
 <h2><span class="header-section-number">3.3</span> White blood cell count</h2>
-<pre class="r"><code>config.wbc &lt;- &#39;../code/step2/config.wtccc-crohn-wbc.yaml&#39;
+<pre class="r"><code>config.wbc &lt;- &#39;../code/config.wtccc-crohn-wbc.yaml&#39;
 doAll(config.wbc)</code></pre>
 <p>The threhold used for extracting functionally consistent variant is 0.001 <img src="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
@@ -518,7 +527,17 @@ doAll(config.wbc)</code></pre>
 <p>This SNP high slightly modest interaction (p-value = 0.1111). <a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=4807569"><em>rs4807569</em></a> locates in intronic region of SBNO2. Its effect is also got enhanced. Note that it also has a strong positive effect on WBC.</p>
 <p>In summary, both masking and enhancing interactions exist.</p>
 <pre class="r"><code>drawLD(c(&#39;rs2076756&#39;, &#39;rs2066843&#39;, &#39;rs3816769&#39;, &#39;rs1026916&#39;, &#39;rs7211777&#39;), config.wbc)</code></pre>
-<p><img src="results_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="results_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="gene-based-analysis-2" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> Gene-based analysis</h3>
+<pre class="r"><code>listGeneBasedTest(config.wbc)</code></pre>
+<p>Gene wildcards used for search are STAT3,NOD2,RSPH6A,SBNO2</p>
+<ol style="list-style-type: decimal">
+<li>The marginal effect of <span class="math inline">\(E\)</span> on <span class="math inline">\(Y\)</span> and <span class="math inline">\(I\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/UKBB_wbc__wtccc_crohn__wtccc_ctrl/direction_gene-based.html">here</a></li>
+<li>The interaction test: <span class="math inline">\(Y \sim I + E + I \times E\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/UKBB_wbc__wtccc_crohn__wtccc_ctrl/inter_gene-based.html">here</a></li>
+</ol>
+<p>Only STAT3, NOD2, and SBNO2 have predicted expression in selected tissues. STAT3 has significant interaction (p &lt; 0.02) in muscle skeletal where the effect of STAT3 is enhanced when WBC is high. This is consistent with the previous finding in GWAS SNPs. While NOD2 and SBNO2 do not have significant interaction.</p>
 </div>
 </div>
 </div>
@@ -526,7 +545,7 @@ doAll(config.wbc)</code></pre>
 <h1><span class="header-section-number">4</span> Type II diabetes</h1>
 <div id="fast-glucose" class="section level2">
 <h2><span class="header-section-number">4.1</span> Fast glucose</h2>
-<pre class="r"><code>config.fastglu &lt;- &#39;../code/step2/config.wtccc-t2d-fastglu.yaml&#39;
+<pre class="r"><code>config.fastglu &lt;- &#39;../code/config.wtccc-t2d-fastglu.yaml&#39;
 doAll(config.fastglu)</code></pre>
 <p>The threhold used for extracting functionally consistent variant is 0.01 <img src="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastGlu__wtccc_t2d__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
@@ -569,12 +588,23 @@ cell proliferation*.
 <p>Interestingly, the direction is not the same as before. Namely the protective effect is stronger if fast glucose level is high.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2930291"><em>rs2930291</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/Q8N5R6">CCDC33</a>. Not sure about its function. The protective effect is stronger when fast glucose level is high, which is the same as <em>rs11075123</em> but the opposite of the others.</p>
 <pre class="r"><code>drawLD(c(&#39;rs5015480&#39;, &#39;rs7923866&#39;), config.fastglu)</code></pre>
-<p><img src="results_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="results_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+<div id="gene-based-analysis-3" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Gene-based analysis</h3>
+<pre class="r"><code>listGeneBasedTest(config.fastglu)</code></pre>
+<p>Gene wildcards used for search are IDE,HHEX,TTLL5,CCDC33</p>
+<ol style="list-style-type: decimal">
+<li>The marginal effect of <span class="math inline">\(E\)</span> on <span class="math inline">\(Y\)</span> and <span class="math inline">\(I\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/fastGlu__wtccc_t2d__wtccc_ctrl/direction_gene-based.html">here</a></li>
+<li>The interaction test: <span class="math inline">\(Y \sim I + E + I \times E\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/fastGlu__wtccc_t2d__wtccc_ctrl/inter_gene-based.html">here</a></li>
+</ol>
+<p>Only IDE, HHEX, and TTLL5 have predicted expression in selected tissues. TTLL5 has significant interaction in adrenal gland (p &lt; 0.01). When fast glucose level is high, the expression level of TTLL5 increases the risk. TTLL5 has been associated with retinal disease but interestingly enough, it involves in glucocorticoid receptor-mediated induction and repression, which is a pathway to control the transcription of genes in diverse processes (energy metabolism, immune response, etc) <a href="http://mcb.asm.org/content/27/4/1467.long">TTLL5/STAMP paper</a> <a href="http://www.pnas.org/content/106/39/16598">GR paper</a>.</p>
+<p>IDE and HHEX have some trend on interaction as well (pituitary for IDE and fibroblast for HHEX). The direction is when fast glucose is high, the expression level of IDE and HHEX tend to enhance the risk.</p>
 </div>
 </div>
 <div id="fast-insulin" class="section level2">
 <h2><span class="header-section-number">4.2</span> Fast insulin</h2>
-<pre class="r"><code>config.fastinsulin &lt;- &#39;../code/step2/config.wtccc-t2d-fastinsulin.yaml&#39;
+<pre class="r"><code>config.fastinsulin &lt;- &#39;../code/config.wtccc-t2d-fastinsulin.yaml&#39;
 doAll(config.fastinsulin)</code></pre>
 <p>The threhold used for extracting functionally consistent variant is 0.01 <img src="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step2/output-direction_XT_YI/fastInsulin__wtccc_t2d__wtccc_ctrl/direction_yi.png" /></p>
 <ol style="list-style-type: decimal">
@@ -588,7 +618,7 @@ doAll(config.fastinsulin)</code></pre>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2155105"><em>rs2155105</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/P57729">RAB38</a>. It is associated with albuminuria in T2D.</p>
 <p>rs1996913, rs17606320, rs7544694, rs7543693, rs12173920, rs16895362,rs2049316, rs6864348 have almost no signal in <span class="math inline">\(I \sim G\)</span>.</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=3734262"><em>rs3734262</em></a> locates in the intronic region of <a href="http://www.uniprot.org/uniprot/Q96T88">UHRF1</a> binding protein 1 (<a href="http://www.uniprot.org/uniprot/Q6BDS2">UHRF1BP1</a>)</p>
-<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9368834"><em>rs9368834</em></a> locates in the intronic region of <a href="https://www.uniprot.org/uniprot/Q92625">ANKS1A</a>. It has been reported that this gene is associated with T2D in obese individuals.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9368834"><em>rs9368834</em></a> locates in the intronic region of <a href="https://www.uniprot.org/uniprot/Q92625">ANKS1A</a>. It has been reported that this gene is associated with T2D in obese individuals <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3364960/">paper</a> (signal is weak and failed to replicate).</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2139980"><em>rs2139980</em></a>. It direction is not the same as others.</p>
 <p>All SNPs but rs2139980 mentioned has protective effect on T2D and when background fast insulin is high, the protective effects become smaller. For rs2139980, its protective effect becomes even stronger.</p>
 <pre class="r"><code>drawGraph(&#39;-&#39;, &#39;-&#39;, &#39;+&#39;, &#39;+&#39;, &#39;t2d-fastinsulin&#39;)  # gy, gi, yi</code></pre>
@@ -612,6 +642,16 @@ doAll(config.fastinsulin)</code></pre>
 <img src="intergraph.t2d-fastinsulin2.png" />
 
 </div>
+</div>
+<div id="gene-based-analysis-4" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Gene-based analysis</h3>
+<pre class="r"><code>listGeneBasedTest(config.fastinsulin)</code></pre>
+<p>Gene wildcards used for search are RAB38,UHRF1,ANKS1A,HRH1,LGR5,TSPAN8</p>
+<ol style="list-style-type: decimal">
+<li>The marginal effect of <span class="math inline">\(E\)</span> on <span class="math inline">\(Y\)</span> and <span class="math inline">\(I\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/fastInsulin__wtccc_t2d__wtccc_ctrl/direction_gene-based.html">here</a></li>
+<li>The interaction test: <span class="math inline">\(Y \sim I + E + I \times E\)</span> is <a href="https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/fastInsulin__wtccc_t2d__wtccc_ctrl/inter_gene-based.html">here</a></li>
+</ol>
+<p>All of them have some predicted expression but only ANKS1A has significant interaction (p &lt; 0.05, in whole blood). When fast insulin is high, the expression of ANKS1A enhances the risk though it has marginal effect to decrease the level of risk factor, fast insulin. An explanation is that ANKS1A should be maintained at certain level to keep fast insulin from being too high (this explains why ANKS1A expression decreases fast insulin level) and if baseline fast insulin is high, such protective effect is masked. ANKS1A has been associated with coronary heart disease and cancer. Note that ANKS1A is close to UHRF1BP1 and this locus has been associated with fast insulin <a href="https://www.nature.com/articles/ng.2274">paper</a>. However, ANKS1A has not been identified as a T2D locus.</p>
 </div>
 </div>
 </div>

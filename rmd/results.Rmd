@@ -28,6 +28,7 @@ listSubset <- function(filename, subset) {
 }
 listGeneBasedTest <- function(filename) {
   meta <- yaml.load_file(filename)
+  cat('Gene wildcards used for search are', meta[[paste0(meta$`TRUE`, '__', meta$x1, '__', meta$x2)]]$`gene-set`, '\n\n')
   cat(paste0('1. The marginal effect of $E$ on $Y$ and $I$ is [here](', 'https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/direction_gene-based.html', ')'), '\n')
   cat(paste0('2. The interaction test: $Y \\sim I + E + I \\times E$ is [here](', 'https://rawgit.com/liangyy/phenotype-epistasis/master/code/step3/output-run_step3/', meta$`TRUE`, '__', meta$x1, '__', meta$x2, '/inter_gene-based.html', ')'), '\n')
 }
@@ -130,7 +131,7 @@ listSubset(config.hdl, 'sig_subset')
 ## LDL
 
 ```{r, results='asis'}
-config.ldl <- '../code/step2/config.wtccc-cad-ldl.yaml'
+config.ldl <- '../code/config.wtccc-cad-ldl.yaml'
 doAll(config.ldl)
 ```
 
@@ -198,11 +199,14 @@ drawGraph('-', 'no', '+', '+', 'cad-ldl2')  # gy, gi, yi
 listGeneBasedTest(config.ldl)
 ```
 
+Only ILF3-AS1 and TMEM132D has predicted expression in the selected tissue types. Interestingly, The expression level of ILF3-AS1 does associated with phenotype in some tissue types (Esophagus, Thyroid, etc) and its effects on LDL are consistent with the effect on CHD (this is also as expected since LDL is correlated with CHD). The interaction term is not significant, but the direction are the same across all tissues. That is the interaction tends to mask the effect of ILF3-AS1 expression when LDL is high. This result is also consistent with the previous finding in functionally consistent SNPs.
+
+For TMEM132D, neither marginal nor interaction term is significant, which indicates that TMEM132D may not be the target gene of the associated SNPs.
 
 ## Serum triglycerides concentration
 
 ```{r, results='asis'}
-config.tg <- '../code/step2/config.wtccc-cad-tg.yaml'
+config.tg <- '../code/config.wtccc-cad-tg.yaml'
 doAll(config.tg)
 ```
 
@@ -236,6 +240,14 @@ No genome-wide significant SNP get interaction p-value smaller than 0.1. Here I 
 drawGraph('-', 'no(-)', '+', '+', 'cad-tg2')  # gy, gi, yi
 ```
 
+### Gene-based analysis
+
+```{r, results='asis'}
+listGeneBasedTest(config.tg)
+```
+
+Still TMEM132D is not significant. [PITPNM3](http://www.uniprot.org/uniprot/Q9BZ71) has been associated with Mendelian disease on visual transduction defect. But the gene is also highly expressed in spleen with unknown functional implication. The gene-based interaction analysis shows that PITPNM3 in esophagus, pancreas, muscle skeletal, and adrenal gland has decent marginal effect on CHD and the interaction term is consistently masking the effect. This is consistent with the previous finding based on functionally consistent SNPs.
+
 ## Leptin
 
 ```{r, results='asis'}
@@ -261,7 +273,7 @@ listSubset(config.igf1, 'func_subset')
 ## White blood cell count
 
 ```{r, results='asis'}
-config.wbc <- '../code/step2/config.wtccc-crohn-wbc.yaml'
+config.wbc <- '../code/config.wtccc-crohn-wbc.yaml'
 doAll(config.wbc)
 ```
 
@@ -313,12 +325,20 @@ In summary, both masking and enhancing interactions exist.
 drawLD(c('rs2076756', 'rs2066843', 'rs3816769', 'rs1026916', 'rs7211777'), config.wbc)
 ```
 
+### Gene-based analysis
+
+```{r, results='asis'}
+listGeneBasedTest(config.wbc)
+```
+
+Only STAT3, NOD2, and SBNO2 have predicted expression in selected tissues. STAT3 has significant interaction (p < 0.02) in muscle skeletal where the effect of STAT3 is enhanced when WBC is high. This is consistent with the previous finding in GWAS SNPs. While NOD2 and SBNO2 do not have significant interaction.
+
 # Type II diabetes
 
 ## Fast glucose
 
 ```{r, results='asis'}
-config.fastglu <- '../code/step2/config.wtccc-t2d-fastglu.yaml'
+config.fastglu <- '../code/config.wtccc-t2d-fastglu.yaml'
 doAll(config.fastglu)
 ```
 
@@ -372,10 +392,20 @@ Interestingly, the direction is not the same as before. Namely the protective ef
 drawLD(c('rs5015480', 'rs7923866'), config.fastglu)
 ```
 
+### Gene-based analysis
+
+```{r, results='asis'}
+listGeneBasedTest(config.fastglu)
+```
+
+Only IDE, HHEX, and TTLL5 have predicted expression in selected tissues. TTLL5 has significant interaction in adrenal gland (p < 0.01). When fast glucose level is high, the expression level of TTLL5 increases the risk. TTLL5 has been associated with retinal disease but interestingly enough, it involves in glucocorticoid receptor-mediated induction and repression, which is a pathway to control the transcription of genes in diverse processes (energy metabolism, immune response, etc) [TTLL5/STAMP paper](http://mcb.asm.org/content/27/4/1467.long) [GR paper](http://www.pnas.org/content/106/39/16598).
+
+IDE and HHEX have some trend on interaction as well (pituitary for IDE and fibroblast for HHEX). The direction is when fast glucose is high, the expression level of IDE and HHEX tend to enhance the risk.
+
 ## Fast insulin
 
 ```{r, results='asis'}
-config.fastinsulin <- '../code/step2/config.wtccc-t2d-fastinsulin.yaml'
+config.fastinsulin <- '../code/config.wtccc-t2d-fastinsulin.yaml'
 doAll(config.fastinsulin)
 ```
 
@@ -391,7 +421,7 @@ rs1996913, rs17606320, rs7544694, rs7543693, rs12173920, rs16895362,rs2049316, r
 
 [*rs3734262*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=3734262) locates in the intronic region of [UHRF1](http://www.uniprot.org/uniprot/Q96T88) binding protein 1 ([UHRF1BP1](http://www.uniprot.org/uniprot/Q6BDS2))
 
-[*rs9368834*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9368834) locates in the intronic region of [ANKS1A](https://www.uniprot.org/uniprot/Q92625). It has been reported that this gene is associated with T2D in obese individuals.
+[*rs9368834*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=9368834) locates in the intronic region of [ANKS1A](https://www.uniprot.org/uniprot/Q92625). It has been reported that this gene is associated with T2D in obese individuals [paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3364960/) (signal is weak and failed to replicate).
 
 [*rs2139980*](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=2139980). It direction is not the same as others.
 
@@ -422,3 +452,11 @@ Overall, the effect is always boosted when fast insulin is high but *rs8012854* 
 ```{r, results='asis'}
 drawGraph('-/+', 'no', '+', '-/+', 't2d-fastinsulin2')  # gy, gi, yi
 ```
+
+### Gene-based analysis
+
+```{r, results='asis'}
+listGeneBasedTest(config.fastinsulin)
+```
+
+All of them have some predicted expression but only ANKS1A has significant interaction (p < 0.05, in whole blood). When fast insulin is high, the expression of ANKS1A enhances the risk though it has marginal effect to decrease the level of risk factor, fast insulin. An explanation is that ANKS1A should be maintained at certain level to keep fast insulin from being too high (this explains why ANKS1A expression decreases fast insulin level) and if baseline fast insulin is high, such protective effect is masked. ANKS1A has been associated with coronary heart disease and cancer. Note that ANKS1A is close to UHRF1BP1 and this locus has been associated with fast insulin [paper](https://www.nature.com/articles/ng.2274). However, ANKS1A has not been identified as a T2D locus.

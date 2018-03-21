@@ -1,0 +1,109 @@
+######################### header parameters ############################
+x1: 'wtccc_crohn'
+x2: 'wtccc_ctrl'
+y: 'UKBB_wbc'
+tissue-type: 'Artery_Coronary,DGN-HapMap-2015,Whole_Blood,Cells_EBV-transformed_lymphocytes,Thyroid,Stomach,Small_Intestine_Terminal_Ileum,Esophagus_Muscularis,Spleen,Pancreas,Esophagus_Gastroesophageal_Junction,Adrenal_Gland,Adipose_Visceral_Omentum,Adipose_Subcutaneous,Pituitary,Colon_Transverse,Esophagus_Mucosa,Liver,Lung,Muscle_Skeletal,Cells_Transformed_fibroblasts'  # can take multiple tissues (separate them by ',')
+######################### header parameters END ########################
+
+########################### data parameters ############################
+#----------------------------- step 1 ---------------------------------#
+wtccc_crohn:
+  prepare_XT:
+    geno-mean:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cd/cd.{chr}.mean.genotype.txt.gz'
+    snp-list:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/cd/cd.wtccc.{chr}.pos'
+  combine_XT_YT:
+    case-control: 2   # 1 for unaffected; 2 for affected
+wtccc_ctrl:
+  prepare_XT:
+    geno-mean:
+      name-format: '/mnt/gluster/home/yanyul/repo/phenotype-epistasis/data/merge/wtccc_ctrl.{chr}.mean.genotype.txt.gz'
+    snp-list:
+      name-format: '/data/internal_restricted/carbonetto_2012_wtccc/BIMBAM/birthctrl/birthctrl.wtccc.{chr}.pos'
+  combine_XT_YT:
+    case-control: 1
+UKBB_wbc:
+  prepare_betaI:
+    beta-ss: '/mnt/gluster/home/yanyul/data/gwas-summary-statistic/wbc_N172435_ukbb_ukbil_meta.tsv.gz'
+    header: 1  # no header = 0, with header = 1
+    chr-pos-ref-alt-reffrq-info-rs-pval-effalt-n: '2,3,5,4,-7,12,1,10,8,11'  # add '-' before reffrq is the column is referring to altfrq. Drop n if no sample size
+    sep: '"\t"'
+  nsamples: 131969
+#---------------------------- step 2/3 -------------------------------#
+wtccc_crohn__wtccc_ctrl:
+  name-format: '../step1/output-combine_XT_YT/{replace}/merge_QC'
+UKBB_wbc__wtccc_crohn__wtccc_ctrl:
+  name-format: '../step1/output-run_step1/{replace}/ldpred_LDpred_p'
+  gene-set: 'STAT3,NOD2,RSPH6A,SBNO2'
+######################## data parameters END ##########################
+
+########################### other parameters ##########################
+#----------------------------- step 1 --------------------------------#
+ldpred-dir: '../../../ldpred/ldpred'
+ldpred:
+  num-SNPs-per-xMb: 1
+  causal-fraction: '1,0.3,0.1,0.03,0.01,0.003,0.001,0.0003,0.0001'
+chr-list: 'chr,1:22'
+quality-control:
+  hwe: 0.05  # 0.05
+  maf: 0.05  # 0.01
+  geno: 0.05  # 0.05
+#----------------------------- step 2 --------------------------------#
+yi-pattern: 'covar_LDpred_:.txt'
+functional-subsetting:
+  pval-theshold: 0.001
+sigificance-subsetting:
+  pval-theshold: 5e-5
+#----------------------------- step 3 --------------------------------#
+gencode_annotation: '/mnt/gluster/home/yanyul/data/gencode/gencode.v19.chr_patch_hapl_scaff.annotation.gtf.gz'
+predixcan-dir: '/mnt/gluster/home/yanyul/repo/PrediXcan/Software/'
+python2.7-dir: '/opt/anaconda/anaconda2/bin/'
+causal-fraction-step3: '1,0.3,0.1'
+########################## other parameters END #########################
+
+
+########################### tissue parameters ###########################
+Artery_Coronary:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Artery_Coronary/gtex_v7_Artery_Coronary_imputed_europeans_tw_0.5_signif.db'
+DGN-HapMap-2015:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/DGN-HapMap-2015/DGN-WB_0.5.db'
+Whole_Blood:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Whole_Blood/gtex_v7_Whole_Blood_imputed_europeans_tw_0.5_signif.db'
+Cells_EBV-transformed_lymphocytes:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Cells_EBV-transformed_lymphocytes/gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db'
+Thyroid:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Thyroid/gtex_v7_Thyroid_imputed_europeans_tw_0.5_signif.db'
+Stomach:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Stomach/gtex_v7_Stomach_imputed_europeans_tw_0.5_signif.db'
+Small_Intestine_Terminal_Ileum:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Small_Intestine_Terminal_Ileum/gtex_v7_Small_Intestine_Terminal_Ileum_imputed_europeans_tw_0.5_signif.db'
+Esophagus_Muscularis:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Esophagus_Muscularis/gtex_v7_Esophagus_Muscularis_imputed_europeans_tw_0.5_signif.db'
+Spleen:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Spleen/gtex_v7_Spleen_imputed_europeans_tw_0.5_signif.db'
+Pancreas:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Pancreas/gtex_v7_Pancreas_imputed_europeans_tw_0.5_signif.db'
+Esophagus_Gastroesophageal_Junction:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Esophagus_Gastroesophageal_Junction/gtex_v7_Esophagus_Gastroesophageal_Junction_imputed_europeans_tw_0.5_signif.db'
+Adrenal_Gland:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Adrenal_Gland/gtex_v7_Adrenal_Gland_imputed_europeans_tw_0.5_signif.db'
+Adipose_Visceral_Omentum:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Adipose_Visceral_Omentum/gtex_v7_Adipose_Visceral_Omentum_imputed_europeans_tw_0.5_signif.db'
+Adipose_Subcutaneous:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Adipose_Subcutaneous/gtex_v7_Adipose_Subcutaneous_imputed_europeans_tw_0.5_signif.db'
+Pituitary:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Pituitary/gtex_v7_Pituitary_imputed_europeans_tw_0.5_signif.db'
+Colon_Transverse:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Colon_Transverse/gtex_v7_Colon_Transverse_imputed_europeans_tw_0.5_signif.db'
+Esophagus_Mucosa:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Esophagus_Mucosa/gtex_v7_Esophagus_Mucosa_imputed_europeans_tw_0.5_signif.db'
+Liver:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Liver/gtex_v7_Liver_imputed_europeans_tw_0.5_signif.db'
+Lung:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Lung/gtex_v7_Lung_imputed_europeans_tw_0.5_signif.db'
+Muscle_Skeletal:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Muscle_Skeletal/gtex_v7_Muscle_Skeletal_imputed_europeans_tw_0.5_signif.db'
+Cells_Transformed_fibroblasts:
+  db: '/mnt/gluster/home/yanyul/data/predixcan/Cells_Transformed_fibroblasts/gtex_v7_Cells_Transformed_fibroblasts_imputed_europeans_tw_0.5_signif.db'
+########################### tissue parameters END ######################
