@@ -372,9 +372,12 @@ for(i in 1 : length(intermediate.list)) {{
       temp.container <- rbind(temp.container, c(ps[i], t, g, stats$coefficients[3], stats$coefficients[6], stats$coefficients[12], 'Y ~ E + I', 'I'))
       model2 <- glm(y ~ e + i + e * i, family=binomial(link='logit'), data = data)
       stats2 <- summary(model2)
+      model3 <- lm(i ~ e, data = data)
+      stats3 <- summary(model3)
       temp.container <- rbind(temp.container, c(ps[i], t, g, stats2$coefficients[2], stats2$coefficients[6], stats2$coefficients[14], 'Y ~ E + I + E*I', 'E'))
       temp.container <- rbind(temp.container, c(ps[i], t, g, stats2$coefficients[3], stats2$coefficients[7], stats2$coefficients[15], 'Y ~ E + I + E*I', 'I'))
       temp.container <- rbind(temp.container, c(ps[i], t, g, stats2$coefficients[4], stats2$coefficients[8], stats2$coefficients[16], 'Y ~ E + I + E*I', 'I*E'))
+      temp.container <- rbind(temp.container, c(ps[i], t, g, stats3$coefficients[2], stats3$coefficients[4], stats3$coefficients[8], 'I ~ E', 'E (on I)'))
     }}
   }}
   temp.container <- data.frame(temp.container)
@@ -409,9 +412,9 @@ for(i in 1 : length(intermediate.list)) {{
   temp.container.nona <- temp.container[!is.na(temp.container$pval), ]
   for(g in unique(temp.container.nona$gene.name)) {{
     cat('###', g, '\\n', '\\n')
-    plot.model2 <- temp.container.nona[temp.container.nona$type == 'Y ~ E + I + E*I' & temp.container.nona$gene.name == g , ]
+    plot.model2 <- temp.container.nona[temp.container.nona$type != 'Y ~ E + I' & temp.container.nona$gene.name == g , ]
     if(nrow(plot.model2) == 0) next
-    p2 <- ggplot(plot.model2[!is.na(plot.model2$pval), ], aes(x = tissue)) +  geom_point(aes(y = estmate)) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.7, hjust = .5), size = 3, position = dodge) + ggtitle('Logistic regression with interaction') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~term)
+    p2 <- ggplot(plot.model2[!is.na(plot.model2$pval), ], aes(x = tissue)) +  geom_point(aes(y = estmate)) + geom_errorbar(aes(ymin = estmate - 1.96 * std, ymax = estmate + 1.96 * std), width = .1) + geom_hline(yintercept = 0, color = 'black') + coord_flip() + theme(axis.text.x=element_text(angle=90,hjust=1)) + geom_text(aes(y = estmate, label = paste0('pval = ', formatC(pval, digits = 2, format = 'e')), vjust = -.7, hjust = .5), size = 3, position = dodge) + ggtitle('Logistic regression with interaction') + ylab('Regression coefficient') + xlab('Expression Tissue') + facet_wrap(~term, scales='free_x')
     print(p2)
     cat('\\n\\n')
   }}
